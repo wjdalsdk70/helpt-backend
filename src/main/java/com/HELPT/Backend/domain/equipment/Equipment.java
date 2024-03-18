@@ -1,4 +1,4 @@
-package com.HELPT.Backend.Entity;
+package com.HELPT.Backend.domain.equipment;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,14 +10,19 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Manager {
+public class Equipment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int mid;
+    private int equipmentid;
 
-    private int gid;
+    private int gymid;
 
-    private String token;
+    private int defaultcount;
 
+    private int defaultset;
+
+    private float defaultweight;
+
+    private String equipmentname;
 }

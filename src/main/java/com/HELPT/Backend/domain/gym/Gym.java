@@ -1,4 +1,4 @@
-package com.HELPT.Backend.Entity;
+package com.HELPT.Backend.domain.gym;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,22 +7,16 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Entity
 @Getter
 @Setter
-public class Notice {
+public class Gym {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int noticeid;
-
     private int gymid;
 
-    private String title;
+    private String address;
 
-    private String content;
-
-    private Date createat;
+    private String gymname;
 }

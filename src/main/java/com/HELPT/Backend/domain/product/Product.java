@@ -1,4 +1,4 @@
-package com.HELPT.Backend.Entity;
+package com.HELPT.Backend.domain.product;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,13 +10,15 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Gym {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int gymid;
+    private int pid;
 
-    private String address;
+    private int gid;
 
-    private String gymname;
+    private int day;
+
+    private int price;
 }

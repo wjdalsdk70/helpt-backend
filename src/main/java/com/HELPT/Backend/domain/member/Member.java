@@ -1,4 +1,4 @@
-package com.HELPT.Backend.Entity;
+package com.HELPT.Backend.domain.member;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

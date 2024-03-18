@@ -1,4 +1,4 @@
-package com.HELPT.Backend.Entity;
+package com.HELPT.Backend.domain.manager;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,11 +10,14 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Admin {
+public class Manager {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userid;
+    private int mid;
 
-    private String password;
+    private int gid;
+
+    private String token;
+
 }

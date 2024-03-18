@@ -1,4 +1,4 @@
-package com.HELPT.Backend.Entity;
+package com.HELPT.Backend.domain.record;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,20 +12,25 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-public class Membership {
+public class Record {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int membershipid;
+    private int rid;
 
     private int userid;
 
-    private int gymid;
+    private int equipmentid;
 
-    private int attendancedate;
+    private int count;
 
-    private Date startDate;
+    private int set;
 
-    private Date endDate;
+    private int weight;
 
+    private Date startdate;
+
+    private Date enddate;
+
+    private float successrate;
 }
