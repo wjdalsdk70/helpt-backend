@@ -14,15 +14,15 @@ public class Equipment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int equipmentid;
+    private int equipmentId;
 
-    private int gymid;
+    private int gymId;
 
-    private int defaultcount;
+    private int defaultCount;
 
-    private int defaultset;
+    private int defaultSet;
 
-    private float defaultweight;
+    private float defaultWeight;
 
-    private String equipmentname;
+    private String equipmentName;
 }

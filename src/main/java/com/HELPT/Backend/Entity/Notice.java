@@ -16,13 +16,13 @@ public class Notice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int noticeid;
+    private int noticeId;
 
-    private int gymid;
+    private int gymId;
 
     private String title;
 
     private String content;
 
-    private Date createat;
+    private Date createAt;
 }

@@ -16,7 +16,7 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int uid;
 
-    private int gymid;
+    private int gymId;
 
     private String token;
 
