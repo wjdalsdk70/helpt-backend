@@ -15,4 +15,17 @@ public class MemberService {
         return memberRepository.isToken(tk);
     }
 
+    public Member register(Member member)
+    {
+        Member newMember = new Member();
+        newMember.setToken(member.getToken());
+        newMember.setGender(member.getGender());
+        newMember.setUsername(member.getUsername());
+        newMember.setWeight(member.getWeight());
+        newMember.setHeight(member.getHeight());
+
+        return memberRepository.add(newMember);
+
+    }
+
 }

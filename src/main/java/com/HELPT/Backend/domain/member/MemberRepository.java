@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -22,15 +23,15 @@ public class MemberRepository {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
+        List<Member> resultList = new ArrayList<>();
         try {
             tx.begin(); //트랜잭션 시작
 
             Query query =  em.createQuery("SELECT m FROM Member m WHERE token=:tk", Member.class);
             query.setParameter("tk",tk);
-            List<Member> resultList = query.getResultList();
-            if(resultList.isEmpty()) return false;
-
+            resultList = query.getResultList();
             tx.commit();//트랜잭션 커밋
+
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback(); //트랜잭션 롤백
@@ -38,7 +39,28 @@ public class MemberRepository {
             em.close(); //엔티티 매니저 종료
         }
 
-        return true;
+        if(resultList.isEmpty()) return false;
+        else return true;
+    }
+
+    public Member add(Member member)
+    {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin(); //트랜잭션 시작
+            em.persist(member);
+            tx.commit();//트랜잭션 커밋
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback(); //트랜잭션 롤백
+        } finally {
+            em.close(); //엔티티 매니저 종료
+        }
+
+        return member;
     }
 
 
