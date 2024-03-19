@@ -10,8 +10,8 @@ public class MembershipService {
 
     private final MembershipRepository membershipRepository;
 
-    public Member checkMembership(int userid)
+    public Membership checkMembership(int userid)
     {
-        return new Member();
+        return membershipRepository.checkMembership(userid);
     }
 }

@@ -1,4 +1,4 @@
-package com.HELPT.Backend.domain.callbackinterface;
+package com.HELPT.Backend.domain.jpamodule.callbackinterface;
 
 import jakarta.persistence.EntityManager;
 

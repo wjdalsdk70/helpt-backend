@@ -1,5 +1,6 @@
 package com.HELPT.Backend.domain.membership;
 
+import com.HELPT.Backend.domain.jpamodule.callbackclass.JpaModule;
 import com.HELPT.Backend.domain.member.Member;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -14,5 +15,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MembershipRepository {
 
+    public Membership checkMembership(int userid)
+    {
+        return JpaModule.executeTransaction(em->{
+            List<Membership> resultList = em.createQuery("SELECT m FROM Membership m WHERE userid=:userid",Membership.class)
+                    .setParameter("userid",userid)
+                    .getResultList();
+            return resultList.isEmpty()?null:resultList.get(0);
+        });
+    }
 
 }

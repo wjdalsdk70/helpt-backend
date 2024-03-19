@@ -11,11 +11,13 @@ public class MembershipController {
 
     private final MembershipService membershipService;
 
-    /*
+
     @GetMapping("/{userid}")
     public ResponseEntity<Membership> getMembership(@PathVariable("userid") int userid)
     {
+        Membership resultMembership = membershipService.checkMembership(userid);
+        return ResponseEntity.ok(resultMembership);
 
     }
-    */
+
 }
