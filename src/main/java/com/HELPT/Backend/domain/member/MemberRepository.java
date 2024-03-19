@@ -18,12 +18,12 @@ public class MemberRepository {
 
     private final EntityManagerFactory emf;
 
-    public boolean isToken(String tk)
+    public Member isToken(String tk)
     {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
-        List<Member> resultList = new ArrayList<>();
+        List<Member> resultList;
         try {
             tx.begin(); //트랜잭션 시작
 
@@ -31,6 +31,10 @@ public class MemberRepository {
             query.setParameter("tk",tk);
             resultList = query.getResultList();
             tx.commit();//트랜잭션 커밋
+            if(!resultList.isEmpty())
+            {
+                return resultList.get(0);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,8 +43,7 @@ public class MemberRepository {
             em.close(); //엔티티 매니저 종료
         }
 
-        if(resultList.isEmpty()) return false;
-        else return true;
+        return null;
     }
 
     public Member add(Member member)

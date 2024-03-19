@@ -10,7 +10,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public boolean checkToken(String tk)
+    public Member checkToken(String tk)
     {
         return memberRepository.isToken(tk);
     }
