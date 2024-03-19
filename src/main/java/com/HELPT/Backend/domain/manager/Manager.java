@@ -14,9 +14,9 @@ public class Manager {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int managerId;
+    private int managerid;
 
-    private int gymId;
+    private int gymid;
 
     private String token;
 
