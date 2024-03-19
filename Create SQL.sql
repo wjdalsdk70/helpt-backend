@@ -21,104 +21,104 @@ USE `helptdb`;
 
 -- 테이블 helptdb.admin 구조 내보내기
 CREATE TABLE IF NOT EXISTS `admin` (
-  `userId` int unsigned NOT NULL,
+  `userid` int unsigned NOT NULL,
   `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`userId`)
+  PRIMARY KEY (`userid`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 helptdb.equipment 구조 내보내기
 CREATE TABLE IF NOT EXISTS `equipment` (
-  `userId` int unsigned NOT NULL,
+  `userid` int unsigned NOT NULL,
   `password` varchar(50) NOT NULL DEFAULT '',
-  PRIMARY KEY (`userId`)
+  PRIMARY KEY (`userid`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 helptdb.gym 구조 내보내기
 CREATE TABLE IF NOT EXISTS `gym` (
-  `gymId` int unsigned NOT NULL AUTO_INCREMENT,
+  `gymid` int unsigned NOT NULL AUTO_INCREMENT,
   `address` varchar(50) NOT NULL,
-  `gymName` varchar(50) NOT NULL,
-  PRIMARY KEY (`gymId`)
+  `gymname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`gymid`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 helptdb.manager 구조 내보내기
 CREATE TABLE IF NOT EXISTS `manager` (
-  `managerId` int unsigned NOT NULL,
+  `managerid` int unsigned NOT NULL,
   `token` varchar(50) NOT NULL DEFAULT '',
-  `gymId` int unsigned NOT NULL,
-  PRIMARY KEY (`managerId`)
+  `gymid` int unsigned NOT NULL,
+  PRIMARY KEY (`managerid`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 helptdb.member 구조 내보내기
 CREATE TABLE IF NOT EXISTS `member` (
-  `userId` int unsigned NOT NULL AUTO_INCREMENT,
-  `gymId` int unsigned DEFAULT NULL,
+  `userid` int unsigned NOT NULL AUTO_INCREMENT,
+  `gymid` int unsigned DEFAULT NULL,
   `token` varchar(50) NOT NULL DEFAULT '',
   `gender` varchar(50) DEFAULT '',
   `height` float unsigned DEFAULT (0),
   `weight` float unsigned DEFAULT (0),
   `userName` varchar(50) NOT NULL DEFAULT '',
-  PRIMARY KEY (`userId`) USING BTREE
+  PRIMARY KEY (`userid`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 helptdb.membership 구조 내보내기
 CREATE TABLE IF NOT EXISTS `membership` (
-  `membershipId` int unsigned NOT NULL AUTO_INCREMENT,
-  `gymId` int unsigned DEFAULT NULL,
-  `attendanceDate` int unsigned DEFAULT NULL,
-  `startDate` date DEFAULT NULL,
-  `endDate` date DEFAULT NULL,
-  `userId` int unsigned DEFAULT NULL,
-  PRIMARY KEY (`membershipId`)
+  `membershipid` int unsigned NOT NULL AUTO_INCREMENT,
+  `gymid` int unsigned DEFAULT NULL,
+  `attendancedate` int unsigned DEFAULT NULL,
+  `startdate` date DEFAULT NULL,
+  `enddate` date DEFAULT NULL,
+  `userid` int unsigned DEFAULT NULL,
+  PRIMARY KEY (`membershipid`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 helptdb.notice 구조 내보내기
 CREATE TABLE IF NOT EXISTS `notice` (
-  `noticeId` int unsigned NOT NULL AUTO_INCREMENT,
-  `gymId` int unsigned DEFAULT NULL,
+  `noticeid` int unsigned NOT NULL AUTO_INCREMENT,
+  `gymid` int unsigned DEFAULT NULL,
   `title` varchar(50) DEFAULT NULL,
   `content` varchar(50) DEFAULT NULL,
-  `createAt` date DEFAULT NULL,
-  PRIMARY KEY (`noticeId`)
+  `createat` date DEFAULT NULL,
+  PRIMARY KEY (`noticeid`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 helptdb.product 구조 내보내기
 CREATE TABLE IF NOT EXISTS `product` (
-  `productId` int unsigned NOT NULL AUTO_INCREMENT,
-  `gymId` int unsigned DEFAULT NULL,
+  `productid` int unsigned NOT NULL AUTO_INCREMENT,
+  `gymid` int unsigned DEFAULT NULL,
   `day` int unsigned DEFAULT NULL,
   `price` int unsigned DEFAULT '0',
-  PRIMARY KEY (`productId`)
+  PRIMARY KEY (`productid`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 helptdb.record 구조 내보내기
 CREATE TABLE IF NOT EXISTS `record` (
-  `recordId` int unsigned NOT NULL,
-  `userId` int unsigned DEFAULT NULL,
-  `equipmentId` int unsigned DEFAULT NULL,
+  `recordid` int unsigned NOT NULL,
+  `userid` int unsigned DEFAULT NULL,
+  `equipmentid` int unsigned DEFAULT NULL,
   `count` int unsigned DEFAULT NULL,
   `set` int unsigned DEFAULT NULL,
   `weight` int unsigned DEFAULT NULL,
-  `startDate` date DEFAULT NULL,
-  `endDate` date DEFAULT NULL,
-  `successRate` float unsigned DEFAULT NULL,
-  PRIMARY KEY (`recordId`)
+  `startdate` date DEFAULT NULL,
+  `enddate` date DEFAULT NULL,
+  `successrate` float unsigned DEFAULT NULL,
+  PRIMARY KEY (`recordid`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
