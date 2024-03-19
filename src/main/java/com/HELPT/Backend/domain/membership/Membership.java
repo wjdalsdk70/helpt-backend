@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -24,8 +25,8 @@ public class Membership {
 
     private int attendancedate;
 
-    private Date startdate;
+    private LocalDate startdate;
 
-    private Date enddate;
+    private LocalDate enddate;
 
 }

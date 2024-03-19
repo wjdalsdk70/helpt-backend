@@ -12,7 +12,7 @@ public class MemberService {
 
     public Member checkToken(String tk)
     {
-        return memberRepository.isToken(tk);
+        return memberRepository.checkMember(tk);
     }
 
     public Member register(Member member)
