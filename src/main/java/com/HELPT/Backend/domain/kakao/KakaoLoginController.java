@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class KakaoLoginController {
 
     private final KakaoAPI kakaoAPI;
+
+    //TODO:: 현재 테스트 위해 서버 URL로 리디렉션, 실제로는 앱내에서 리디렉션후 code만 서버로 전송 후 토큰을 클라이언트로 전송.
     @GetMapping("")
     public String login(@RequestParam("code") String code) {
         log.info("Authorization Code is {}", code);
