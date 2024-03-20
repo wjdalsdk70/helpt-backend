@@ -20,7 +20,9 @@ public class Member {
 
     private int gymid;
 
-    private String token;
+    private String accesstoken;
+
+    private String refreshtoken;
 
     private String username;
 

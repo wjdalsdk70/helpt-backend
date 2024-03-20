@@ -14,7 +14,7 @@ public class MemberRepository {
     public Member checkMember(String tk)
     {
         return JpaModule.executeTransaction(em -> {
-            List<Member> resultList = em.createQuery("SELECT m FROM Member m WHERE token=:tk", Member.class)
+            List<Member> resultList = em.createQuery("SELECT m FROM Member m WHERE accesstoken=:tk", Member.class)
                     .setParameter("tk", tk)
                     .getResultList();
             return resultList.isEmpty() ? null : resultList.get(0);
