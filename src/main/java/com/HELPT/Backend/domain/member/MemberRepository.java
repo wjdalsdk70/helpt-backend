@@ -1,7 +1,6 @@
 package com.HELPT.Backend.domain.member;
 
-import com.HELPT.Backend.domain.jpamodule.callbackclass.JpaModule;
-import jakarta.persistence.Query;
+import com.HELPT.Backend.domain.modules.jpamodule.callbackclass.JpaModule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

@@ -1,11 +1,6 @@
 package com.HELPT.Backend.domain.membership;
 
-import com.HELPT.Backend.domain.jpamodule.callbackclass.JpaModule;
-import com.HELPT.Backend.domain.member.Member;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Query;
+import com.HELPT.Backend.domain.modules.jpamodule.callbackclass.JpaModule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

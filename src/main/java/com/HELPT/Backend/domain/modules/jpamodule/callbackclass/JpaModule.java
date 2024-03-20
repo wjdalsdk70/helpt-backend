@@ -1,6 +1,6 @@
-package com.HELPT.Backend.domain.jpamodule.callbackclass;
+package com.HELPT.Backend.domain.modules.jpamodule.callbackclass;
 
-import com.HELPT.Backend.domain.jpamodule.callbackinterface.TransactionCallback;
+import com.HELPT.Backend.domain.modules.jpamodule.callbackinterface.TransactionCallback;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;

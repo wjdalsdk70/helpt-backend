@@ -1,4 +1,4 @@
-package com.HELPT.Backend.domain.kakao;
+package com.HELPT.Backend.domain.modules.kakao;
 
 import lombok.Builder;
 import lombok.Getter;
