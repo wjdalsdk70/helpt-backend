@@ -24,6 +24,7 @@ public class KakaoLoginController {
         log.info(accessToken);
 
         log.info("accessToken is {}", accessToken);
+        kakaoAPI.vaildateToken(accessToken);
         KakaoUserInfo kakaoUserInfo = kakaoAPI.getUserInfo(accessToken);
 
         return String.format("%s님 안녕하세요!",kakaoUserInfo.getNickname());

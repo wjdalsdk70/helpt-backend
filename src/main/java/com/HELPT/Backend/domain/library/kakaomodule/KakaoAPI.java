@@ -4,9 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -21,6 +19,8 @@ public class KakaoAPI {
 
     //private final String CLIENT_ID = "9fd7e81a8247e2989395288e7e20d318";
     private final String KAKAO_API_URL = "https://kauth.kakao.com/oauth/token";
+
+    private final String KAKAO_VAILDATE_API_URL = "https://kapi.kakao.com/v1/user/access_token_info";
     private final String KAKAO_USER_INFO_URL = "https://kapi.kakao.com/v2/user/me";
     private final String REDIRECT_URL = "http://localhost:8080/login";
 
@@ -89,5 +89,23 @@ public class KakaoAPI {
         log.info("kakaoUserInfo is {}", kakaoUserInfo);
 
         return kakaoUserInfo;
+    }
+
+    public boolean vaildateToken(String token) {
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(KAKAO_VAILDATE_API_URL, HttpMethod.GET, requestEntity, String.class);
+        if(response.getStatusCode()==HttpStatus.OK)
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
