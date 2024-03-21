@@ -1,4 +1,4 @@
-package com.HELPT.Backend.domain.modules.kakao;
+package com.HELPT.Backend.domain.library.kakaomodule;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -64,7 +64,7 @@ public class KakaoAPI {
         JsonObject properties = rootObject.getAsJsonObject("properties");
         JsonObject accountObject = rootObject.getAsJsonObject("kakao_account");
 
-        log.info("response is {}", response.toString());
+        log.info("response is {}", response);
 
         KakaoUserInfo kakaoUserInfo = KakaoUserInfo.builder()
                 .nickname(properties.get("nickname").getAsString())
