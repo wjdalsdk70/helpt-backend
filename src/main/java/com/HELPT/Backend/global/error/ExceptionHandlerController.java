@@ -1,4 +1,4 @@
-package com.HELPT.Backend;
+package com.HELPT.Backend.global.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
