@@ -1,6 +1,6 @@
 package com.HELPT.Backend.domain.membership;
 
-import com.HELPT.Backend.domain.modules.jpamodule.callbackclass.JpaModule;
+import com.HELPT.Backend.domain.library.jpamodule.callbackclass.JpaModule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
