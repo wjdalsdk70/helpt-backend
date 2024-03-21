@@ -1,6 +1,7 @@
 package com.HELPT.Backend.global.Validate;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -10,10 +11,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    /* 나중에 통신에 토큰 담아서 통신할 때 사용
+    /*
+    @Autowired
+    private TokenHandler tokenHandler;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new TokenHandler());
+        registry.addInterceptor(tokenHandler);
     }
      */
 }
