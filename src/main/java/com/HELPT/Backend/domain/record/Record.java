@@ -16,11 +16,11 @@ public class Record {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int recordid;
+    private int recordId;
 
-    private int userid;
+    private int userId;
 
-    private int equipmentid;
+    private int equipmentId;
 
     private int count;
 
@@ -28,9 +28,9 @@ public class Record {
 
     private int weight;
 
-    private Date startdate;
+    private Date startDate;
 
-    private Date enddate;
+    private Date endDate;
 
-    private float successrate;
+    private float successRate;
 }

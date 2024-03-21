@@ -16,15 +16,15 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userid;
+    private int userId;
 
-    private int gymid;
+    private int gymId;
 
-    private String accesstoken;
+    private String accessToken;
 
-    private String refreshtoken;
+    private String refreshToken;
 
-    private String username;
+    private String userName;
 
     private String gender;
 

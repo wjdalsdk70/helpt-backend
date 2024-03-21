@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -16,13 +17,13 @@ public class Notice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int noticeid;
+    private int noticeId;
 
-    private int gymid;
+    private int gymId;
 
     private String title;
 
     private String content;
 
-    private Date createat;
+    private LocalDate createAt;
 }
