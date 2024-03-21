@@ -23,7 +23,12 @@ public class TokenHandler implements HandlerInterceptor {
                 return true; // 유효한 토큰
             }
         }
-        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value()); // 토큰이 유효하지 않으면 500 코드를 반환
+        //에러 코드 401
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setContentType("text/plain");
+        String errorMessage = "만료된 토큰입니다.";
+        response.getWriter().write(errorMessage);
+
         return false;
     }
 }
