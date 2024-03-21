@@ -19,8 +19,8 @@ public class KakaoAPI {
 
     //private final String CLIENT_ID = "9fd7e81a8247e2989395288e7e20d318";
     private final String KAKAO_API_URL = "https://kauth.kakao.com/oauth/token";
-
     private final String KAKAO_VAILDATE_API_URL = "https://kapi.kakao.com/v1/user/access_token_info";
+    private final String KAKAO_REFRESH_API_URL = "https://kauth.kakao.com/oauth/token";
     private final String KAKAO_USER_INFO_URL = "https://kapi.kakao.com/v2/user/me";
     private final String REDIRECT_URL = "http://localhost:8080/login";
 
@@ -107,5 +107,24 @@ public class KakaoAPI {
         else {
             return false;
         }
+    }
+
+    public String refreshToken(String refreshToken) {
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("grant_type", "refresh_token");
+        map.add("client_id", KAKAO_API_KEY);
+        map.add("refresh_token", refreshToken);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(map, headers);
+
+        Map<String, Object> response = restTemplate.postForObject(KAKAO_REFRESH_API_URL, requestEntity, HashMap.class);
+
+        return response.get("access_token").toString();
     }
 }
