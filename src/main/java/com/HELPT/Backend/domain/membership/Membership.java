@@ -17,16 +17,16 @@ public class Membership {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int membershipid;
+    private int membershipId;
 
-    private int userid;
+    private int userId;
 
-    private int gymid;
+    private int gymId;
 
-    private int attendancedate;
+    private int attendanceDate;
 
-    private LocalDate startdate;
+    private LocalDate startDate;
 
-    private LocalDate enddate;
+    private LocalDate endDate;
 
 }

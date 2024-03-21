@@ -14,9 +14,9 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int productid;
+    private int productId;
 
-    private int gymid;
+    private int gymId;
 
     private int day;
 

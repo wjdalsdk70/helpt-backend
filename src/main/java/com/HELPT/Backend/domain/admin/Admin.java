@@ -14,7 +14,8 @@ public class Admin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userid;
+    private Long adminId;
 
+    private String loginId;
     private String password;
 }
