@@ -1,7 +1,9 @@
 package com.HELPT.Backend.domain.member;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,21 +14,18 @@ import java.util.List;
 @Repository
 @Transactional
 public class MemberRepository {
-    private static EntityManagerFactory emf;
-    private static EntityManager em;
 
+    @PersistenceContext
+    private static EntityManager em;
+    private static JPAQueryFactory queryFactory;
     @Autowired
-    public void setEmf(EntityManagerFactory entityManagerFactory) {
-        emf = entityManagerFactory;
-        em = emf.createEntityManager();
+    public void setJPAQueryFactory(EntityManager entityManager) {
+        queryFactory = new JPAQueryFactory(entityManager);
     }
 
     public Member checkMember(String tk)
     {
-            List<Member> resultList = em.createQuery("SELECT m FROM Member m WHERE accessToken=:tk", Member.class)
-                    .setParameter("tk", tk)
-                    .getResultList();
-            return resultList.isEmpty() ? null : resultList.get(0);
+        return new Member();
     }
 
     public Member add(Member member)
