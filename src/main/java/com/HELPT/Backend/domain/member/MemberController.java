@@ -18,7 +18,24 @@ public class MemberController {
     @GetMapping("/login")
     public ResponseEntity<Member> login(@RequestParam("token") String token) {
 
-        Member resultMember = memberService.checkToken(token);
+        Member resultMember = memberService.existMember(token);
+
+        return ResponseEntity.ok(resultMember);
+    }
+
+    @GetMapping("/attendance/{userid}")
+    public ResponseEntity<String> attendance(@PathVariable("userid") int userid) {
+
+        boolean bResult = memberService.attendance(userid);
+
+        return ResponseEntity.ok(String.valueOf(bResult));
+    }
+
+    @GetMapping("/find/{userid}")
+    public ResponseEntity<Member> findMember(@PathVariable("userid") int userid) {
+
+        Member resultMember = memberService.findMember(userid);
+
         return ResponseEntity.ok(resultMember);
     }
 
@@ -26,6 +43,15 @@ public class MemberController {
     public ResponseEntity<Member> registerMember(@RequestBody Member member) {
 
         Member newMember = memberService.register(member);
+
+        return ResponseEntity.ok(newMember);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<Member> updateMember(@RequestBody Member member) {
+
+        Member newMember = memberService.updateMember(member);
+
         return ResponseEntity.ok(newMember);
     }
 

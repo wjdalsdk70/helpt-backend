@@ -10,11 +10,23 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public Member checkToken(String tk)
+    public Member existMember(String tk)
     {
         return memberRepository.findByToken(tk);
     }
 
+    public Member findMember(int userid)
+    {
+        return memberRepository.findById(userid);
+    }
+    public Member updateMember(Member member)
+    {
+        return memberRepository.update(member);
+    }
+    public boolean attendance(int userid)
+    {
+        return memberRepository.attendance(userid);
+    }
     public Member register(Member member)
     {
         Member newMember = new Member();
@@ -28,5 +40,7 @@ public class MemberService {
         return memberRepository.add(newMember);
 
     }
+
+
 
 }

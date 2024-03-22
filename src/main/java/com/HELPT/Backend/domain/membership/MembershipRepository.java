@@ -32,4 +32,10 @@ public class MembershipRepository {
                 .fetchOne();
     }
 
+    public Membership add(Membership membership)
+    {
+        em.persist(membership);
+        return membership;
+    }
+
 }

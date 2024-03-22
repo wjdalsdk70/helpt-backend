@@ -14,12 +14,18 @@ public class MembershipController {
     private final MembershipService membershipService;
 
 
-    @GetMapping("/{userid}")
+    @GetMapping("/find/{userid}")
     public ResponseEntity<Membership> getMembership(@PathVariable("userid") int userid)
     {
-        Membership resultMembership = membershipService.checkMembership(userid);
+        Membership resultMembership = membershipService.findMembership(userid);
         return ResponseEntity.ok(resultMembership);
+    }
 
+    @PostMapping("/register")
+    public ResponseEntity<Membership> addMembership(@RequestBody Membership membership)
+    {
+        Membership resultMembership = membershipService.addMembership(membership);
+        return ResponseEntity.ok(resultMembership);
     }
 
 }

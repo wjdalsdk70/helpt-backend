@@ -1,4 +1,4 @@
-package com.HELPT.Backend.domain.library.kakaomodule;
+package com.HELPT.Backend.global.kakaomodule;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

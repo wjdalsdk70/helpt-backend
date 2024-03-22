@@ -1,4 +1,4 @@
-package com.HELPT.Backend.domain.library.kakaomodule;
+package com.HELPT.Backend.global.kakaomodule;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
