@@ -16,9 +16,9 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/login")
-    public ResponseEntity<Member> login(@RequestParam("token") String token) {
+    public ResponseEntity<Member> login(@RequestParam("kakaoId") Long kakaoId) {
 
-        Member resultMember = memberService.existMember(token);
+        Member resultMember = memberService.existMember(kakaoId);
 
         return ResponseEntity.ok(resultMember);
     }

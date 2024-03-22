@@ -14,13 +14,11 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    private Long userId;
 
-    private int gymId;
+    private Long gymId;
 
-    private String accessToken;
-
-    private String refreshToken;
+    private Long kakaoId;
 
     private String userName;
 

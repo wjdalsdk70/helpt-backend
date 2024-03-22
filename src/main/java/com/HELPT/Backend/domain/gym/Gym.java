@@ -14,7 +14,7 @@ public class Gym {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int gymId;
+    private Long gymId;
 
     private String address;
 

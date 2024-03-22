@@ -10,9 +10,9 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public Member existMember(String tk)
+    public Member existMember(Long kakaoId)
     {
-        return memberRepository.findByToken(tk);
+        return memberRepository.findByKakaoId(kakaoId);
     }
 
     public Member findMember(int userid)
@@ -30,8 +30,6 @@ public class MemberService {
     public Member register(Member member)
     {
         Member newMember = new Member();
-        newMember.setAccessToken(member.getAccessToken());
-        newMember.setRefreshToken(member.getRefreshToken());
         newMember.setGender(member.getGender());
         newMember.setUserName(member.getUserName());
         newMember.setWeight(member.getWeight());

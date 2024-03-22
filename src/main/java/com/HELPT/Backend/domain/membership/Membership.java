@@ -17,11 +17,11 @@ public class Membership {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int membershipId;
+    private Long membershipId;
 
-    private int userId;
+    private Long userId;
 
-    private int gymId;
+    private Long gymId;
 
     private int attendanceDate;
 

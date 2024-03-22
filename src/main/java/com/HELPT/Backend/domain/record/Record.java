@@ -18,11 +18,11 @@ public class Record {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int recordId;
+    private Long recordId;
 
-    private int userId;
+    private Long userId;
 
-    private int equipmentId;
+    private Long equipmentId;
 
     private int count;
 

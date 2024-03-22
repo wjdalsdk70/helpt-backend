@@ -31,18 +31,18 @@ public class MemberRepository {
     {
         return em.find(Member.class,userid);
     }
-    public Member findByToken(String tk)
+    public Member findByKakaoId(Long kakaoId)
     {
         return queryFactory.selectFrom(member)
-                .where(member.accessToken.eq(tk))
+                .where(member.kakaoId.eq(kakaoId))
                 .fetchOne();
     }
 
     public Member update(Member member)
     {
         Member findMember = em.find(Member.class,member.getUserId());
-        BeanUtils.copyProperties(member,findMember);
 
+        BeanUtils.copyProperties(member,findMember);
 
         return findMember;
     }

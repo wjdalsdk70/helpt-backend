@@ -14,9 +14,9 @@ public class Equipment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int equipmentId;
+    private Long equipmentId;
 
-    private int gymId;
+    private Long gymId;
 
     private int defaultCount;
 

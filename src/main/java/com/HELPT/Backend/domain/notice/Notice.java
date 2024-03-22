@@ -17,9 +17,9 @@ public class Notice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int noticeId;
+    private Long noticeId;
 
-    private int gymId;
+    private Long gymId;
 
     private String title;
 
