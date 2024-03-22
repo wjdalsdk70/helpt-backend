@@ -18,10 +18,10 @@ public class MemberService {
     public Member register(Member member)
     {
         Member newMember = new Member();
-        newMember.setAccesstoken(member.getAccesstoken());
-        newMember.setRefreshtoken(member.getRefreshtoken());
+        newMember.setAccessToken(member.getAccessToken());
+        newMember.setRefreshToken(member.getRefreshToken());
         newMember.setGender(member.getGender());
-        newMember.setUsername(member.getUsername());
+        newMember.setUserName(member.getUserName());
         newMember.setWeight(member.getWeight());
         newMember.setHeight(member.getHeight());
 
