@@ -5,9 +5,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import static com.HELPT.Backend.domain.membership.QMembership.membership;
 
 import java.util.List;
 
@@ -16,20 +18,18 @@ import java.util.List;
 public class MembershipRepository {
 
     @PersistenceContext
-    private static EntityManager em;
+    private EntityManager em;
     private static JPAQueryFactory queryFactory;
     @Autowired
     public void setJPAQueryFactory(EntityManager entityManager) {
         queryFactory = new JPAQueryFactory(entityManager);
     }
 
-
-    public Membership checkMembership(int userid)
+    public Membership findByUserid(int userid)
     {
-            List<Membership> resultList = em.createQuery("SELECT m FROM Membership m WHERE userId=:userid",Membership.class)
-                    .setParameter("userid",userid)
-                    .getResultList();
-            return resultList.isEmpty()?null:resultList.get(0);
+        return queryFactory.selectFrom(membership)
+                .where(membership.userId.eq(userid))
+                .fetchOne();
     }
 
 }

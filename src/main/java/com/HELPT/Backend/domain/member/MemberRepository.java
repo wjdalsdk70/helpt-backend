@@ -8,24 +8,26 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import static com.HELPT.Backend.domain.member.QMember.member;
 
 import java.util.List;
 
 @Repository
 @Transactional
 public class MemberRepository {
-
     @PersistenceContext
-    private static EntityManager em;
+    private EntityManager em;
     private static JPAQueryFactory queryFactory;
     @Autowired
     public void setJPAQueryFactory(EntityManager entityManager) {
         queryFactory = new JPAQueryFactory(entityManager);
     }
 
-    public Member checkMember(String tk)
+    public Member findByToken(String tk)
     {
-        return new Member();
+        return queryFactory.selectFrom(member)
+                .where(member.accessToken.eq(tk))
+                .fetchOne();
     }
 
     public Member add(Member member)

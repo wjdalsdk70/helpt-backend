@@ -12,6 +12,6 @@ public class MembershipService {
 
     public Membership checkMembership(int userid)
     {
-        return membershipRepository.checkMembership(userid);
+        return membershipRepository.findByUserid(userid);
     }
 }
