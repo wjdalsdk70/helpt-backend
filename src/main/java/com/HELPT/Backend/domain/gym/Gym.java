@@ -4,12 +4,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
+@Builder
 @Getter
-@Setter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Gym {
 
     @Id
@@ -19,4 +20,12 @@ public class Gym {
     private String address;
 
     private String gymName;
+
+    public void updateAddress(String address) {
+        this.address = address;
+    }
+
+    public void updateGymName(String gymName) {
+        this.gymName = gymName;
+    }
 }
