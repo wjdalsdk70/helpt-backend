@@ -12,25 +12,5 @@ import java.util.List;
 public class MembershipController {
 
     private final MembershipService membershipService;
-    @GetMapping("/find/{userId}")
-    public ResponseEntity<Membership> getMembership(@PathVariable("userId") Long userId)
-    {
-        Membership resultMembership = membershipService.findMembership(userId);
-        return ResponseEntity.ok(resultMembership);
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<Membership> addMembership(@RequestBody Membership membership)
-    {
-        Membership resultMembership = membershipService.addMembership(membership);
-        return ResponseEntity.ok(resultMembership);
-    }
-
-    @PostMapping("/extension")
-    public ResponseEntity<Membership> extensionMembership(@RequestParam Long userId,@RequestParam int addDays)
-    {
-        Membership resultMembership = membershipService.extensionMembership(userId,addDays);
-        return ResponseEntity.ok(resultMembership);
-    }
 
 }

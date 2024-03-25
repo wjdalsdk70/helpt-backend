@@ -17,12 +17,7 @@ public class KakaoLoginController {
 
     //TODO:: 현재 테스트 위해 서버 local URL로 리디렉션, 실제로는 앱내에서 리디렉션후 응답 code만 서버로 전송 후 토큰을 클라이언트로 전송.
     @GetMapping("")
-    public String login(@RequestParam("code") String code) {
-        log.info("Authorization Code is {}", code);
-
-        String accessToken = kakaoAPI.getAccessToken(code);
-        log.info(accessToken);
-
+    public String login(@RequestParam("accessToken") String accessToken) {
         log.info("accessToken is {}", accessToken);
         KakaoUserInfo kakaoUserInfo = kakaoAPI.getUserInfo(accessToken);
 
