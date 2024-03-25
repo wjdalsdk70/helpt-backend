@@ -1,41 +1,10 @@
 package com.HELPT.Backend.domain.membership;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.PersistenceContext;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-import static com.HELPT.Backend.domain.membership.QMembership.membership;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import java.util.Optional;
 
-@Repository
-@Transactional
-public class MembershipRepository {
+public interface MembershipRepository extends JpaRepository<Membership,Long> {
 
-    @PersistenceContext
-    private EntityManager em;
-    private static JPAQueryFactory queryFactory;
-    @Autowired
-    public void setJPAQueryFactory(EntityManager entityManager) {
-        queryFactory = new JPAQueryFactory(entityManager);
-    }
-
-    public Membership findByUserid(int userid)
-    {
-        return queryFactory.selectFrom(membership)
-                .where(membership.userId.eq(userid))
-                .fetchOne();
-    }
-
-    public Membership add(Membership membership)
-    {
-        em.persist(membership);
-        return membership;
-    }
-
+    Optional<Membership> findByUserId(Long userId);
 }

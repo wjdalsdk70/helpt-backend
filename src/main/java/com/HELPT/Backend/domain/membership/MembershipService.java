@@ -10,12 +10,13 @@ public class MembershipService {
 
     private final MembershipRepository membershipRepository;
 
-    public Membership findMembership(int userid)
+    public Membership findMembership(Long userid)
     {
-        return membershipRepository.findByUserid(userid);
+        return membershipRepository.findByUserId(userid).orElseThrow(() -> new RuntimeException("Membership not found"));
     }
     public Membership addMembership(Membership membership)
     {
-        return membershipRepository.add(membership);
+        Membership newMembership = membershipRepository.save(membership);
+        return newMembership;
     }
 }

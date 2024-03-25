@@ -1,8 +1,12 @@
 package com.HELPT.Backend.domain.member;
 
+import com.HELPT.Backend.domain.membership.Membership;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -12,30 +16,38 @@ public class MemberService {
 
     public Member existMember(Long kakaoId)
     {
-        return memberRepository.findByKakaoId(kakaoId);
+        Member member = memberRepository.findByKakaoId(kakaoId).orElseThrow(() -> new RuntimeException("Member not found"));
+        return member;
     }
 
-    public Member findMember(int userid)
+    public boolean attendance(Long userid)
     {
-        return memberRepository.findById(userid);
+        Membership membership =  memberRepository.attendance(userid);
+
+        if(membership==null) return false;
+        membership.setAttendanceDate(membership.getAttendanceDate()+1);
+
+        return true;
     }
+    public Member findMember(Long userid)
+    {
+        Member member = memberRepository.findById(userid).orElseThrow(() -> new RuntimeException("Member not found"));
+        return member;
+    }
+
     public Member updateMember(Member member)
     {
-        return memberRepository.update(member);
+        Member findMember = memberRepository.findById(member.getUserId()).orElseThrow(() -> new RuntimeException("Member not found"));
+        BeanUtils.copyProperties(member,findMember);
+
+        return findMember;
     }
-    public boolean attendance(int userid)
-    {
-        return memberRepository.attendance(userid);
-    }
+
     public Member register(Member member)
     {
-        Member newMember = new Member();
-        newMember.setGender(member.getGender());
-        newMember.setUserName(member.getUserName());
-        newMember.setWeight(member.getWeight());
-        newMember.setHeight(member.getHeight());
+        Member newMember = memberRepository.save(member);
 
-        return memberRepository.add(newMember);
+        return newMember;
 
     }
 

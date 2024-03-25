@@ -12,10 +12,8 @@ import java.util.List;
 public class MembershipController {
 
     private final MembershipService membershipService;
-
-
     @GetMapping("/find/{userid}")
-    public ResponseEntity<Membership> getMembership(@PathVariable("userid") int userid)
+    public ResponseEntity<Membership> getMembership(@PathVariable("userid") Long userid)
     {
         Membership resultMembership = membershipService.findMembership(userid);
         return ResponseEntity.ok(resultMembership);

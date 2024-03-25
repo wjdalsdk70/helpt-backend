@@ -17,14 +17,14 @@ public class MemberController {
 
     @GetMapping("/login")
     public ResponseEntity<Member> login(@RequestParam("kakaoId") Long kakaoId) {
-
         Member resultMember = memberService.existMember(kakaoId);
 
         return ResponseEntity.ok(resultMember);
     }
 
+
     @GetMapping("/attendance/{userid}")
-    public ResponseEntity<String> attendance(@PathVariable("userid") int userid) {
+    public ResponseEntity<String> attendance(@PathVariable("userid") Long userid) {
 
         boolean bResult = memberService.attendance(userid);
 
@@ -32,7 +32,7 @@ public class MemberController {
     }
 
     @GetMapping("/find/{userid}")
-    public ResponseEntity<Member> findMember(@PathVariable("userid") int userid) {
+    public ResponseEntity<Member> findMember(@PathVariable("userid") Long userid) {
 
         Member resultMember = memberService.findMember(userid);
 
