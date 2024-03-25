@@ -1,9 +1,6 @@
-package com.HELPT.Backend.domain.member;
+package com.HELPT.Backend.domain.member.Dto;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
+import com.HELPT.Backend.domain.member.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +22,7 @@ public class MemberDto {
 
     private float weight;
 
+
     public MemberDto(Long userId, Long gymId, String userName, String gender, float height, float weight) {
         this.userId = userId;
         this.gymId = gymId;
@@ -33,7 +31,6 @@ public class MemberDto {
         this.height = height;
         this.weight = weight;
     }
-
     public Member toEntity()
     {
         return Member.builder()
