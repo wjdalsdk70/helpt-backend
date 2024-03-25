@@ -67,10 +67,10 @@ public class KakaoAPI {
         log.info("response is {}", response);
 
         KakaoUserInfo kakaoUserInfo = KakaoUserInfo.builder()
-                .nickname(properties.get("nickname").getAsString())
+                .id(rootObject.get("id").getAsLong())
                 .build();
                 /*
-                .id(rootObject.get("id").getAsString())
+                .nickname(properties.get("nickname").getAsString())
                 .profileImage(properties.get("profile_image").getAsString())
                 .thumbnailImage(properties.get("thumbnail_image").getAsString())
                 .profileNeedsAgreement(accountObject.get("profile_needs_agreement").getAsBoolean())

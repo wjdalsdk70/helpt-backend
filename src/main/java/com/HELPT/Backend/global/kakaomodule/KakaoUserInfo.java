@@ -8,9 +8,9 @@ import lombok.Setter;
 @Setter
 @Builder
 public class KakaoUserInfo {
-    String nickname;
+    Long id;
     /*
-    String id;
+    String nickname;
     String profileImage;
     String thumbnailImage;
     Boolean profileNeedsAgreement;
