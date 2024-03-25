@@ -16,8 +16,8 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/login")
-    public ResponseEntity<Member> login(@RequestParam("kakaoId") Long kakaoId) {
-        Member resultMember = memberService.existMember(kakaoId);
+    public ResponseEntity<MemberDto> login(@RequestParam("kakaoId") Long kakaoId) {
+        MemberDto resultMember = memberService.existMember(kakaoId);
 
         return ResponseEntity.ok(resultMember);
     }
@@ -32,27 +32,28 @@ public class MemberController {
     }
 
     @GetMapping("/find/{userid}")
-    public ResponseEntity<Member> findMember(@PathVariable("userid") Long userid) {
+    public ResponseEntity<MemberDto> findMember(@PathVariable("userid") Long userid) {
 
-        Member resultMember = memberService.findMember(userid);
+        MemberDto resultMember = memberService.findMember(userid);
 
         return ResponseEntity.ok(resultMember);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Member> registerMember(@RequestBody Member member) {
+    public ResponseEntity<MemberDto> registerMember(@RequestBody MemberDto member,
+                                                    @RequestParam("kakaoId")Long kakaoId) {
 
-        Member newMember = memberService.register(member);
+        MemberDto newMember = memberService.register(member,kakaoId);
 
         return ResponseEntity.ok(newMember);
     }
 
     @PostMapping("/update")
-    public ResponseEntity<Member> updateMember(@RequestBody Member member) {
+    public ResponseEntity<MemberDto> updateMember(@RequestBody MemberDto member) {
 
-        Member newMember = memberService.updateMember(member);
+        MemberDto resultMemberDto = memberService.updateMember(member);
 
-        return ResponseEntity.ok(newMember);
+        return ResponseEntity.ok(resultMemberDto);
     }
 
 

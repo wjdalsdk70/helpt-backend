@@ -6,10 +6,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
+
 @Entity
 @Getter
-@Setter
 @ToString
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -28,5 +29,21 @@ public class Member {
 
     private float weight;
 
+    @Builder
+    public Member(Long gymId, Long kakaoId, String userName, String gender, float height, float weight) {
+        this.gymId = gymId;
+        this.kakaoId = kakaoId;
+        this.userName = userName;
+        this.gender = gender;
+        this.height = height;
+        this.weight = weight;
+    }
 
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
 }

@@ -26,4 +26,11 @@ public class MembershipController {
         return ResponseEntity.ok(resultMembership);
     }
 
+    @PostMapping("/extension")
+    public ResponseEntity<Membership> extensionMembership(@RequestParam Long userId,@RequestParam int addDays)
+    {
+        Membership resultMembership = membershipService.extensionMembership(userId,addDays);
+        return ResponseEntity.ok(resultMembership);
+    }
+
 }
