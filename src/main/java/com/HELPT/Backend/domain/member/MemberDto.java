@@ -5,10 +5,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class MemberDto {
 
     private Long userId;
@@ -22,7 +24,8 @@ public class MemberDto {
     private float height;
 
     private float weight;
-    public MemberDto(Long userId,Long gymId, String userName, String gender, float height, float weight) {
+
+    public MemberDto(Long userId, Long gymId, String userName, String gender, float height, float weight) {
         this.userId = userId;
         this.gymId = gymId;
         this.userName = userName;

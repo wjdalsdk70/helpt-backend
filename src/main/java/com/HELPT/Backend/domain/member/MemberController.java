@@ -23,18 +23,18 @@ public class MemberController {
     }
 
 
-    @GetMapping("/attendance/{userid}")
-    public ResponseEntity<String> attendance(@PathVariable("userid") Long userid) {
+    @GetMapping("/attendance/{userId}")
+    public ResponseEntity<String> attendance(@PathVariable("userId") Long userId) {
 
-        boolean bResult = memberService.attendance(userid);
+        boolean bResult = memberService.attendance(userId);
 
         return ResponseEntity.ok(String.valueOf(bResult));
     }
 
-    @GetMapping("/find/{userid}")
-    public ResponseEntity<MemberDto> findMember(@PathVariable("userid") Long userid) {
+    @GetMapping("/find/{userId}")
+    public ResponseEntity<MemberDto> findMember(@PathVariable("userId") Long userId) {
 
-        MemberDto resultMember = memberService.findMember(userid);
+        MemberDto resultMember = memberService.findMember(userId);
 
         return ResponseEntity.ok(resultMember);
     }
@@ -43,17 +43,17 @@ public class MemberController {
     public ResponseEntity<MemberDto> registerMember(@RequestBody MemberDto member,
                                                     @RequestParam("kakaoId")Long kakaoId) {
 
-        MemberDto newMember = memberService.register(member,kakaoId);
+        MemberDto resultMember = memberService.register(member,kakaoId);
 
-        return ResponseEntity.ok(newMember);
+        return ResponseEntity.ok(resultMember);
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<MemberDto> updateMember(@RequestBody MemberDto member) {
+    @PostMapping("/update/{userId}")
+    public ResponseEntity<MemberDto> updateMember(@PathVariable("userId")Long userId,@RequestBody MemberDto member) {
 
-        MemberDto resultMemberDto = memberService.updateMember(member);
+        MemberDto resultMember = memberService.updateMember(userId,member);
 
-        return ResponseEntity.ok(resultMemberDto);
+        return ResponseEntity.ok(resultMember);
     }
 
 

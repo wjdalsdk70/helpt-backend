@@ -23,25 +23,25 @@ public class MemberService {
         return memberDto;
     }
 
-    public boolean attendance(Long userid)
+    public boolean attendance(Long userId)
     {
-        Membership membership =  memberRepository.attendance(userid);
+        Membership membership =  memberRepository.attendance(userId);
         if(membership==null) return false;
 
         membership.setAttendanceDate(membership.getAttendanceDate()+1);
 
         return true;
     }
-    public MemberDto findMember(Long userid)
+    public MemberDto findMember(Long userId)
     {
-        Member member = memberRepository.findById(userid).orElseThrow(() -> new RuntimeException("Member not found"));
+        Member member = memberRepository.findById(userId).orElseThrow(() -> new RuntimeException("Member not found"));
         MemberDto memberDto = MemberDto.toDto(member);
         return memberDto;
     }
 
-    public MemberDto updateMember(MemberDto member)
+    public MemberDto updateMember(Long userId,MemberDto member)
     {
-        Member findMember = memberRepository.findById(member.getUserId()).orElseThrow(() -> new RuntimeException("Member not found"));
+        Member findMember = memberRepository.findById(userId).orElseThrow(() -> new RuntimeException("Member not found"));
         findMember.setHeight(member.getHeight());
         findMember.setWeight(member.getWeight());
         MemberDto resultDto = MemberDto.toDto(findMember);
