@@ -20,7 +20,7 @@ public class MemberController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam("accessToken") String accessToken) {
         KakaoUserInfo kakaoUserInfo = kakaoAPI.getUserInfo(accessToken);
-        Long kakaoId = kakaoUserInfo.getId();
+        String kakaoId = kakaoUserInfo.getId();
 
         return ResponseEntity.ok("true");
     }
