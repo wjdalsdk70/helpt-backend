@@ -19,7 +19,7 @@ public class Member {
 
     private Long gymId;
 
-    private Long kakaoId;
+    private String kakaoId;
 
     private String userName;
 
@@ -30,7 +30,7 @@ public class Member {
     private float weight;
 
     @Builder
-    public Member(Long gymId, Long kakaoId, String userName, String gender, float height, float weight) {
+    public Member(Long gymId, String kakaoId, String userName, String gender, float height, float weight) {
         this.gymId = gymId;
         this.kakaoId = kakaoId;
         this.userName = userName;
