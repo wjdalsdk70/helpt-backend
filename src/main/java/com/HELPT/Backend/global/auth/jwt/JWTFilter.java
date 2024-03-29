@@ -1,0 +1,62 @@
+package com.HELPT.Backend.global.auth.jwt;
+
+import com.HELPT.Backend.domain.member.Member;
+import com.HELPT.Backend.global.auth.dto.CustomUserDetails;
+import com.HELPT.Backend.global.error.CustomException;
+import com.HELPT.Backend.global.error.ErrorCode;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import javax.security.sasl.AuthenticationException;
+import java.io.IOException;
+import java.util.Collections;
+
+@RequiredArgsConstructor
+@Slf4j
+public class JWTFilter extends OncePerRequestFilter {
+
+    private final JWTUtil jwtUtil;
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+        log.info("jwt");
+        String token = getJwtFromRequest(request);
+        if (jwtUtil.isExpired(token)) {
+            log.info("token expired");
+            filterChain.doFilter(request, response);
+            return;
+        }
+        //토큰에서 username과 role 획득
+        Long userId = jwtUtil.getUserId(token);
+//        String role = jwtUtil.getRole(token);
+//        log.info("userName: {}", userId);
+        //userEntity를 생성하여 값 set
+//        Member member = new Member();
+//        userEntity.setRole(role);
+        //UserDetails에 회원 정보 객체 담기
+//        CustomUserDetails customUserDetails = new CustomUserDetails(member);
+        //스프링 시큐리티 인증 토큰 생성
+        Authentication authToken = new UsernamePasswordAuthenticationToken(userId, null, Collections.emptyList());
+        //세션에 사용자 등록
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+        filterChain.doFilter(request, response);
+    }
+
+    public String getJwtFromRequest(HttpServletRequest request) throws AuthenticationException {
+        String authorization= request.getHeader("Authorization");
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        }
+        String token = authorization.split(" ")[1];
+        return token;
+    }
+}
