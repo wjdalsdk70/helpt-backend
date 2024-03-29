@@ -15,15 +15,6 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
-    private final KakaoAPI kakaoAPI;
-
-//    @PostMapping("/login")
-//    public ResponseEntity<String> login(@RequestParam("accessToken") String accessToken) {
-//        KakaoUserInfo kakaoUserInfo = kakaoAPI.getUserInfo(accessToken);
-//        Long kakaoId = kakaoUserInfo.getId();
-//
-//        return ResponseEntity.ok("true");
-//    }
 
     @GetMapping("/attendance/{userid}")
     public ResponseEntity<String> attendance(@PathVariable("userid") Long userid) {

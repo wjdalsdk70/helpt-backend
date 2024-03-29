@@ -1,13 +1,12 @@
 package com.HELPT.Backend.domain.member.Dto;
 
 import com.HELPT.Backend.domain.member.Member;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
-@Setter
-@NoArgsConstructor
+@Builder
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberDto {
 
     private Long userId;
@@ -22,18 +21,13 @@ public class MemberDto {
 
     private float weight;
 
+    private String kakaoId;
 
-    public MemberDto(Long userId, Long gymId, String userName, String gender, float height, float weight) {
-        this.userId = userId;
-        this.gymId = gymId;
-        this.userName = userName;
-        this.gender = gender;
-        this.height = height;
-        this.weight = weight;
-    }
+
     public Member toEntity()
     {
         return Member.builder()
+                .kakaoId(kakaoId)
                 .gymId(gymId)
                 .userName(userName)
                 .gender(gender)
@@ -44,6 +38,6 @@ public class MemberDto {
 
     public static MemberDto toDto(Member member)
     {
-        return new MemberDto(member.getUserId(),member.getGymId(),member.getUserName(),member.getGender(),member.getHeight(),member.getWeight());
+        return new MemberDto(member.getUserId(),member.getGymId(),member.getUserName(),member.getGender(),member.getHeight(),member.getWeight(), member.getKakaoId());
     }
 }

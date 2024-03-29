@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static com.HELPT.Backend.domain.member.QMember.member;
-import static com.HELPT.Backend.domain.membership.QMembership.membership;
+//import static com.HELPT.Backend.domain.member.QMember.member;
+//import static com.HELPT.Backend.domain.membership.QMembership.membership;
 
 @Repository
 @RequiredArgsConstructor
@@ -30,8 +30,9 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
     @Override
     public Membership attendance(Long userid)
     {
-        return queryFactory.selectFrom(membership)
-                .where(membership.userId.eq(userid))
-                .fetchOne();
+//        return queryFactory.selectFrom(membership)
+//                .where(membership.userId.eq(userid))
+//                .fetchOne();
+        return null;
     }
 }

@@ -13,7 +13,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public MemberDto existMember(Long kakaoId)
+    public MemberDto existMember(String kakaoId)
     {
         Member member = memberRepository.findByKakaoId(kakaoId).orElseThrow(() -> new RuntimeException("Member not found"));
         MemberDto memberDto = MemberDto.toDto(member);
@@ -46,7 +46,7 @@ public class MemberService {
         return resultDto;
     }
 
-    public MemberDto register(MemberDto member,Long kakaoId)
+    public MemberDto register(MemberDto member,String kakaoId)
     {
         Member newMember = Member.builder()
                 .gymId(member.getGymId())
