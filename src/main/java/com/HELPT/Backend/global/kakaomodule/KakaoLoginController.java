@@ -21,6 +21,6 @@ public class KakaoLoginController {
         log.info("accessToken is {}", accessToken);
         KakaoUserInfo kakaoUserInfo = kakaoAPI.getUserInfo(accessToken);
 
-        return String.format("%s님 안녕하세요!",kakaoUserInfo.getNickname());
+        return String.format("%s님 안녕하세요!",kakaoUserInfo.getId());
     }
 }
