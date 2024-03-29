@@ -26,7 +26,7 @@ public class Record {
 
     private int count;
 
-    private int set;
+    private int setNumber;
 
     private int weight;
 
