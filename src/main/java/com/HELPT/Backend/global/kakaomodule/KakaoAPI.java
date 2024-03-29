@@ -67,7 +67,7 @@ public class KakaoAPI {
         log.info("response is {}", response);
 
         KakaoUserInfo kakaoUserInfo = KakaoUserInfo.builder()
-                .id(rootObject.get("id").getAsLong())
+                .id(rootObject.get("id").getAsString())
                 .build();
                 /*
                 .nickname(properties.get("nickname").getAsString())
