@@ -3,6 +3,7 @@ package com.HELPT.Backend.domain.gym;
 import com.HELPT.Backend.domain.gym.dto.GymResponse;
 import com.HELPT.Backend.domain.gym.dto.GymRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +12,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/gyms")
+@Slf4j
 public class GymController {
 
     private final GymService gymService;
 
     @PostMapping
     public ResponseEntity<GymResponse> createGym(@RequestBody GymRequest gymRequest){
+        log.info("gogo");
         return ResponseEntity.ok(gymService.createGym(gymRequest));
     }
 
