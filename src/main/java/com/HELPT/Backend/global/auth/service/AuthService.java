@@ -7,10 +7,12 @@ import com.HELPT.Backend.domain.member.MemberRepository;
 import com.HELPT.Backend.global.auth.jwt.JWTResponse;
 import com.HELPT.Backend.global.auth.jwt.JWTToken;
 import com.HELPT.Backend.global.auth.jwt.JWTUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.security.sasl.AuthenticationException;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -40,5 +42,11 @@ public class AuthService {
             log.info("Login error", e);
         }
         return null;
+    }
+
+    public JWTResponse refreshAccessToken(HttpServletRequest request) {
+        String refreshToken = jwtUtil.getJwtFromRequest(request);
+        JWTToken jwt = jwtUtil.refresh(refreshToken);
+        return JWTResponse.builder().token(jwt).build();
     }
 }

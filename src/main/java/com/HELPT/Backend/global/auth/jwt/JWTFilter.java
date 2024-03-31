@@ -29,7 +29,7 @@ public class JWTFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         log.info("jwt");
-        String token = getJwtFromRequest(request);
+        String token = jwtUtil.getJwtFromRequest(request);
         if (jwtUtil.isExpired(token)) {
             log.info("token expired");
             filterChain.doFilter(request, response);
@@ -49,14 +49,5 @@ public class JWTFilter extends OncePerRequestFilter {
         //세션에 사용자 등록
         SecurityContextHolder.getContext().setAuthentication(authToken);
         filterChain.doFilter(request, response);
-    }
-
-    public String getJwtFromRequest(HttpServletRequest request) throws AuthenticationException {
-        String authorization= request.getHeader("Authorization");
-        if (authorization == null || !authorization.startsWith("Bearer ")) {
-            throw new CustomException(ErrorCode.BAD_REQUEST);
-        }
-        String token = authorization.split(" ")[1];
-        return token;
     }
 }

@@ -96,6 +96,6 @@ public class SecurityConfig {
         // 아래 url은 filter 에서 제외
         return web ->
                 web.ignoring()
-                        .requestMatchers("/api/auth/login", "/token/refresh");
+                        .requestMatchers("/api/auth/login");
     }
 }
