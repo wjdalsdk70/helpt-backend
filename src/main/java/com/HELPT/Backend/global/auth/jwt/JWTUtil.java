@@ -21,8 +21,8 @@ import java.util.Date;
 @Slf4j
 public class JWTUtil {
 
-    private static final Long accessTokenValidTime = Duration.ofMinutes(1).toMillis(); // 만료시간 30분
-    private static final Long refreshTokenValidTime = Duration.ofDays(14).toMillis(); // 만료시간 2주
+    private static final Long accessTokenValidTime = Duration.ofDays(15).toMillis(); // 만료시간 30분
+    private static final Long refreshTokenValidTime = Duration.ofDays(30).toMillis(); // 만료시간 2주
     private static final Long remainValidTime = Duration.ofDays(3).toMillis();
     private SecretKey secretKey;
 
