@@ -1,7 +1,6 @@
 package com.HELPT.Backend.global.auth.jwt;
 
 import com.HELPT.Backend.domain.member.Member;
-import com.HELPT.Backend.global.auth.dto.CustomUserDetails;
 import com.HELPT.Backend.global.error.CustomException;
 import com.HELPT.Backend.global.error.ErrorCode;
 import jakarta.servlet.FilterChain;
