@@ -1,6 +1,7 @@
 package com.HELPT.Backend.global.auth.jwt;
 
 import com.HELPT.Backend.domain.member.Member;
+import com.HELPT.Backend.global.auth.dto.CustomUserDetails;
 import com.HELPT.Backend.global.error.CustomException;
 import com.HELPT.Backend.global.error.ErrorCode;
 import jakarta.servlet.FilterChain;
@@ -36,15 +37,10 @@ public class JWTFilter extends OncePerRequestFilter {
         }
         //토큰에서 username과 role 획득
         Long userId = jwtUtil.getUserId(token);
-//        String role = jwtUtil.getRole(token);
-//        log.info("userName: {}", userId);
-        //userEntity를 생성하여 값 set
-//        Member member = new Member();
-//        userEntity.setRole(role);
         //UserDetails에 회원 정보 객체 담기
-//        CustomUserDetails customUserDetails = new CustomUserDetails(member);
+        CustomUserDetails userDetails = new CustomUserDetails(userId);
         //스프링 시큐리티 인증 토큰 생성
-        Authentication authToken = new UsernamePasswordAuthenticationToken(userId, null, Collections.emptyList());
+        Authentication authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         //세션에 사용자 등록
         SecurityContextHolder.getContext().setAuthentication(authToken);
         filterChain.doFilter(request, response);
