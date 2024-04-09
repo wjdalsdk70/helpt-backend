@@ -1,15 +1,14 @@
 package com.HELPT.Backend.domain.manager;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import com.HELPT.Backend.global.auth.Role;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Builder
 @Getter
-@Setter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Manager {
 
     @Id
@@ -18,6 +17,11 @@ public class Manager {
 
     private Long gymId;
 
-    private String token;
+    private String kakaoId;
+//    private String name;
+//    private String phone;
+
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.MANAGER;
 
 }
