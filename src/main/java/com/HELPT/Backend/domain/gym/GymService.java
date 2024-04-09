@@ -2,6 +2,7 @@ package com.HELPT.Backend.domain.gym;
 
 import com.HELPT.Backend.domain.gym.dto.GymResponse;
 import com.HELPT.Backend.domain.gym.dto.GymRequest;
+import com.HELPT.Backend.domain.gym.entity.Gym;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,21 +17,21 @@ public class GymService {
     private final GymRepository gymRepository;
 
     @Transactional
-    public GymResponse createGym(GymRequest gymRequest) {
+    public GymResponse addGym(GymRequest gymRequest) {
         Gym gym = gymRequest.toEntity();
         gymRepository.save(gym);
         return GymResponse.builder().gym(gym).build();
     }
 
     @Transactional(readOnly = true)
-    public GymResponse getGymById(Long id) {
+    public GymResponse findGym(Long id) {
         Gym gym = gymRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Gym not found"));
         return GymResponse.builder().gym(gym).build();
     }
 
     @Transactional(readOnly = true)
-    public List<GymResponse> getAllGyms() {
+    public List<GymResponse> findGyms() {
         List<Gym> gyms = gymRepository.findAll();
         return gyms.stream()
                 .map(gym -> new GymResponse(gym)) // GymResponse의 생성자 또는 빌더를 사용
@@ -38,7 +39,7 @@ public class GymService {
     }
 
     @Transactional
-    public GymResponse updateGym(Long id, GymRequest gymRequest) {
+    public GymResponse modifyGym(Long id, GymRequest gymRequest) {
         Gym gym = gymRepository.findById(id).orElseThrow(() -> new RuntimeException("Gym not found"));
         gym.updateAddress(gymRequest.getAddress());
         gym.updateGymName(gymRequest.getGymName());
@@ -47,7 +48,7 @@ public class GymService {
     }
 
     @Transactional
-    public void deleteGym(Long id) {
+    public void removeGym(Long id) {
         Gym gym = gymRepository.findById(id).orElseThrow(() -> new RuntimeException("Gym not found"));
         gymRepository.delete(gym);
     }

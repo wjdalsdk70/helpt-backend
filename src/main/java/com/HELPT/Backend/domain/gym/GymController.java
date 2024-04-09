@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/gyms")
@@ -18,29 +20,28 @@ public class GymController {
     private final GymService gymService;
 
     @PostMapping
-    public ResponseEntity<GymResponse> createGym(@RequestBody GymRequest gymRequest){
-        log.info("gogo");
-        return ResponseEntity.ok(gymService.createGym(gymRequest));
+    public ResponseEntity<GymResponse> gymAdd(@RequestBody GymRequest gymRequest){
+        return ResponseEntity.ok(gymService.addGym(gymRequest));
     }
 
     @GetMapping("/{gym_id}")
-    public ResponseEntity<GymResponse> getGym(@PathVariable Long id) {
-        return ResponseEntity.ok(gymService.getGymById(id));
+    public ResponseEntity<GymResponse> gymDetails(@PathVariable Long id) {
+        return ResponseEntity.ok(gymService.findGym(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<GymResponse>> getAllGyms() {
-        return ResponseEntity.ok(gymService.getAllGyms());
+    public ResponseEntity<List<GymResponse>> gymList() {
+        return ResponseEntity.ok(gymService.findGyms());
     }
 
     @PutMapping("/{gym_id}")
-    public ResponseEntity<GymResponse> updateGym(@PathVariable Long id, @RequestBody GymRequest gymRequest) {
-        return ResponseEntity.ok(gymService.updateGym(id, gymRequest));
+    public ResponseEntity<GymResponse> gymModify(@PathVariable Long id, @RequestBody GymRequest gymRequest) {
+        return ResponseEntity.ok(gymService.modifyGym(id, gymRequest));
     }
 
     @DeleteMapping("/{gym_id}")
-    public ResponseEntity<Void> deleteGym(@PathVariable Long id) {
-        gymService.deleteGym(id);
+    public ResponseEntity<Void> gymRemove(@PathVariable Long id) {
+        gymService.removeGym(id);
         return ResponseEntity.ok().build();
     }
 
