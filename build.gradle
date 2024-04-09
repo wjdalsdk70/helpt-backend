@@ -2,7 +2,6 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.3'
 	id 'io.spring.dependency-management' version '1.1.4'
-	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'com.HELPT'
@@ -45,7 +44,7 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
+/*
 def querydslDir = "$buildDir/generated/querydsl"
 
 querydsl {
@@ -58,9 +57,11 @@ sourceSets {
 compileQuerydsl{
 	options.annotationProcessorPath = configurations.querydsl
 }
+*/
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
 	querydsl.extendsFrom compileClasspath
 }
+
