@@ -1,6 +1,6 @@
 package com.HELPT.Backend.domain.gym.dto;
 
-import com.HELPT.Backend.domain.gym.Gym;
+import com.HELPT.Backend.domain.gym.entity.Gym;
 import lombok.*;
 
 @Getter

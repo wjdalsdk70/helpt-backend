@@ -1,4 +1,4 @@
-package com.HELPT.Backend.domain.gym;
+package com.HELPT.Backend.domain.gym.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +20,7 @@ public class Gym {
     private String address;
 
     private String gymName;
+    private String chat_link;
 
     public void updateAddress(String address) {
         this.address = address;
