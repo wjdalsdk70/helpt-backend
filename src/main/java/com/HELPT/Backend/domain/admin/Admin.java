@@ -1,15 +1,14 @@
 package com.HELPT.Backend.domain.admin;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import com.HELPT.Backend.global.auth.Role;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Builder
 @Getter
-@Setter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Admin {
 
     @Id
@@ -18,4 +17,7 @@ public class Admin {
 
     private String loginId;
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.ADMIN;
 }
