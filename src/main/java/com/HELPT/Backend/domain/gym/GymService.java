@@ -3,6 +3,8 @@ package com.HELPT.Backend.domain.gym;
 import com.HELPT.Backend.domain.gym.dto.GymResponse;
 import com.HELPT.Backend.domain.gym.dto.GymRequest;
 import com.HELPT.Backend.domain.gym.entity.Gym;
+import com.HELPT.Backend.domain.gym.entity.Status;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ public class GymService {
     @Transactional
     public GymResponse addGym(GymRequest gymRequest) {
         Gym gym = gymRequest.toEntity();
+        gym.builder().status(Status.Pending);
         gymRepository.save(gym);
         return GymResponse.builder().gym(gym).build();
     }
@@ -53,4 +56,14 @@ public class GymService {
         gymRepository.delete(gym);
     }
 
+    public List<Gym> findGymsByStatus(Status status) {
+        return gymRepository.findByStatus(status);
+    }
+
+    public void updateGymStatus(Long gymId, Status status) {
+        Gym gym = gymRepository.findById(gymId)
+                .orElseThrow(() -> new EntityNotFoundException("Gym not found with id " + gymId));
+        gym.updateStatus(status);
+        gymRepository.save(gym);
+    }
 }
