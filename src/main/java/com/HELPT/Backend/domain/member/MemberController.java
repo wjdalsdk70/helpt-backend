@@ -1,6 +1,7 @@
 package com.HELPT.Backend.domain.member;
 
 import com.HELPT.Backend.domain.member.Dto.MemberDto;
+import com.HELPT.Backend.global.auth.jwt.JWTResponse;
 import com.HELPT.Backend.global.kakaomodule.KakaoAPI;
 import com.HELPT.Backend.global.kakaomodule.KakaoUserInfo;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,12 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
+
+    @PostMapping("/login")
+    public ResponseEntity<JWTResponse> login(@RequestBody MemberDto memberDto) {
+        log.info("login");
+        return ResponseEntity.ok(memberService.login(memberDto));
+    }
 
     @GetMapping("/attendance/{userid}")
     public ResponseEntity<String> attendance(@PathVariable("userid") Long userid) {
