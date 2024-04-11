@@ -19,5 +19,6 @@ public class Admin {
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private Role role = Role.ADMIN;
 }
