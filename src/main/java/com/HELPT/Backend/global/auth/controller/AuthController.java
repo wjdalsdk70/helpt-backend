@@ -1,15 +1,11 @@
 package com.HELPT.Backend.global.auth.controller;
-
-import com.HELPT.Backend.domain.member.Dto.MemberDto;
 import com.HELPT.Backend.global.auth.jwt.JWTResponse;
-import com.HELPT.Backend.global.auth.jwt.JWTToken;
 import com.HELPT.Backend.global.auth.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,12 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
-
-    @PostMapping("/login")
-    public ResponseEntity<JWTResponse> login(@RequestBody MemberDto memberDto) {
-        log.info("login");
-        return ResponseEntity.ok(authService.login(memberDto));
-    }
 
     @PostMapping("/token/refresh")
     public ResponseEntity<JWTResponse> refreshAccessToken(HttpServletRequest request) {
