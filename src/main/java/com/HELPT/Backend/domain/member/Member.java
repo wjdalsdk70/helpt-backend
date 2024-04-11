@@ -1,16 +1,16 @@
 package com.HELPT.Backend.domain.member;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.HELPT.Backend.global.auth.Role;
+import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.userdetails.User;
 
 
-@Entity
 @Getter
-@ToString
-@NoArgsConstructor
+@Builder
+@Entity
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     @Id
@@ -29,15 +29,10 @@ public class Member {
 
     private float weight;
 
-    @Builder
-    public Member(Long gymId, String kakaoId, String userName, String gender, float height, float weight) {
-        this.gymId = gymId;
-        this.kakaoId = kakaoId;
-        this.userName = userName;
-        this.gender = gender;
-        this.height = height;
-        this.weight = weight;
-    }
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Role role = Role.MEMBER;
+
 
     public void setHeight(float height) {
         this.height = height;
