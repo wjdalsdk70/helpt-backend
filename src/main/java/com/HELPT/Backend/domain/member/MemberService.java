@@ -2,22 +2,44 @@ package com.HELPT.Backend.domain.member;
 
 import com.HELPT.Backend.domain.member.Dto.MemberDto;
 import com.HELPT.Backend.domain.membership.Membership;
+import com.HELPT.Backend.global.auth.jwt.JWTResponse;
+import com.HELPT.Backend.global.auth.jwt.JWTToken;
+import com.HELPT.Backend.global.auth.jwt.JWTUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final JWTUtil jwtUtil;
 
-    public MemberDto existMember(String kakaoId)
-    {
-        Member member = memberRepository.findByKakaoId(kakaoId).orElseThrow(() -> new RuntimeException("Member not found"));
-        MemberDto memberDto = MemberDto.toDto(member);
-        return memberDto;
+    public JWTResponse login(MemberDto memberDto) {
+        try {
+            String kakaoId = memberDto.getKakaoId();
+            Optional<Member> existingMemberOptional = memberRepository.findByKakaoId(kakaoId);
+
+            Member member;
+            if (existingMemberOptional.isPresent()) {
+                member = existingMemberOptional.get();
+            } else {
+                memberRepository.save(memberDto.toEntity());
+                member = memberRepository.findByKakaoId(kakaoId).orElseThrow(() -> new RuntimeException("Member could not be retrieved after save."));
+            }
+
+            JWTToken jwt = jwtUtil.createTokens(member.getUserId());
+            return JWTResponse.builder().token(jwt).build();
+        } catch (Exception e) {
+            log.info("Login error", e);
+        }
+        return null;
     }
 
     public boolean attendance(Long userId)
