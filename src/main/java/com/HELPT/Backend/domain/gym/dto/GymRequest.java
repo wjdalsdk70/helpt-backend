@@ -12,13 +12,11 @@ public class GymRequest {
 
     private String address;
     private String gymName;
-    private Status status;
 
     public Gym toEntity(){
         return Gym.builder()
                 .address(address)
                 .gymName(gymName)
-                .status(status)
                 .build();
     }
 }
