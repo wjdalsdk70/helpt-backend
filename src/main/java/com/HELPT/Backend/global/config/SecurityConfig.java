@@ -104,6 +104,6 @@ public class SecurityConfig {
         // 아래 url은 filter 에서 제외
         return web ->
                 web.ignoring()
-                        .requestMatchers("/members/login","manager/login","/admin/**","/css/**", "/js/**", "/images/**");
+                        .requestMatchers("/v3/**","/swagger-ui/**","/members/login","manager/login","/admin/**","/css/**", "/js/**", "/images/**");
     }
 }
