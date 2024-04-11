@@ -21,6 +21,7 @@ public class Gym {
 
     private String gymName;
     private String chat_link;
+    private Status status;
 
     public void updateAddress(String address) {
         this.address = address;
@@ -28,5 +29,8 @@ public class Gym {
 
     public void updateGymName(String gymName) {
         this.gymName = gymName;
+    }
+
+    public void updateStatus(Status status) {this.status = status;
     }
 }
