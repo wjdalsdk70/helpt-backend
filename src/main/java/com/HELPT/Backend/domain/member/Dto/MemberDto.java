@@ -9,8 +9,6 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberDto {
 
-    private Long userId;
-
     private Long gymId;
 
     private String userName;
@@ -36,8 +34,14 @@ public class MemberDto {
                 .build();
     }
 
-    public static MemberDto toDto(Member member)
-    {
-        return new MemberDto(member.getUserId(),member.getGymId(),member.getUserName(),member.getGender(),member.getHeight(),member.getWeight(), member.getKakaoId());
+    public static MemberDto toDto(Member member) {
+        return MemberDto.builder()
+                .gymId(member.getGymId())
+                .userName(member.getUserName())
+                .gender(member.getGender())
+                .height(member.getHeight())
+                .weight(member.getWeight())
+                .kakaoId(member.getKakaoId())
+                .build();
     }
 }
