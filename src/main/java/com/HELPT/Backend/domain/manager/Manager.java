@@ -22,6 +22,7 @@ public class Manager {
 //    private String phone;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    @Builder.Default
+    private Role role = Role.MANAGER;
 
 }
