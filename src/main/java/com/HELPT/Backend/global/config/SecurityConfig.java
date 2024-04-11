@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -31,6 +33,11 @@ public class SecurityConfig {
 
         this.authenticationConfiguration = authenticationConfiguration;
         this.jwtUtil = jwtUtil;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -73,8 +80,9 @@ public class SecurityConfig {
                 .httpBasic((auth) -> auth.disable());
         http
                 .authorizeHttpRequests((auth)->auth
-                        .requestMatchers("/api/auth/login","/api/auth/*","/join").permitAll()
-                        .requestMatchers("/admin").hasRole("ADMIN")
+                        .requestMatchers("/auth/**","/admin/**").permitAll()
+//                        .requestMatchers("/admin").permitAll() //.hasRole("ADMIN")
+                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated());
         //JWTFilter 등록
         http
@@ -96,6 +104,6 @@ public class SecurityConfig {
         // 아래 url은 filter 에서 제외
         return web ->
                 web.ignoring()
-                        .requestMatchers("/api/auth/login","manager/login");
+                        .requestMatchers("/members/login","manager/login","/admin/**","/css/**", "/js/**", "/images/**");
     }
 }
