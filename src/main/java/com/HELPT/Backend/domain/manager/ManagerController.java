@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/managers")
@@ -28,24 +30,25 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.login(managerRequest));
     }
 
-    @GetMapping("/{gym_id}")
-    public ResponseEntity<ManagerResponse> managerDetails(@PathVariable Long id) {
-        return ResponseEntity.ok(managerService.findManager(id));
-    }
+//    @GetMapping("/{gym_id}")
+//    public ResponseEntity<ManagerResponse> managerDetails(@PathVariable Long id) {
+//        return ResponseEntity.ok(managerService.findManager(id));
+//    }
 
     @GetMapping
     public ResponseEntity<List<ManagerResponse>> managerList() {
         return ResponseEntity.ok(managerService.findManagers());
     }
 
-    @PutMapping("/{gym_id}")
-    public ResponseEntity<ManagerResponse> managerModify(@PathVariable Long id, @RequestBody ManagerRequest managerRequest) {
-        return ResponseEntity.ok(managerService.modifyManager(id, managerRequest));
-    }
+//    @PutMapping("/{gym_id}")
+//    public ResponseEntity<ManagerResponse> managerModify(@PathVariable Long id, @RequestBody ManagerRequest managerRequest) {
+//        return ResponseEntity.ok(managerService.modifyManager(id, managerRequest));
+//    }
 
-    @DeleteMapping("/{gym_id}")
-    public ResponseEntity<Void> managerRemove(@PathVariable Long id) {
-        managerService.removeManager(id);
+    @DeleteMapping
+    public ResponseEntity<Void> memberRemove() {
+        Long userId = getCurrentUserId();
+        managerService.removeManager(userId);
         return ResponseEntity.ok().build();
     }
 }
