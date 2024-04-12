@@ -1,9 +1,13 @@
 package com.HELPT.Backend.domain.gym;
 
+import com.HELPT.Backend.domain.gym.dto.GymResistrationRequest;
 import com.HELPT.Backend.domain.gym.dto.GymResponse;
 import com.HELPT.Backend.domain.gym.dto.GymRequest;
 import com.HELPT.Backend.domain.gym.entity.Gym;
+import com.HELPT.Backend.domain.gym.entity.GymRegistration;
 import com.HELPT.Backend.domain.gym.entity.Status;
+import com.HELPT.Backend.domain.gym.repository.GymRegistrationRepository;
+import com.HELPT.Backend.domain.gym.repository.GymRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,11 +21,13 @@ import java.util.stream.Collectors;
 public class GymService {
 
     private final GymRepository gymRepository;
+    private final GymRegistrationRepository gymRegistrationRepository;
 
     @Transactional
-    public GymResponse addGym(GymRequest gymRequest) {
-        Gym gym = gymRequest.toEntity();
-        gym.builder().status(Status.Pending);
+    public GymResponse addGym(GymResistrationRequest gymResistrationRequest) {
+        Gym gym = gymResistrationRequest.toGymEntity();
+        GymRegistration gymRegistrationEntity = gymResistrationRequest.toGymRegistrationEntity();
+        gym.builder().gymRegistration(gymRegistrationEntity);
         gymRepository.save(gym);
         return GymResponse.builder().gym(gym).build();
     }

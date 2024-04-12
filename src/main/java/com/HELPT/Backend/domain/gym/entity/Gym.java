@@ -1,9 +1,6 @@
 package com.HELPT.Backend.domain.gym.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -18,10 +15,15 @@ public class Gym {
     private Long gymId;
 
     private String address;
-
     private String gymName;
     private String chat_link;
-    private Status status;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "gym_registration_id")
+    private GymRegistration gymRegistration;
+
+    @Builder.Default
+    private Status status = Status.Pending;
 
     public void updateAddress(String address) {
         this.address = address;

@@ -13,6 +13,7 @@ public class GymRequest {
     private String address;
     private String gymName;
 
+
     public Gym toEntity(){
         return Gym.builder()
                 .address(address)

@@ -1,19 +1,18 @@
 package com.HELPT.Backend.domain.gym.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 @Entity
+@Builder
 @Getter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GymRegistration {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @OneToOne
-    @JoinColumn(name = "gym_id", referencedColumnName = "gymId")
-    private Gym gym;
+    private Long GymRegistrationId;
 
     private String contactNumber; // 연락처
     private String businessNumber; // 사업자 등록번호

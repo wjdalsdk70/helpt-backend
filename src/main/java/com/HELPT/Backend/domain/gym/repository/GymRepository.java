@@ -1,4 +1,4 @@
-package com.HELPT.Backend.domain.gym;
+package com.HELPT.Backend.domain.gym.repository;
 
 import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.domain.gym.entity.Status;

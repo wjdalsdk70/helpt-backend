@@ -2,12 +2,11 @@ package com.HELPT.Backend.global.config;
 
 import com.HELPT.Backend.domain.admin.Admin;
 import com.HELPT.Backend.domain.admin.AdminRepository;
-import com.HELPT.Backend.domain.gym.GymRepository;
+import com.HELPT.Backend.domain.gym.repository.GymRepository;
 import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.domain.gym.entity.Status;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
