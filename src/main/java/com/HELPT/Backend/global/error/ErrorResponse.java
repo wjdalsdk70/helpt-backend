@@ -9,7 +9,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ErrorResponse {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private String errMsg;
+    private int status;
+    private String message;
 
     public String convertToJson() throws JsonProcessingException {
         return objectMapper.writeValueAsString(this);
