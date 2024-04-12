@@ -1,6 +1,7 @@
 package com.HELPT.Backend.domain.member;
 
 import com.HELPT.Backend.domain.member.Dto.MemberDto;
+import com.HELPT.Backend.global.auth.SecurityUtil;
 import com.HELPT.Backend.global.auth.jwt.JWTResponse;
 import com.HELPT.Backend.global.kakaomodule.KakaoAPI;
 import com.HELPT.Backend.global.kakaomodule.KakaoUserInfo;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
 
 @RestController
 @Slf4j
@@ -51,6 +54,13 @@ public class MemberController {
         MemberDto resultMemberDto = memberService.updateMember(userid,member);
 
         return ResponseEntity.ok(resultMemberDto);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> memberRemove() {
+        Long userId = getCurrentUserId();
+        memberService.removeMember(userId);
+        return ResponseEntity.ok().build();
     }
 
 

@@ -85,6 +85,12 @@ public class MemberService {
 
     }
 
+    @Transactional
+    public void removeMember(Long id) {
+        Member member = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("Gym not found"));
+        memberRepository.delete(member);
+    }
+
 
 
 }
