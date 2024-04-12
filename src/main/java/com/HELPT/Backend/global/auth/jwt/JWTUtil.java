@@ -21,7 +21,7 @@ import java.util.Date;
 @Slf4j
 public class JWTUtil {
 
-    private static final Long accessTokenValidTime = Duration.ofDays(15).toMillis(); // 만료시간 30분
+    private static final Long accessTokenValidTime = Duration.ofDays(15).toMillis(); // 만료시간 15일
     private static final Long refreshTokenValidTime = Duration.ofDays(30).toMillis(); // 만료시간 2주
     private static final Long remainValidTime = Duration.ofDays(3).toMillis();
     private SecretKey secretKey;
@@ -53,6 +53,20 @@ public class JWTUtil {
         }catch (ExpiredJwtException e){
             throw new CustomException(ErrorCode.EXPIRED_ACCESS_TOKEN);
         }catch (JwtException e){
+            throw new CustomException(ErrorCode.UNAUTHORIZED);
+        }
+    }
+
+    // Test용 JWT 토큰 만료 여부 확인
+    public boolean isTokenExpired(String token) {
+        try {
+            Date expiration = Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration();
+            long diffInMillis = Math.abs(new Date().getTime() + Duration.ofDays(15).toMillis() - expiration.getTime());
+            long diffInMinutes = diffInMillis / (60 * 1000);
+            return diffInMinutes > 30;
+        } catch (ExpiredJwtException e) {
+            throw new CustomException(ErrorCode.EXPIRED_ACCESS_TOKEN);
+        } catch (JwtException e) {
             throw new CustomException(ErrorCode.UNAUTHORIZED);
         }
     }
