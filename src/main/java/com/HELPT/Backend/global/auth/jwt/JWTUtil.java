@@ -47,12 +47,11 @@ public class JWTUtil {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", String.class);
     }
 
-    public Boolean isExpired(String token) {
+    public void isExpired(String token) {
         try{
-            log.info("isExpired");
-            return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
+            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
         }catch (ExpiredJwtException e){
-            return false;
+            throw new CustomException(ErrorCode.EXPIRED_ACCESS_TOKEN);
         }catch (JwtException e){
             throw new CustomException(ErrorCode.UNAUTHORIZED);
         }

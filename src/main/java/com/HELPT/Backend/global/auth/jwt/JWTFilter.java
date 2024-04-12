@@ -30,11 +30,7 @@ public class JWTFilter extends OncePerRequestFilter {
 
         log.info("jwt");
         String token = jwtUtil.getJwtFromRequest(request);
-        if (jwtUtil.isExpired(token)) {
-            log.info("token expired");
-            filterChain.doFilter(request, response);
-            return;
-        }
+        jwtUtil.isExpired(token);
         //토큰에서 username과 role 획득
         Long userId = jwtUtil.getUserId(token);
         //UserDetails에 회원 정보 객체 담기
