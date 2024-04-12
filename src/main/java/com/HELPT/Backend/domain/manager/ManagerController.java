@@ -17,7 +17,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/manager")
+@RequestMapping("/managers")
 @Slf4j
 public class ManagerController {
 
