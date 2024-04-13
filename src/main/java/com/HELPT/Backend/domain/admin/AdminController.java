@@ -2,7 +2,9 @@ package com.HELPT.Backend.domain.admin;
 
 import com.HELPT.Backend.domain.admin.dto.AdminRequest;
 import com.HELPT.Backend.domain.gym.GymService;
+import com.HELPT.Backend.domain.gym.dto.GymRegistrationDto;
 import com.HELPT.Backend.domain.gym.entity.Gym;
+import com.HELPT.Backend.domain.gym.entity.GymRegistration;
 import com.HELPT.Backend.domain.gym.entity.Status;
 import com.HELPT.Backend.domain.manager.dto.ManagerRequest;
 import com.HELPT.Backend.global.auth.jwt.JWTResponse;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -38,17 +41,32 @@ public class AdminController {
             cookie.setHttpOnly(true); // JavaScript를 통한 접근 방지
             cookie.setPath("/"); // 사이트 전역에서 쿠키 접근 가능
             response.addCookie(cookie);
-            return "redirect:/admin/gyms/pending";
+            return "redirect:/admin/index";
         } else {
             return "login";
         }
     }
 
+    @GetMapping
+    public RedirectView viewAdmin(Model model) {
+        return new RedirectView("/admin/gyms/pending");
+    }
+
     @GetMapping("/gyms/pending")
-    public String listPendingGyms(Model model) {
+    public String viewCategory(Model model) {
+        // View attribute
         List<Gym> pendingGyms = gymService.findGymsByStatus(Status.Pending);
         model.addAttribute("pendingGyms", pendingGyms);
-        return "gyms/pending";
+        model.addAttribute("template", "gyms/pending");
+        return "admin/index";
+    }
+
+    @GetMapping("/gyms/gymregistrations")
+    public String showGymDetails(@RequestParam Long gymId, Model model) {
+        // 서버에서 헬스장의 상세 정보를 조회
+        GymRegistrationDto gymDetails = gymService.findGymRegistration(gymId);
+        model.addAttribute("gymDetails", gymDetails);
+        return "redirect:/admin/gyms/pending";
     }
 
     @PostMapping("/gyms/updateStatus")

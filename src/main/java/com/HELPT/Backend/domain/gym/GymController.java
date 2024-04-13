@@ -4,6 +4,7 @@ import com.HELPT.Backend.domain.gym.dto.GymRegistrationDto;
 import com.HELPT.Backend.domain.gym.dto.GymResistrationRequest;
 import com.HELPT.Backend.domain.gym.dto.GymResponse;
 import com.HELPT.Backend.domain.gym.dto.GymRequest;
+import com.HELPT.Backend.domain.gym.entity.GymRegistration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,11 @@ public class GymController {
     @GetMapping("/{gym_id}")
     public ResponseEntity<GymResponse> gymDetails(@PathVariable Long gym_id) {
         return ResponseEntity.ok(gymService.findGym(gym_id));
+    }
+
+    @GetMapping("/{gym_id}/gymregistrations")
+    public ResponseEntity<GymRegistrationDto> gymRegistrationDetails(@PathVariable Long gym_id) {
+        return ResponseEntity.ok(gymService.findGymRegistration(gym_id));
     }
 
     @GetMapping
