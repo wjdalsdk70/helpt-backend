@@ -1,5 +1,6 @@
 package com.HELPT.Backend.domain.gym;
 
+import com.HELPT.Backend.domain.gym.dto.GymRegistrationDto;
 import com.HELPT.Backend.domain.gym.dto.GymResistrationRequest;
 import com.HELPT.Backend.domain.gym.dto.GymResponse;
 import com.HELPT.Backend.domain.gym.dto.GymRequest;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +40,12 @@ public class GymService {
                 .orElseThrow(() -> new RuntimeException("Gym not found"));
         return GymResponse.builder().gym(gym).build();
     }
+    @Transactional(readOnly = true)
+    public GymRegistrationDto findGymRegistration(Long id) {
+        Gym gym = gymRepository.findById(id).orElseThrow(() -> new RuntimeException("Gym not found"));
+        return GymRegistrationDto.toDto(gym.getGymRegistration());
+    }
+
 
     @Transactional(readOnly = true)
     public List<GymResponse> findGyms() {
