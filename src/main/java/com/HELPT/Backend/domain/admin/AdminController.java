@@ -41,7 +41,7 @@ public class AdminController {
             cookie.setHttpOnly(true); // JavaScript를 통한 접근 방지
             cookie.setPath("/"); // 사이트 전역에서 쿠키 접근 가능
             response.addCookie(cookie);
-            return "redirect:/admin/index";
+            return "redirect:/admin/gyms/pending";
         } else {
             return "login";
         }
