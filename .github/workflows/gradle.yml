@@ -37,7 +37,7 @@ jobs:
 
       # docker hub 퍼블리시
       - name: Publish to docker hub
-        run: docker push dlsqja3436/backendbuild
+        run: docker push dlsqja3436/backendbuild .
         
 
       # WAS 인스턴스 접속 & 애플리케이션 실행
