@@ -36,8 +36,8 @@ jobs:
 
       # docker image tag
       - name: docker image tag change
-        run: docker tag backendbuild dlsqja3436/backendbuild
-
+        run: docker tag backendbuild dlsqja3436/backendbuild:latest
+        
       # docker hub 퍼블리시
       - name: Publish to docker hub
         run: docker push dlsqja3436/backendbuild
