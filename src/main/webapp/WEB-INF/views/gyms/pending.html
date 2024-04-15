@@ -13,10 +13,10 @@
             <td th:text="${gym.gymName}">헬스장 이름</td>
             <td th:text="${gym.address}">주소</td>
             <td>
-<!--                <form th:action="@{/admin/gyms/gymregistrations}" method="get" style="display: inline;">-->
-<!--                    <input type="hidden" name="gymId" th:value="${gym.gymId}" />-->
-<!--                    <button type="submit" class="gyms-details">상세 보기</button>-->
-<!--                </form>-->
+                <form th:action="@{/admin/gyms/gymregistrations}" method="get" style="display: inline;">
+                    <input type="hidden" name="gymId" th:value="${gym.gymId}" />
+                    <button type="submit" class="gyms-details">상세 보기</button>
+                </form>
 
                 <!-- 승인 버튼 -->
                 <form th:action="@{/admin/gyms/updateStatus}" method="post" style="display: inline;">
@@ -32,29 +32,6 @@
                 </form>
             </td>
         </tr>
-        <div th:replace="~{gyms/gymDetailsModal :: gymDetailsModal}"></div>
         </tbody>
     </table>
 </div>
-
-
-<script>
-    $(document).ready(function() {
-        $('#gymDetailsButton').click(function() {
-            var gymId = $(this).data('gym-id'); // 버튼에서 data-gym-id 속성 값을 가져옴
-
-            $.ajax({
-                url: '/admin/gyms/' + gymId + '/gymregistrations', // API 경로
-                type: 'GET', // HTTP 요청 방식
-                success: function(response) {
-                    // 성공 시 실행할 코드, 예: 응답 데이터를 모달에 표시
-                    console.log(response); // 콘솔에 응답 로그 출력
-                },
-                error: function(xhr, status, error) {
-                    // 오류 시 실행할 코드
-                    console.error(error); // 콘솔에 오류 로그 출력
-                }
-            });
-        });
-    });
-</script>
