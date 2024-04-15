@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EquipmentService {
 
-    private EquipmentRepository equipmentRepository;
+    private final EquipmentRepository equipmentRepository;
 
     @Transactional
     public EquipmentDto addEquipment(EquipmentDto equipmentDto) {
