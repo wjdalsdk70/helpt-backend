@@ -25,7 +25,7 @@ jobs:
 
       # docker image 빌드
       - name: Build docker image
-        run: docker build -t dlsqja3436/backendbuild .
+        run: docker build -t backendbuild .
 
       # docker hub 로그인
       - name: Login docker hub
@@ -36,11 +36,11 @@ jobs:
 
       # docker image tag
       - name: docker image tag change
-        run: docker tag backendbuild dlsqja3436/backendbuild:latest
+        run: docker tag backendbuild:latest songinbeom/backendbuild
         
       # docker hub 퍼블리시
       - name: Publish to docker hub
-        run: docker push dlsqja3436/backendbuild
+        run: docker push songinbeom/backendbuild:latest
         
 
       # WAS 인스턴스 접속 & 애플리케이션 실행
