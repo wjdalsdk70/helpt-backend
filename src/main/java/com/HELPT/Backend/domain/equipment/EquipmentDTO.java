@@ -1,4 +1,37 @@
 package com.HELPT.Backend.domain.equipment;
 
-public class EquipmentDTO {
+import lombok.*;
+
+@Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class EquipmentDto {
+
+    private String equipmentName;
+
+    private int defaultCount;
+
+    private int defaultSet;
+
+    private int defaultWeight;
+
+    public Equipment toEntity(){
+        return Equipment.builder()
+                .equipmentName(equipmentName)
+                .defaultCount(defaultCount)
+                .defaultSet(defaultSet)
+                .defaultWeight(defaultWeight)
+                .build();
+    }
+
+    public static EquipmentDto toDto(Equipment equipment){
+        return EquipmentDto.builder()
+                .equipmentName(equipment.getEquipmentName())
+                .defaultCount(equipment.getDefaultCount())
+                .defaultSet(equipment.getDefaultSet())
+                .defaultWeight(equipment.getDefaultWeight())
+                .build();
+    }
+
 }
