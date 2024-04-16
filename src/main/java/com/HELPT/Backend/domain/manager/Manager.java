@@ -19,7 +19,7 @@ public class Manager {
 
     private String kakaoId;
 //    private String name;
-//    private String phone;
+//    private String phone; 
 
     @Enumerated(EnumType.STRING)
     @Builder.Default

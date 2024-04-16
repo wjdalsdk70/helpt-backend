@@ -2,6 +2,8 @@ package com.HELPT.Backend.global.config;
 
 import com.HELPT.Backend.domain.admin.Admin;
 import com.HELPT.Backend.domain.admin.AdminRepository;
+import com.HELPT.Backend.domain.equipment.Equipment;
+import com.HELPT.Backend.domain.equipment.EquipmentRepository;
 import com.HELPT.Backend.domain.gym.entity.GymRegistration;
 import com.HELPT.Backend.domain.gym.repository.GymRepository;
 import com.HELPT.Backend.domain.gym.entity.Gym;
@@ -20,6 +22,7 @@ public class DataInitializer{
     private final AdminRepository adminRepository;
     private final GymRepository gymRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EquipmentRepository equipmentRepository;
 
     @PostConstruct
     public void initData() {
@@ -43,6 +46,12 @@ public class DataInitializer{
                 .build();
         gymRepository.save(gym);
 
-
+        Equipment equipment = Equipment.builder()
+                .equipmentName("스쿼트")
+                .defaultCount(10)
+                .defaultSet(5)
+                .defaultWeight(20)
+                .build();
+        equipmentRepository.save(equipment);
     }
 }

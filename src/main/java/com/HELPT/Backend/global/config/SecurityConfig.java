@@ -82,7 +82,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth)->auth
                         .requestMatchers("/auth/**","/admin/**").permitAll()
 //                        .requestMatchers("/admin").permitAll() //.hasRole("ADMIN")
-                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated());
         //JWTFilter 등록
         http
@@ -104,6 +103,6 @@ public class SecurityConfig {
         // 아래 url은 filter 에서 제외
         return web ->
                 web.ignoring()
-                        .requestMatchers("/v3/**","/swagger-ui/**","/members/login","manager/login","/admin/**","/css/**", "/js/**", "/images/**");
+                        .requestMatchers("/favicon.ico","/v3/**","/swagger-ui/**","/members/login","manager/login","/admin/**","/css/**", "/js/**", "/images/**");
     }
 }
