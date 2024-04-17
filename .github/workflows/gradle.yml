@@ -52,6 +52,7 @@ jobs:
  #         key: ${{ secrets.SSH_KEY }}
  #         port: ${{ secrets.WAS_SSH_PORT }}
  #         script: |
+ #           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin 
  #           docker stop $(docker ps -a -q) 
  #           docker rm $(docker ps -a -q) 
  #           docker pull <docker_hub_username>/<docker_image_name>
