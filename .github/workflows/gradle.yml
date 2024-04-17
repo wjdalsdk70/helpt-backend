@@ -18,7 +18,10 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-    
+              
+      - run: touch ./src/main/resources/application.properties
+      - run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.properties
+      
       # gradlew 권한 부여
       - name: give permission
         run: chmod +x ./gradlew
@@ -59,6 +62,6 @@ jobs:
             docker stop $(docker ps -a -q) 
             docker rm $(docker ps -a -q) 
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/backendbuild:latest
-            docker run -d -p 8080:8080 --name backend-app ${{ secrets.DOCKERHUB_USERNAME }}/backendbuild:latest
+            docker run --add-host=host.docker.internal:host-gateway -d -p 8080:8080 --name backend-app ${{ secrets.DOCKERHUB_USERNAME }}/backendbuild:latest
             
 
