@@ -64,6 +64,6 @@ jobs:
             docker stop $(docker ps -a -q) 
             docker rm $(docker ps -a -q) 
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/backendbuild:latest
-            docker run -d --name backend-app ${{ secrets.DOCKERHUB_USERNAME }}/backendbuild:latest
+            docker run -d -e SPRING_DATASOURCE_URL=jdbc:mysql://helpt-database-rds.chwuic4mcofb.ap-northeast-2.rds.amazonaws.com:3306/helptdb?characterEncoding=UTF-8 -p 8080:8080 --name backend-app ${{ secrets.DOCKERHUB_USERNAME }}/backendbuild:latest
 
 
