@@ -22,4 +22,12 @@ public class Product {
     private int day;
 
     private int price;
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }
