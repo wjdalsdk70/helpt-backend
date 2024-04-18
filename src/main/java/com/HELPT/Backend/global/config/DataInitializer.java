@@ -2,12 +2,14 @@ package com.HELPT.Backend.global.config;
 
 import com.HELPT.Backend.domain.admin.Admin;
 import com.HELPT.Backend.domain.admin.AdminRepository;
-import com.HELPT.Backend.domain.gym.GymRepository;
+import com.HELPT.Backend.domain.equipment.Equipment;
+import com.HELPT.Backend.domain.equipment.EquipmentRepository;
+import com.HELPT.Backend.domain.gym.entity.GymRegistration;
+import com.HELPT.Backend.domain.gym.repository.GymRepository;
 import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.domain.gym.entity.Status;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +22,7 @@ public class DataInitializer{
     private final AdminRepository adminRepository;
     private final GymRepository gymRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EquipmentRepository equipmentRepository;
 
     @PostConstruct
     public void initData() {
@@ -29,9 +32,26 @@ public class DataInitializer{
             Admin admin = Admin.builder().loginId("wjdalsdk70").password(encodedPassword).role(ADMIN).build();
             adminRepository.save(admin);
         }
+        GymRegistration gr = GymRegistration.builder()
+                .contactNumber("010-1234-5678")
+                .businessNumber("123-45-67890")
+                .businessType("개인")
+                .OwnerName("홍길동")
+                .businessFile("/path/to/file.pdf")
+                .build();
+
         Gym gym = Gym.builder().gymName("나이스짐")
-                .status(Status.Pending)
+                .address("경기도 수원시 팔달구 아주로 37 아록빌딩 7층 나이스짐")
+                .gymRegistration(gr)
                 .build();
         gymRepository.save(gym);
+
+        Equipment equipment = Equipment.builder()
+                .equipmentName("스쿼트")
+                .defaultCount(10)
+                .defaultSet(5)
+                .defaultWeight(20)
+                .build();
+        equipmentRepository.save(equipment);
     }
 }

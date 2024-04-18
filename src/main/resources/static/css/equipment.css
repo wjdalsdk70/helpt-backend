@@ -1,0 +1,80 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
+    padding: 20px;
+    margin: 0;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #7386D5;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #7386D5;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #7386D5;
+}
+
+.edit-button, .delete-button, .add-button {
+    text-decoration: none;
+    padding: 8px 12px;
+    color: white;
+    border-radius: 5px;
+    margin-right: 10px;
+    display: inline-block; /* 추가 */
+}
+
+.edit-button {
+    background-color: #ffa500; /* Orange */
+}
+
+.delete-button {
+    background-color: #ff6347; /* Tomato */
+}
+
+.add-button {
+    background-color: #32cd32; /* LimeGreen */
+}
+
+a.add-button {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+form {
+    display: inline; /* 폼을 인라인 요소로 처리 */
+}
+.styled-table td.action-cell {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px; /* 버튼 사이의 간격 */
+}

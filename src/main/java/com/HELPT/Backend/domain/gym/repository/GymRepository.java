@@ -1,4 +1,4 @@
-package com.HELPT.Backend.domain.gym;
+package com.HELPT.Backend.domain.gym.repository;
 
 import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.domain.gym.entity.Status;
@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface GymRepository extends JpaRepository<Gym,Long> {
     List<Gym> findByStatus(Status status);
+    Long findByGymName(String gymName);
 }
