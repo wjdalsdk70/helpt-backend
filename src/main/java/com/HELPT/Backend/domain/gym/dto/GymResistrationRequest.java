@@ -19,6 +19,10 @@ public class GymResistrationRequest {
     private String OwnerName; // 사업자 이름
     private String businessFile; // 사업자 등록증 파일 경로
 
+    public void updateBusinessFile(String file){
+        this.businessFile = file;
+    }
+
     public GymRegistration toGymRegistrationEntity()
     {
         return GymRegistration.builder()
