@@ -5,11 +5,16 @@ import com.HELPT.Backend.domain.gym.dto.GymResistrationRequest;
 import com.HELPT.Backend.domain.gym.dto.GymResponse;
 import com.HELPT.Backend.domain.gym.dto.GymRequest;
 import com.HELPT.Backend.domain.gym.entity.GymRegistration;
+import com.HELPT.Backend.global.s3.S3Uploader;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
@@ -21,10 +26,25 @@ import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
 public class GymController {
 
     private final GymService gymService;
+    private final S3Uploader s3Uploader;
 
     @PostMapping
     public ResponseEntity<GymResponse> gymAdd(@RequestBody GymResistrationRequest gymResistrationRequest){
         return ResponseEntity.ok(gymService.addGym(gymResistrationRequest));
+    }
+
+    @PostMapping(value = "/file", consumes = "multipart/form-data")
+    public ResponseEntity<?> registerGym(
+            @RequestPart("gymInfo") GymResistrationRequest gymInfo,
+            @RequestPart("businessFile") MultipartFile businessFile) {
+        String uploadURL;
+        try {
+            uploadURL = s3Uploader.upload(businessFile, "businessFile");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        gymInfo.updateBusinessFile(uploadURL);
+        return ResponseEntity.ok(gymService.addGym(gymInfo));
     }
 
     @GetMapping("/{gym_id}")
