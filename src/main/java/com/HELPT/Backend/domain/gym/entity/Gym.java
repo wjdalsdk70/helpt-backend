@@ -33,6 +33,6 @@ public class Gym {
         this.gymName = gymName;
     }
 
-    public void updateStatus(Status status) {this.status = status;
-    }
+    public void updateStatus(Status status) {this.status = status;}
+    public void updateGymRegistration(GymRegistration gymRegistration) {this.gymRegistration = gymRegistration;}
 }
