@@ -27,7 +27,6 @@ jobs:
       - name: give permission
         run: chmod +x ./gradlew
         
-        
       # Spring boot application 빌드
       - name: Build with gradle
         run: ./gradlew clean bootjar
