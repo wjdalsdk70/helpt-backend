@@ -79,4 +79,11 @@ public class ManagerService {
         Manager manager = managerRepository.findById(id).orElseThrow(() -> new RuntimeException("Manager not found"));
         managerRepository.delete(manager);
     }
+
+    @Transactional(readOnly = true)
+    public JWTResponse loginTest(String kakaoId) {
+        Manager manager = managerRepository.findByKakaoId(kakaoId).orElseThrow(() -> new RuntimeException("Manager not found"));
+        JWTToken jwt = jwtUtil.createTokens(manager.getManagerId());
+        return JWTResponse.builder().token(jwt).build();
+    }
 }

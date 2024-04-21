@@ -25,9 +25,14 @@ public class ManagerController {
 
     private final ManagerService managerService;
 
+//    @PostMapping("/login")
+//    public ResponseEntity<JWTResponse> login(@RequestBody ManagerRequest managerRequest) {
+//        return ResponseEntity.ok(managerService.login(managerRequest));
+//    }
+
     @PostMapping("/login")
-    public ResponseEntity<JWTResponse> login(@RequestBody ManagerRequest managerRequest) {
-        return ResponseEntity.ok(managerService.login(managerRequest));
+    public ResponseEntity<JWTResponse> loginTest(@RequestBody String kakaoId) {
+        return ResponseEntity.ok(managerService.loginTest(kakaoId));
     }
 
 //    @GetMapping("/{gym_id}")
