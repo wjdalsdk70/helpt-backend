@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MembershipRequest {
@@ -13,6 +15,7 @@ public class MembershipRequest {
 
     @Builder
     public MembershipRequest(Long membershipId) {
+
         this.membershipId = membershipId;
     }
 }

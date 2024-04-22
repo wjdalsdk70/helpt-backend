@@ -7,6 +7,7 @@ import com.HELPT.Backend.domain.product.Product;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,13 +54,11 @@ public class MembershipService {
         return new MembershipResponse(saveMembership);
     }
 
-    public Membership extensionMembership(Long userId,int addDays)
+    public MembershipResponse extensionMembership(Long userId, LocalDate endDate)
     {
         Membership findMembership = membershipRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("Membership not found"));
-        LocalDate endDate = findMembership.getEndDate();
-        LocalDate extensionDate = endDate.plusDays(addDays);
-        findMembership.setEndDate(extensionDate);
+        findMembership.setEndDate(endDate);
 
-        return findMembership;
+        return new MembershipResponse(findMembership);
     }
 }
