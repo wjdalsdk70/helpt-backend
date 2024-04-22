@@ -46,8 +46,7 @@ public class MemberService {
     {
         Membership membership =  memberRepository.attendance(userId);
         if(membership==null) return false;
-
-        membership.setAttendanceDate(membership.getAttendanceDate()+1);
+        membership.attend();
 
         return true;
     }

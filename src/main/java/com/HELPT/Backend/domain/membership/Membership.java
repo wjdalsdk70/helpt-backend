@@ -26,14 +26,16 @@ public class Membership {
 
     private int attendanceDate;
 
+    private Boolean isAttendToday;
+
     private LocalDate startDate;
 
     private LocalDate endDate;
 
-    public void setAttendanceDate(int attendanceDate) {
-        this.attendanceDate = attendanceDate;
+    public void attend(){
+        this.attendanceDate += 1;
+        this.isAttendToday = true;
     }
-
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }

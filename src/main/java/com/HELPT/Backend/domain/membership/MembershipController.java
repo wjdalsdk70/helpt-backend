@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
@@ -33,12 +34,22 @@ public class MembershipController {
         return ResponseEntity.ok(membershipService.addMembership(userId,productId));
     }
 
+    @PostMapping("/extension")
+    public ResponseEntity<MembershipResponse> extensionMembership(
+            @RequestBody MembershipRequest membershipRequest,
+            @RequestParam("endDate") LocalDate endDate) {
+
+        Long mId = membershipRequest.getMembershipId();
+        return ResponseEntity.ok(membershipService.extensionMembership(mId,endDate));
+    }
+
     @DeleteMapping("/remove")
-    public ResponseEntity<Boolean> addMembership(@RequestBody MembershipRequest membershipRequest) {
+    public ResponseEntity<Boolean> removeMembership(@RequestBody MembershipRequest membershipRequest) {
 
         membershipService.removeMembership(membershipRequest);
         return ResponseEntity.ok(true);
     }
+
 
 
 }

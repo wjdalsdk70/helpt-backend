@@ -9,6 +9,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import static com.HELPT.Backend.domain.member.QMember.member;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class ManagerRepositoryImpl implements ManagerRepositoryCustom{
 
     @PersistenceContext
@@ -36,7 +38,8 @@ public class ManagerRepositoryImpl implements ManagerRepositoryCustom{
     @Override
     public List<MemberJoinResponse> MemberList(Long gymId)
     {
-        List<Tuple> results = queryFactory.select(member,membership)
+
+        List<Tuple> results = queryFactory.select(member.userId,member.userName,membership.startDate,membership.endDate)
                 .from(member)
                 .leftJoin(membership).on(member.userId.eq(membership.userId))
                 .where(member.gymId.eq(gymId))
