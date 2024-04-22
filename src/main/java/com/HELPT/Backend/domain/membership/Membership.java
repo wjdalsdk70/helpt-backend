@@ -32,10 +32,6 @@ public class Membership {
 
     private LocalDate endDate;
 
-    public void setAttendanceDate(int attendanceDate) {
-        this.attendanceDate = attendanceDate;
-    }
-
     public void attend(){
         this.attendanceDate += 1;
         this.isAttendToday = true;
