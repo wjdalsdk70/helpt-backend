@@ -5,6 +5,7 @@ import lombok.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class MemberJoinResponse {
 
     private Long userId;

@@ -85,7 +85,6 @@ public class ManagerService {
     @Transactional
     public List<MemberJoinResponse> memberList(Long gymId) {
 
-        List<MemberJoinResponse> memberList = managerRepository.MemberList(gymId);
-        return memberList;
+        return managerRepository.MemberList(gymId);
     }
 }
