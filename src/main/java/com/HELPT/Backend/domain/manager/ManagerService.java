@@ -5,11 +5,13 @@ import com.HELPT.Backend.domain.gym.dto.GymResponse;
 import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.domain.manager.dto.ManagerRequest;
 import com.HELPT.Backend.domain.manager.dto.ManagerResponse;
+import com.HELPT.Backend.domain.manager.dto.MemberJoinResponse;
 import com.HELPT.Backend.domain.member.Dto.MemberDto;
 import com.HELPT.Backend.domain.member.Member;
 import com.HELPT.Backend.global.auth.jwt.JWTResponse;
 import com.HELPT.Backend.global.auth.jwt.JWTToken;
 import com.HELPT.Backend.global.auth.jwt.JWTUtil;
+import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
@@ -78,5 +80,12 @@ public class ManagerService {
     public void removeManager(Long id) {
         Manager manager = managerRepository.findById(id).orElseThrow(() -> new RuntimeException("Manager not found"));
         managerRepository.delete(manager);
+    }
+
+    @Transactional
+    public List<MemberJoinResponse> memberList(Long gymId) {
+
+        List<MemberJoinResponse> memberList = managerRepository.MemberList(gymId);
+        return memberList;
     }
 }
