@@ -6,9 +6,10 @@ import lombok.*;
 import org.springframework.security.core.userdetails.User;
 
 
+
+@Entity
 @Getter
 @Builder
-@Entity
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {

@@ -26,10 +26,10 @@ public class GymService {
     private final GymRegistrationRepository gymRegistrationRepository;
 
     @Transactional
-    public GymResponse addGym(GymResistrationRequest gymResistrationRequest) {
-        Gym gym = gymResistrationRequest.toGymEntity();
-        GymRegistration gymRegistrationEntity = gymResistrationRequest.toGymRegistrationEntity();
-        gym.builder().gymRegistration(gymRegistrationEntity);
+    public GymResponse addGym(GymResistrationRequest gymInfo) {
+        Gym gym = gymInfo.toGymEntity();
+        GymRegistration gymRegistrationEntity = gymInfo.toGymRegistrationEntity();
+        gym.updateGymRegistration(gymRegistrationEntity);
         gymRepository.save(gym);
         return GymResponse.builder().gym(gym).build();
     }

@@ -26,32 +26,31 @@ public class MemberController {
         return ResponseEntity.ok(memberService.login(memberDto));
     }
 
-    @GetMapping("/attendance/{userid}")
-    public ResponseEntity<String> attendance(@PathVariable("userid") Long userid) {
-
-        boolean bResult = memberService.attendance(userid);
+    @GetMapping("/attendance")
+    public ResponseEntity<String> attendance() {
+        Long userId = getCurrentUserId();
+        boolean bResult = memberService.attendance(userId);
 
         return ResponseEntity.ok(String.valueOf(bResult));
     }
 
-    @GetMapping("/find/{userid}")
-    public ResponseEntity<MemberDto> findMember(@PathVariable("userid") Long userid) {
-        MemberDto resultMember = memberService.findMember(userid);
+    @GetMapping("/detail")
+    public ResponseEntity<MemberDto> findMember() {
+        Long userId = getCurrentUserId();
+        MemberDto resultMember = memberService.findMember(userId);
         return ResponseEntity.ok(resultMember);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<MemberDto> registerMember(@RequestBody MemberDto member,
-                                                    @RequestParam("kakaoId")String kakaoId) {
-        MemberDto newMember = memberService.register(member,kakaoId);
+    public ResponseEntity<MemberDto> registerMember(@RequestBody MemberDto member) {
+        MemberDto newMember = memberService.register(member);
         return ResponseEntity.ok(newMember);
     }
 
     @PostMapping("/update")
-    public ResponseEntity<MemberDto> updateMember(@PathVariable("userid") Long userid,
-                                                  @RequestBody MemberDto member) {
-
-        MemberDto resultMemberDto = memberService.updateMember(userid,member);
+    public ResponseEntity<MemberDto> updateMember(@RequestBody MemberDto member) {
+        Long userId = getCurrentUserId();
+        MemberDto resultMemberDto = memberService.updateMember(userId,member);
 
         return ResponseEntity.ok(resultMemberDto);
     }

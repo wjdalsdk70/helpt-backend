@@ -4,6 +4,7 @@ import com.HELPT.Backend.domain.gym.dto.GymRequest;
 import com.HELPT.Backend.domain.gym.dto.GymResponse;
 import com.HELPT.Backend.domain.manager.dto.ManagerRequest;
 import com.HELPT.Backend.domain.manager.dto.ManagerResponse;
+import com.HELPT.Backend.domain.manager.dto.MemberJoinResponse;
 import com.HELPT.Backend.domain.member.Dto.MemberDto;
 import com.HELPT.Backend.global.auth.jwt.JWTResponse;
 import com.HELPT.Backend.global.auth.service.AuthService;
@@ -38,6 +39,20 @@ public class ManagerController {
     @GetMapping
     public ResponseEntity<List<ManagerResponse>> managerList() {
         return ResponseEntity.ok(managerService.findManagers());
+    }
+
+//    @PutMapping("/{gym_id}")
+//    public ResponseEntity<ManagerResponse> managerModify(@PathVariable Long id, @RequestBody ManagerRequest managerRequest) {
+//        return ResponseEntity.ok(managerService.modifyManager(id, managerRequest));
+//    }
+
+    @GetMapping("/members")
+    public ResponseEntity<List<MemberJoinResponse>> memberList() {
+        Long userId = getCurrentUserId();
+        ManagerResponse mr = managerService.findManager(userId);
+        Long gymId = mr.getGymId();
+
+        return ResponseEntity.ok(managerService.memberList(gymId));
     }
 
 //    @PutMapping("/{gym_id}")

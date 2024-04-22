@@ -4,15 +4,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Membership {
 
     @Id
@@ -25,8 +26,17 @@ public class Membership {
 
     private int attendanceDate;
 
+    private Boolean isAttendToday;
+
     private LocalDate startDate;
 
     private LocalDate endDate;
 
+    public void attend(){
+        this.attendanceDate += 1;
+        this.isAttendToday = true;
+    }
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ManagerRepository extends JpaRepository<Manager,Long> {
+public interface ManagerRepository extends JpaRepository<Manager,Long>,ManagerRepositoryCustom{
 
     Optional<Manager> findByKakaoId(String kakaoId);
 }

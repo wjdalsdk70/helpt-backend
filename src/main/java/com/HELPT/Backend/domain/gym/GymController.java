@@ -28,13 +28,13 @@ public class GymController {
     private final GymService gymService;
     private final S3Uploader s3Uploader;
 
-    @PostMapping
-    public ResponseEntity<GymResponse> gymAdd(@RequestBody GymResistrationRequest gymResistrationRequest){
-        return ResponseEntity.ok(gymService.addGym(gymResistrationRequest));
-    }
+//    @PostMapping
+//    public ResponseEntity<GymResponse> gymAdd(@RequestBody GymResistrationRequest gymResistrationRequest){
+//        return ResponseEntity.ok(gymService.addGym(gymResistrationRequest));
+//    }
 
-    @PostMapping(value = "/file", consumes = "multipart/form-data")
-    public ResponseEntity<?> registerGym(
+    @PostMapping(consumes = "multipart/form-data")
+    public ResponseEntity<GymResponse> registerGym(
             @RequestPart("gymInfo") GymResistrationRequest gymInfo,
             @RequestPart("businessFile") MultipartFile businessFile) {
         String uploadURL;

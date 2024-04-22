@@ -46,8 +46,7 @@ public class MemberService {
     {
         Membership membership =  memberRepository.attendance(userId);
         if(membership==null) return false;
-
-        membership.setAttendanceDate(membership.getAttendanceDate()+1);
+        membership.attend();
 
         return true;
     }
@@ -68,11 +67,11 @@ public class MemberService {
         return resultDto;
     }
 
-    public MemberDto register(MemberDto member,String kakaoId)
+    public MemberDto register(MemberDto member)
     {
         Member newMember = Member.builder()
                 .gymId(member.getGymId())
-                .kakaoId(kakaoId)
+                .kakaoId(member.getKakaoId())
                 .userName(member.getUserName())
                 .gender(member.getGender())
                 .height(member.getHeight())

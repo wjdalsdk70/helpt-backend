@@ -34,7 +34,7 @@ public class GymRegistrationDto {
                 .businessNumber(gymRegistration.getBusinessNumber())
                 .businessType(gymRegistration.getBusinessType())
                 .OwnerName(gymRegistration.getOwnerName())
-                .businessFile(gymRegistration.getOwnerName())
+                .businessFile(gymRegistration.getBusinessFile())
                 .build();
     }
 }
