@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static com.HELPT.Backend.domain.member.QMember.member;
 import static com.HELPT.Backend.domain.membership.QMembership.membership;
 
 @Repository
