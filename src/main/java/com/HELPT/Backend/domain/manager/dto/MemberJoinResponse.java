@@ -16,14 +16,7 @@ public class MemberJoinResponse {
     public MemberJoinResponse(Long userId, String userName, LocalDate startDate, LocalDate endDate) {
         this.userId = userId;
         this.userName = userName;
-        if(startDate==null)
-        {
-            this.startDate = LocalDate.of(1111,1,1);
-            this.endDate = LocalDate.of(1111,1,1);
-        }
-        else {
-            this.startDate = startDate;
-            this.endDate = endDate;
-        }
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 }
