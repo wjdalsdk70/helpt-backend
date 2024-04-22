@@ -44,11 +44,12 @@ public class MembershipController {
     }
 
     @DeleteMapping("/remove")
-    public ResponseEntity<Boolean> addMembership(@RequestBody MembershipRequest membershipRequest) {
+    public ResponseEntity<Boolean> removeMembership(@RequestBody MembershipRequest membershipRequest) {
 
         membershipService.removeMembership(membershipRequest);
         return ResponseEntity.ok(true);
     }
+
 
 
 }
