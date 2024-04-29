@@ -1,5 +1,6 @@
 package com.HELPT.Backend.domain.member;
 
+import com.HELPT.Backend.global.auth.GENDER;
 import com.HELPT.Backend.global.auth.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,7 +25,8 @@ public class Member {
 
     private String userName;
 
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private GENDER gender;
 
     private float height;
 
