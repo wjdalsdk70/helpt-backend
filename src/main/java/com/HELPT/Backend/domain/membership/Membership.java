@@ -5,8 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Entity
@@ -28,7 +30,8 @@ public class Membership {
 
     private Boolean isAttendToday;
 
-    private LocalDate startDate;
+    @Builder.Default
+    private LocalDate startDate = LocalDate.now();
 
     private LocalDate endDate;
 

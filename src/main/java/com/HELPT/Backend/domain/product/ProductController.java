@@ -23,14 +23,14 @@ public class ProductController {
         return ResponseEntity.ok(productService.findAllProducts(gymId));
     }
 
-    @PostMapping("/{gymId}/add")
+    @PostMapping("/{gymId}")
     public ResponseEntity<ProductResponse> addProduct(@PathVariable("gymId") Long gymId,
                                               @RequestBody ProductRequest productRequest) {
 
         return ResponseEntity.ok(productService.addProduct(gymId,productRequest));
     }
 
-    @PutMapping("/{gymId}/{productId}/modify")
+    @PutMapping("/{gymId}/{productId}")
     public ResponseEntity<ProductResponse> modifyProduct(@PathVariable("gymId") Long gymId,
                                                          @PathVariable("productId") Long productId,
                                                       @RequestBody ProductRequest productRequest) {
