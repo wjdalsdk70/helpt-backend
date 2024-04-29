@@ -2,11 +2,13 @@ package com.HELPT.Backend.domain.membership.dto;
 
 import com.HELPT.Backend.domain.membership.Membership;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class MembershipResponse {
 
     private Long membershipId;
