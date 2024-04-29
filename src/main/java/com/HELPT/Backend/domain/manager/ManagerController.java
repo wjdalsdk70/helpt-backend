@@ -2,6 +2,8 @@ package com.HELPT.Backend.domain.manager;
 
 import com.HELPT.Backend.domain.gym.dto.GymRequest;
 import com.HELPT.Backend.domain.gym.dto.GymResponse;
+import com.HELPT.Backend.domain.manager.dto.KakaoLoginRequest;
+import com.HELPT.Backend.domain.manager.dto.KakaoLoginResponse;
 import com.HELPT.Backend.domain.manager.dto.ManagerRequest;
 import com.HELPT.Backend.domain.manager.dto.ManagerResponse;
 import com.HELPT.Backend.domain.member.Dto.MemberDto;
@@ -25,15 +27,16 @@ public class ManagerController {
 
     private final ManagerService managerService;
 
-//    @PostMapping("/login")
-//    public ResponseEntity<JWTResponse> login(@RequestBody ManagerRequest managerRequest) {
-//        return ResponseEntity.ok(managerService.login(managerRequest));
-//    }
-
     @PostMapping("/login")
-    public ResponseEntity<JWTResponse> loginTest(@RequestBody String kakaoId) {
-        return ResponseEntity.ok(managerService.loginTest(kakaoId));
+    public ResponseEntity<KakaoLoginResponse> loginTest(@RequestBody KakaoLoginRequest kakaoLoginRequest) {
+        return ResponseEntity.ok(managerService.login(kakaoLoginRequest));
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<JWTResponse> register(@RequestBody ManagerRequest managerRequest) {
+        return ResponseEntity.ok(managerService.register(managerRequest));
+    }
+
 
 //    @GetMapping("/{gym_id}")
 //    public ResponseEntity<ManagerResponse> managerDetails(@PathVariable Long id) {
