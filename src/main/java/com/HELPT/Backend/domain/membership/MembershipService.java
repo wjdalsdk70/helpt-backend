@@ -46,7 +46,7 @@ public class MembershipService {
         em.flush();
         em.clear();
 
-        membershipRepository.findById(saveMembership.getMembershipId());
+        saveMembership = membershipRepository.findById(saveMembership.getMembershipId()).get();
         LocalDate startDate = saveMembership.getStartDate();
         LocalDate endDate = startDate.plusDays(product.getDay());
         saveMembership.setEndDate(endDate);
