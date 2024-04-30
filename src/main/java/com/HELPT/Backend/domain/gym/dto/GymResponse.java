@@ -1,5 +1,6 @@
 package com.HELPT.Backend.domain.gym.dto;
 
+import com.HELPT.Backend.domain.gym.entity.Address;
 import com.HELPT.Backend.domain.gym.entity.Gym;
 import lombok.*;
 
@@ -9,7 +10,7 @@ import lombok.*;
 public class GymResponse {
 
     private Long gymId;
-    private String address;
+    private Address address;
     private String gymName;
 
     @Builder

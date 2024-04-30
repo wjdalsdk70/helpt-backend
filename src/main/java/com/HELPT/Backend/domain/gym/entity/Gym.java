@@ -14,7 +14,9 @@ public class Gym {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long gymId;
 
-    private String address;
+    @Embedded
+    private Address address;
+
     private String gymName;
     private String chat_link;
 
@@ -25,14 +27,12 @@ public class Gym {
     @Builder.Default
     private Status status = Status.Pending;
 
-    public void updateAddress(String address) {
+    public void updateAddress(Address address) {
         this.address = address;
     }
-
     public void updateGymName(String gymName) {
         this.gymName = gymName;
     }
-
     public void updateStatus(Status status) {this.status = status;}
     public void updateGymRegistration(GymRegistration gymRegistration) {this.gymRegistration = gymRegistration;}
 }

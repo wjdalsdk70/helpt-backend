@@ -7,10 +7,12 @@ import com.HELPT.Backend.domain.gym.dto.GymRequest;
 import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.domain.gym.entity.GymRegistration;
 import com.HELPT.Backend.domain.gym.entity.Status;
-import com.HELPT.Backend.domain.gym.repository.GymRegistrationRepository;
 import com.HELPT.Backend.domain.gym.repository.GymRepository;
+import com.HELPT.Backend.domain.manager.Manager;
+import com.HELPT.Backend.domain.manager.ManagerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,19 +20,25 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
+
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class GymService {
 
     private final GymRepository gymRepository;
-    private final GymRegistrationRepository gymRegistrationRepository;
+    private final ManagerRepository managerRepository;
 
     @Transactional
     public GymResponse addGym(GymResistrationRequest gymInfo) {
+        log.info(String.valueOf(gymInfo.getAddress()));
         Gym gym = gymInfo.toGymEntity();
         GymRegistration gymRegistrationEntity = gymInfo.toGymRegistrationEntity();
         gym.updateGymRegistration(gymRegistrationEntity);
         gymRepository.save(gym);
+        Optional<Manager> manager = managerRepository.findById(getCurrentUserId());
+        manager.get().updateGym(gym);
         return GymResponse.builder().gym(gym).build();
     }
 
@@ -51,14 +59,14 @@ public class GymService {
     public List<GymResponse> findGyms() {
         List<Gym> gyms = gymRepository.findAll();
         return gyms.stream()
-                .map(gym -> new GymResponse(gym)) // GymResponse의 생성자 또는 빌더를 사용
+                .map(gym -> new GymResponse(gym))
                 .collect(Collectors.toList());
     }
 
     @Transactional
     public GymResponse modifyGym(Long id, GymRequest gymRequest) {
         Gym gym = gymRepository.findById(id).orElseThrow(() -> new RuntimeException("Gym not found"));
-        gym.updateAddress(gymRequest.getAddress());
+//        gym.updateAddress(gymRequest.getAddress());
         gym.updateGymName(gymRequest.getGymName());
 //        gym = gymRepository.save(gym); // 변경 감지
         return GymResponse.builder().gym(gym).build();

@@ -1,29 +1,25 @@
 package com.HELPT.Backend.domain.manager;
 
-import com.HELPT.Backend.domain.gym.dto.GymRequest;
-import com.HELPT.Backend.domain.gym.dto.GymResponse;
 import com.HELPT.Backend.domain.gym.entity.Gym;
+import com.HELPT.Backend.domain.gym.entity.Status;
+import com.HELPT.Backend.global.common.dto.KakaoLoginRequest;
+import com.HELPT.Backend.global.common.dto.KakaoLoginResponse;
 import com.HELPT.Backend.domain.manager.dto.ManagerRequest;
 import com.HELPT.Backend.domain.manager.dto.ManagerResponse;
 import com.HELPT.Backend.domain.manager.dto.MemberJoinResponse;
-import com.HELPT.Backend.domain.member.Dto.MemberDto;
-import com.HELPT.Backend.domain.member.Member;
 import com.HELPT.Backend.global.auth.jwt.JWTResponse;
 import com.HELPT.Backend.global.auth.jwt.JWTToken;
 import com.HELPT.Backend.global.auth.jwt.JWTUtil;
-import com.querydsl.core.Tuple;
+import com.HELPT.Backend.global.error.CustomException;
+import com.HELPT.Backend.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static com.HELPT.Backend.domain.member.QMember.member;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +29,7 @@ public class ManagerService {
     private final ManagerRepository managerRepository;
     private final JWTUtil jwtUtil;
 
-    public JWTResponse login(ManagerRequest managerRequest) {
+    public JWTResponse register(ManagerRequest managerRequest) {
         try {
             String kakaoId = managerRequest.getKakaoId();
             Optional<Manager> existManager = managerRepository.findByKakaoId(kakaoId);
@@ -52,6 +48,26 @@ public class ManagerService {
             log.info("Login error", e);
         }
         return null;
+    }
+
+    @Transactional(readOnly = true)
+    public KakaoLoginResponse login(KakaoLoginRequest kakaoLoginRequest) {
+        Optional<Manager> manager = managerRepository.findByKakaoId(kakaoLoginRequest.getKakaoId());
+        if(manager.isEmpty()){
+            throw new CustomException(ErrorCode.NOT_EXIST_USER);
+        }
+        JWTToken jwt = jwtUtil.createTokens(manager.get().getManagerId());
+        Gym gym = manager.get().getGym();
+        if (gym == null) {
+            return KakaoLoginResponse.builder()
+                    .accessToken(jwt.getAccessToken())
+                    .refreshToken(jwt.getRefreshToken())
+                    .gymStatus(Status.Unregistered).build();
+        }
+        return KakaoLoginResponse.builder()
+                .accessToken(jwt.getAccessToken())
+                .refreshToken(jwt.getRefreshToken())
+                .gymStatus(gym.getStatus()).build();
     }
 
     @Transactional(readOnly = true)
