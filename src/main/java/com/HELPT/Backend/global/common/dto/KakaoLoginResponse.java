@@ -1,4 +1,4 @@
-package com.HELPT.Backend.domain.manager.dto;
+package com.HELPT.Backend.global.common.dto;
 
 import com.HELPT.Backend.domain.gym.entity.Status;
 import lombok.*;
