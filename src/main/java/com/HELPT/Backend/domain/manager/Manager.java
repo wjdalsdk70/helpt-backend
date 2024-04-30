@@ -1,5 +1,6 @@
 package com.HELPT.Backend.domain.manager;
 
+import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.global.auth.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,14 +16,21 @@ public class Manager {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long managerId;
 
-    private Long gymId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gym_id")
+    private Gym gym;
 
     private String kakaoId;
-//    private String name;
-//    private String phone; 
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Role role = Role.MANAGER;
+
+    public void updateGym(Gym gym) {
+        this.gym = gym;
+    }
+
+    //    private String name;
+    //    private String phone;
 
 }

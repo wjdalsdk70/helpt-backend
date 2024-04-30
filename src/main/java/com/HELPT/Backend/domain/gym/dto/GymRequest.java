@@ -1,5 +1,6 @@
 package com.HELPT.Backend.domain.gym.dto;
 
+import com.HELPT.Backend.domain.gym.entity.Address;
 import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.domain.gym.entity.Status;
 import lombok.*;
@@ -10,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GymRequest {
 
-    private String address;
+    private Address address;
     private String gymName;
 
 
