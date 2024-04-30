@@ -12,6 +12,7 @@ import com.HELPT.Backend.domain.manager.Manager;
 import com.HELPT.Backend.domain.manager.ManagerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class GymService {
 
     private final GymRepository gymRepository;
@@ -30,6 +32,7 @@ public class GymService {
 
     @Transactional
     public GymResponse addGym(GymResistrationRequest gymInfo) {
+        log.info(String.valueOf(gymInfo.getAddress()));
         Gym gym = gymInfo.toGymEntity();
         GymRegistration gymRegistrationEntity = gymInfo.toGymRegistrationEntity();
         gym.updateGymRegistration(gymRegistrationEntity);
