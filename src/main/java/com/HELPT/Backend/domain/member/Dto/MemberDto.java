@@ -1,6 +1,7 @@
 package com.HELPT.Backend.domain.member.Dto;
 
 import com.HELPT.Backend.domain.member.Member;
+import com.HELPT.Backend.global.auth.GENDER;
 import lombok.*;
 
 @Getter
@@ -13,7 +14,7 @@ public class MemberDto {
 
     private String userName;
 
-    private String gender;
+    private GENDER gender;
 
     private float height;
 
