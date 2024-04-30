@@ -51,8 +51,5 @@ public class ManagerRepositoryImpl implements ManagerRepositoryCustom{
                 .startDate(tuple.get(membership.startDate))
                 .endDate(tuple.get(membership.endDate))
                 .build()).toList();
-
-
-
     }
 }

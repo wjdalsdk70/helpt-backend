@@ -3,6 +3,8 @@ package com.HELPT.Backend.domain.member;
 import com.HELPT.Backend.domain.member.Dto.MemberDto;
 import com.HELPT.Backend.global.auth.SecurityUtil;
 import com.HELPT.Backend.global.auth.jwt.JWTResponse;
+import com.HELPT.Backend.global.common.dto.KakaoLoginRequest;
+import com.HELPT.Backend.global.common.dto.KakaoLoginResponse;
 import com.HELPT.Backend.global.kakaomodule.KakaoAPI;
 import com.HELPT.Backend.global.kakaomodule.KakaoUserInfo;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +23,13 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/login")
-    public ResponseEntity<JWTResponse> login(@RequestBody MemberDto memberDto) {
-        log.info("login");
-        return ResponseEntity.ok(memberService.login(memberDto));
+    public ResponseEntity<JWTResponse> login(@RequestBody KakaoLoginRequest kakaoLoginRequest) {
+        return ResponseEntity.ok(memberService.login(kakaoLoginRequest));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<JWTResponse> register(@RequestBody MemberDto memberDto) {
+        return ResponseEntity.ok(memberService.register(memberDto));
     }
 
     @GetMapping("/attendance")
@@ -39,12 +45,6 @@ public class MemberController {
         Long userId = getCurrentUserId();
         MemberDto resultMember = memberService.findMember(userId);
         return ResponseEntity.ok(resultMember);
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<MemberDto> registerMember(@RequestBody MemberDto member) {
-        MemberDto newMember = memberService.register(member);
-        return ResponseEntity.ok(newMember);
     }
 
     @PostMapping("/update")
