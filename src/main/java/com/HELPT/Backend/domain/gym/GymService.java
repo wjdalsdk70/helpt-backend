@@ -32,7 +32,6 @@ public class GymService {
 
     @Transactional
     public GymResponse addGym(GymResistrationRequest gymInfo) {
-        log.info(String.valueOf(gymInfo.getAddress()));
         Gym gym = gymInfo.toGymEntity();
         GymRegistration gymRegistrationEntity = gymInfo.toGymRegistrationEntity();
         gym.updateGymRegistration(gymRegistrationEntity);
@@ -87,5 +86,17 @@ public class GymService {
                 .orElseThrow(() -> new EntityNotFoundException("Gym not found with id " + gymId));
         gym.updateStatus(status);
         gymRepository.save(gym);
+    }
+
+    public List<GymResponse> findGymsByName(String name) {
+        List<Gym> gyms;
+        if (name == null || name.isEmpty()) {
+            gyms = gymRepository.findAll();
+        } else {
+            gyms = gymRepository.findByGymNameContaining(name);
+        }
+        return gyms.stream()
+                .map(gym -> GymResponse.builder().gym(gym).build())
+                .collect(Collectors.toList());
     }
 }

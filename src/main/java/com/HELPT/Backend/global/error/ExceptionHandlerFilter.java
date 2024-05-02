@@ -1,5 +1,6 @@
 package com.HELPT.Backend.global.error;
 
+import com.HELPT.Backend.global.common.ApiResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,9 +28,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         response.setStatus(status.value());
         response.setContentType("application/json; charset=UTF-8");
 
-        response.getWriter().write(
-                new ErrorResponse(status.value(), ex.getMessage())
-                        .convertToJson()
-        );
+        ApiResponse apiResponse = ApiResponse.errorResponse(ex.getMessage());
+        response.getWriter().write(apiResponse.toJson());
     }
 }

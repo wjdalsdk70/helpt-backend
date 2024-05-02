@@ -58,8 +58,8 @@ public class GymController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GymResponse>> gymList() {
-        return ResponseEntity.ok(gymService.findGyms());
+    public ResponseEntity<List<GymResponse>> gymListByName(@RequestParam(name = "name", required = false)String gymName) {
+        return ResponseEntity.ok(gymService.findGymsByName(gymName));
     }
 
     @PutMapping("/{gym_id}")
