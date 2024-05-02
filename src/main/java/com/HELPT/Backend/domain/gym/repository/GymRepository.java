@@ -9,4 +9,5 @@ import java.util.List;
 public interface GymRepository extends JpaRepository<Gym,Long> {
     List<Gym> findByStatus(Status status);
     Long findByGymName(String gymName);
+    List<Gym> findByGymNameContaining(String name);
 }
