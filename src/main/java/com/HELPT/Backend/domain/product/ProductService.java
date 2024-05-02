@@ -29,7 +29,7 @@ public class ProductService {
 
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public ProductResponse addProduct(Long gymId, ProductRequest productRequest) {
 
         Product product = Product.builder()
@@ -51,7 +51,7 @@ public class ProductService {
         return new ProductResponse(findProduct);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
 
