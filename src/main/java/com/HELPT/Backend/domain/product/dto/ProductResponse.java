@@ -3,6 +3,7 @@ package com.HELPT.Backend.domain.product.dto;
 import com.HELPT.Backend.domain.product.Product;
 import lombok.*;
 
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductResponse {
     private Long productId;
