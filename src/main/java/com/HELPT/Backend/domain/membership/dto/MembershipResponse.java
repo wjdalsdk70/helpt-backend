@@ -9,7 +9,6 @@ import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
 public class MembershipResponse {
 
     private Long membershipId;

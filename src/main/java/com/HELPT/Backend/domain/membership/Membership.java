@@ -28,8 +28,7 @@ public class Membership {
 
     private Boolean isAttendToday;
 
-    @Builder.Default
-    private LocalDate startDate = LocalDate.now();
+    private LocalDate startDate;
 
     private LocalDate endDate;
 
