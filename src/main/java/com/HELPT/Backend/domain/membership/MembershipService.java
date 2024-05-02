@@ -37,19 +37,16 @@ public class MembershipService {
     public MembershipResponse addMembership(Long userId, Long productId)
     {
         Product product = membershipRepository.findProduct(productId);
+
         Membership addMembership = Membership.builder()
                 .userId(userId)
                 .gymId(product.getGymId())
                 .build();
+
+        addMembership.addDays(product.getDay());
+
+
         Membership saveMembership = membershipRepository.save(addMembership);
-
-        em.flush();
-        em.clear();
-
-        membershipRepository.findById(saveMembership.getMembershipId());
-        LocalDate startDate = saveMembership.getStartDate();
-        LocalDate endDate = startDate.plusDays(product.getDay());
-        saveMembership.setEndDate(endDate);
 
         return new MembershipResponse(saveMembership);
     }

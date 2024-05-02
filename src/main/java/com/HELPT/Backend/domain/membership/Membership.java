@@ -11,8 +11,6 @@ import java.util.Date;
 
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Membership {
 
@@ -31,6 +29,19 @@ public class Membership {
     private LocalDate startDate;
 
     private LocalDate endDate;
+
+    @Builder
+    public Membership(Long userId, Long gymId) {
+        this.userId = userId;
+        this.gymId = gymId;
+        this.startDate = LocalDate.now();
+        this.isAttendToday=false;
+    }
+
+    public void addDays(int days)
+    {
+        this.endDate = startDate.plusDays(days);
+    }
 
     public void attend(){
         this.attendanceDate += 1;
