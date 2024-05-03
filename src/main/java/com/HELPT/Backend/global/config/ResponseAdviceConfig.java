@@ -13,19 +13,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 public class ResponseAdviceConfig implements ResponseBodyAdvice {
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {
-        return true;
+        return !returnType.getContainingClass().getName().contains("springdoc");
     }
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-//        if(body instanceof String){
-//            return body;
-//        }else if(body instanceof ResponseDto){
-//            ((ResponseDto) body).setStatus(status);
-//            return body;
-//        }else{
-//            return new ResponseDto(status,body);
-//        }
         if(body instanceof String){
             return body;
         }else{
