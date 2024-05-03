@@ -1,5 +1,6 @@
 package com.HELPT.Backend.domain.manager;
 
+import com.HELPT.Backend.domain.gym.dto.GymResponse;
 import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.domain.gym.entity.Status;
 import com.HELPT.Backend.global.common.dto.KakaoLoginRequest;
@@ -21,6 +22,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.HELPT.Backend.domain.gym.entity.Status.Unregistered;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -29,6 +32,7 @@ public class ManagerService {
     private final ManagerRepository managerRepository;
     private final JWTUtil jwtUtil;
 
+    @Transactional
     public JWTResponse register(ManagerRequest managerRequest) {
         try {
             String kakaoId = managerRequest.getKakaoId();
@@ -51,23 +55,13 @@ public class ManagerService {
     }
 
     @Transactional(readOnly = true)
-    public KakaoLoginResponse login(KakaoLoginRequest kakaoLoginRequest) {
+    public JWTResponse login(KakaoLoginRequest kakaoLoginRequest) {
         Optional<Manager> manager = managerRepository.findByKakaoId(kakaoLoginRequest.getKakaoId());
         if(manager.isEmpty()){
             throw new CustomException(ErrorCode.NOT_EXIST_USER);
         }
         JWTToken jwt = jwtUtil.createTokens(manager.get().getManagerId());
-        Gym gym = manager.get().getGym();
-        if (gym == null) {
-            return KakaoLoginResponse.builder()
-                    .accessToken(jwt.getAccessToken())
-                    .refreshToken(jwt.getRefreshToken())
-                    .gymStatus(Status.Unregistered).build();
-        }
-        return KakaoLoginResponse.builder()
-                .accessToken(jwt.getAccessToken())
-                .refreshToken(jwt.getRefreshToken())
-                .gymStatus(gym.getStatus()).build();
+        return JWTResponse.builder().token(jwt).build();
     }
 
     @Transactional(readOnly = true)
@@ -98,7 +92,7 @@ public class ManagerService {
         managerRepository.delete(manager);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<MemberJoinResponse> memberList(Long gymId) {
 
         return managerRepository.MemberList(gymId);

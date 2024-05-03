@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.HELPT.Backend.domain.gym.entity.Status.Unregistered;
 import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
 
 @Service
@@ -38,14 +39,14 @@ public class GymService {
         gymRepository.save(gym);
         Optional<Manager> manager = managerRepository.findById(getCurrentUserId());
         manager.get().updateGym(gym);
-        return GymResponse.builder().gym(gym).build();
+        return GymResponse.toDto(gym);
     }
 
     @Transactional(readOnly = true)
     public GymResponse findGym(Long id) {
         Gym gym = gymRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Gym not found"));
-        return GymResponse.builder().gym(gym).build();
+        return GymResponse.toDto(gym);
     }
     @Transactional(readOnly = true)
     public GymRegistrationDto findGymRegistration(Long id) {
@@ -58,36 +59,30 @@ public class GymService {
     public List<GymResponse> findGyms() {
         List<Gym> gyms = gymRepository.findAll();
         return gyms.stream()
-                .map(gym -> new GymResponse(gym))
+                .map(gym -> GymResponse.toDto(gym))
                 .collect(Collectors.toList());
     }
 
-    @Transactional
-    public GymResponse modifyGym(Long id, GymRequest gymRequest) {
-        Gym gym = gymRepository.findById(id).orElseThrow(() -> new RuntimeException("Gym not found"));
-//        gym.updateAddress(gymRequest.getAddress());
-        gym.updateGymName(gymRequest.getGymName());
-//        gym = gymRepository.save(gym); // 변경 감지
-        return GymResponse.builder().gym(gym).build();
+    @Transactional(readOnly = true)
+    public GymResponse findGymStatus(Long id) {
+        Manager manager = managerRepository.findById(id).orElseThrow(() -> new RuntimeException("Manager not found"));
+        Gym gym = manager.getGym();
+        if(gym == null){
+            return GymResponse.builder()
+                    .status(Unregistered)
+                    .build();
+        }
+        return GymResponse.builder()
+                .status(gym.getStatus())
+                .build();
     }
 
-    @Transactional
-    public void removeGym(Long id) {
-        Gym gym = gymRepository.findById(id).orElseThrow(() -> new RuntimeException("Gym not found"));
-        gymRepository.delete(gym);
-    }
-
+    @Transactional(readOnly = true)
     public List<Gym> findGymsByStatus(Status status) {
         return gymRepository.findByStatus(status);
     }
 
-    public void updateGymStatus(Long gymId, Status status) {
-        Gym gym = gymRepository.findById(gymId)
-                .orElseThrow(() -> new EntityNotFoundException("Gym not found with id " + gymId));
-        gym.updateStatus(status);
-        gymRepository.save(gym);
-    }
-
+    @Transactional(readOnly = true)
     public List<GymResponse> findGymsByName(String name) {
         List<Gym> gyms;
         if (name == null || name.isEmpty()) {
@@ -96,7 +91,30 @@ public class GymService {
             gyms = gymRepository.findByGymNameContaining(name);
         }
         return gyms.stream()
-                .map(gym -> GymResponse.builder().gym(gym).build())
+                .map(gym -> GymResponse.toDto(gym))
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void updateGymStatus(Long gymId, Status status) {
+        Gym gym = gymRepository.findById(gymId)
+                .orElseThrow(() -> new EntityNotFoundException("Gym not found with id " + gymId));
+        gym.updateStatus(status);
+        gymRepository.save(gym);
+    }
+
+    @Transactional
+    public GymResponse modifyGym(Long id, GymRequest gymRequest) {
+        Gym gym = gymRepository.findById(id).orElseThrow(() -> new RuntimeException("Gym not found"));
+//        gym.updateAddress(gymRequest.getAddress());
+        gym.updateGymName(gymRequest.getGymName());
+//        gym = gymRepository.save(gym); // 변경 감지
+        return GymResponse.toDto(gym);
+    }
+
+    @Transactional
+    public void removeGym(Long id) {
+        Gym gym = gymRepository.findById(id).orElseThrow(() -> new RuntimeException("Gym not found"));
+        gymRepository.delete(gym);
     }
 }

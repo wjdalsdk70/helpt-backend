@@ -28,11 +28,6 @@ public class GymController {
     private final GymService gymService;
     private final S3Uploader s3Uploader;
 
-//    @PostMapping
-//    public ResponseEntity<GymResponse> gymAdd(@RequestBody GymResistrationRequest gymResistrationRequest){
-//        return ResponseEntity.ok(gymService.addGym(gymResistrationRequest));
-//    }
-
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<GymResponse> registerGym(
             @RequestPart("gymInfo") GymResistrationRequest gymInfo,
@@ -50,6 +45,11 @@ public class GymController {
     @GetMapping("/{gym_id}")
     public ResponseEntity<GymResponse> gymDetails(@PathVariable Long gym_id) {
         return ResponseEntity.ok(gymService.findGym(gym_id));
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<GymResponse> gymStatus(){
+        return ResponseEntity.ok(gymService.findGymStatus(getCurrentUserId()));
     }
 
     @GetMapping("/{gym_id}/gymregistrations")
