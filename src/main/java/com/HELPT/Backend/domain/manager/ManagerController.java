@@ -1,5 +1,6 @@
 package com.HELPT.Backend.domain.manager;
 
+import com.HELPT.Backend.domain.gym.dto.GymResponse;
 import com.HELPT.Backend.global.common.dto.KakaoLoginRequest;
 import com.HELPT.Backend.global.common.dto.KakaoLoginResponse;
 import com.HELPT.Backend.domain.manager.dto.ManagerRequest;
@@ -24,7 +25,7 @@ public class ManagerController {
     private final ManagerService managerService;
 
     @PostMapping("/login")
-    public ResponseEntity<KakaoLoginResponse> loginTest(@RequestBody KakaoLoginRequest kakaoLoginRequest) {
+    public ResponseEntity<JWTResponse> login(@RequestBody KakaoLoginRequest kakaoLoginRequest) {
         return ResponseEntity.ok(managerService.login(kakaoLoginRequest));
     }
 
@@ -33,21 +34,16 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.register(managerRequest));
     }
 
-
-//    @GetMapping("/{gym_id}")
-//    public ResponseEntity<ManagerResponse> managerDetails(@PathVariable Long id) {
-//        return ResponseEntity.ok(managerService.findManager(id));
-//    }
+    @GetMapping("/{gym_id}")
+    public ResponseEntity<ManagerResponse> managerDetails() {
+        Long manager_id = getCurrentUserId();
+        return ResponseEntity.ok(managerService.findManager(manager_id));
+    }
 
     @GetMapping
     public ResponseEntity<List<ManagerResponse>> managerList() {
         return ResponseEntity.ok(managerService.findManagers());
     }
-
-//    @PutMapping("/{gym_id}")
-//    public ResponseEntity<ManagerResponse> managerModify(@PathVariable Long id, @RequestBody ManagerRequest managerRequest) {
-//        return ResponseEntity.ok(managerService.modifyManager(id, managerRequest));
-//    }
 
     @GetMapping("/members")
     public ResponseEntity<List<MemberJoinResponse>> memberList() {
@@ -58,10 +54,11 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.memberList(gymId));
     }
 
-//    @PutMapping("/{gym_id}")
-//    public ResponseEntity<ManagerResponse> managerModify(@PathVariable Long id, @RequestBody ManagerRequest managerRequest) {
-//        return ResponseEntity.ok(managerService.modifyManager(id, managerRequest));
-//    }
+    @PutMapping("/{gym_id}")
+    public ResponseEntity<ManagerResponse> managerModify(@RequestBody ManagerRequest managerRequest) {
+        Long manager_id = getCurrentUserId();
+        return ResponseEntity.ok(managerService.modifyManager(manager_id, managerRequest));
+    }
 
     @DeleteMapping
     public ResponseEntity<Void> memberRemove() {
