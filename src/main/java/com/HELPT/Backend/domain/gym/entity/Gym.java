@@ -12,7 +12,7 @@ public class Gym {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long gymId;
+    private Long id;
 
     @Embedded
     private Address address;

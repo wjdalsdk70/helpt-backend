@@ -13,6 +13,6 @@ public class ManagerResponse {
 
     @Builder
     public ManagerResponse(Manager manager) {
-        this.gymId = manager.getGym().getGymId();
+        this.gymId = manager.getGym().getId();
     }
 }
