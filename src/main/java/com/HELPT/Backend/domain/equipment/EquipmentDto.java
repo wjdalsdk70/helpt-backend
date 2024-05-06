@@ -4,6 +4,7 @@ import lombok.*;
 
 @Getter
 @Builder
+@Setter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EquipmentDto {
