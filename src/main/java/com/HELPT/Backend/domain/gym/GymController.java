@@ -5,6 +5,8 @@ import com.HELPT.Backend.domain.gym.dto.GymResistrationRequest;
 import com.HELPT.Backend.domain.gym.dto.GymResponse;
 import com.HELPT.Backend.domain.gym.dto.GymRequest;
 import com.HELPT.Backend.domain.gym.entity.GymRegistration;
+import com.HELPT.Backend.domain.gymequipment.GymEquipmentService;
+import com.HELPT.Backend.domain.gymequipment.dto.GymEquipmentResponse;
 import com.HELPT.Backend.global.s3.S3Uploader;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +28,7 @@ import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
 public class GymController {
 
     private final GymService gymService;
+    private final GymEquipmentService gymEquipmentService;
     private final S3Uploader s3Uploader;
 
     @PostMapping(consumes = "multipart/form-data")
@@ -42,9 +45,9 @@ public class GymController {
         return ResponseEntity.ok(gymService.addGym(gymInfo));
     }
 
-    @GetMapping("/{gym_id}")
-    public ResponseEntity<GymResponse> gymDetails(@PathVariable Long gym_id) {
-        return ResponseEntity.ok(gymService.findGym(gym_id));
+    @GetMapping("/{gymId}")
+    public ResponseEntity<GymResponse> gymDetails(@PathVariable Long gymId) {
+        return ResponseEntity.ok(gymService.findGym(gymId));
     }
 
     @GetMapping("/status")
@@ -52,9 +55,15 @@ public class GymController {
         return ResponseEntity.ok(gymService.findGymStatus(getCurrentUserId()));
     }
 
-    @GetMapping("/{gym_id}/gymregistrations")
-    public ResponseEntity<GymRegistrationDto> gymRegistrationDetails(@PathVariable Long gym_id) {
-        return ResponseEntity.ok(gymService.findGymRegistration(gym_id));
+    @GetMapping("/{gymId}/gym-registrations")
+    public ResponseEntity<GymRegistrationDto> gymRegistrationDetails(@PathVariable Long gymId) {
+        return ResponseEntity.ok(gymService.findGymRegistration(gymId));
+    }
+
+    @GetMapping("/{gymId}/gym-equipments")
+    public ResponseEntity<List<GymEquipmentResponse>> getAllGymEquipments(@PathVariable Long gymId) {
+        List<GymEquipmentResponse> equipments = gymEquipmentService.findGymEquipments(gymId);
+        return ResponseEntity.ok(equipments);
     }
 
     @GetMapping
@@ -62,14 +71,14 @@ public class GymController {
         return ResponseEntity.ok(gymService.findGymsByName(gymName));
     }
 
-    @PutMapping("/{gym_id}")
-    public ResponseEntity<GymResponse> gymModify(@PathVariable Long gym_id, @RequestBody GymRequest gymRequest) {
-        return ResponseEntity.ok(gymService.modifyGym(gym_id, gymRequest));
+    @PutMapping("/{gymId}")
+    public ResponseEntity<GymResponse> gymModify(@PathVariable Long gymId, @RequestBody GymRequest gymRequest) {
+        return ResponseEntity.ok(gymService.modifyGym(gymId, gymRequest));
     }
 
-    @DeleteMapping("/{gym_id}")
-    public ResponseEntity<Void> gymRemove(@PathVariable Long gym_id) {
-        gymService.removeGym(gym_id);
+    @DeleteMapping("/{gymId}")
+    public ResponseEntity<Void> gymRemove(@PathVariable Long gymId) {
+        gymService.removeGym(gymId);
         return ResponseEntity.ok().build();
     }
 }
