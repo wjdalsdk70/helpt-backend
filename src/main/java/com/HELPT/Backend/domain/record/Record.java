@@ -4,8 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,7 +12,9 @@ import java.util.Date;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Record {
 
     @Id
@@ -30,9 +31,7 @@ public class Record {
 
     private int weight;
 
-    private LocalDateTime startDate;
-
-    private LocalDateTime endDate;
+    private LocalDateTime recordDate;
 
     private float successRate;
 }
