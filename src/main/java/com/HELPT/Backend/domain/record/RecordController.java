@@ -21,7 +21,7 @@ public class RecordController {
     private final RecordService recordService;
 
     @PostMapping("/save")
-    public ResponseEntity<RecordResponse> productList(@RequestBody RecordRequest recordRequest) {
+    public ResponseEntity<RecordResponse> saveRecord(@RequestBody RecordRequest recordRequest) {
 
         Long userId = getCurrentUserId();
 
