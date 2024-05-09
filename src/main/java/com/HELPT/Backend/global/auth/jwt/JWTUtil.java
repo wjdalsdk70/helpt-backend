@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import javax.security.sasl.AuthenticationException;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.Date;
@@ -22,7 +21,7 @@ import java.util.Date;
 public class JWTUtil {
 
     private static final Long accessTokenValidTime = Duration.ofDays(15).toMillis(); // 만료시간 15일
-    private static final Long refreshTokenValidTime = Duration.ofDays(30).toMillis(); // 만료시간 2주
+    private static final Long refreshTokenValidTime = Duration.ofDays(30).toMillis(); // 만료시간 30일
     private static final Long remainValidTime = Duration.ofDays(3).toMillis();
     private SecretKey secretKey;
 
@@ -47,7 +46,7 @@ public class JWTUtil {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", String.class);
     }
 
-    public void isExpired(String token) {
+    public boolean isExpired(String token) {
         try{
             Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
         }catch (ExpiredJwtException e){
@@ -55,6 +54,7 @@ public class JWTUtil {
         }catch (JwtException e){
             throw new CustomException(ErrorCode.UNAUTHORIZED);
         }
+        return false;
     }
 
     // Test용 JWT 토큰 만료 여부 확인
