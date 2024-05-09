@@ -30,7 +30,7 @@ public class JWTFilter extends OncePerRequestFilter {
 
         log.info("jwt");
         String token = jwtUtil.getJwtFromRequest(request);
-        if(jwtUtil.isTokenExpired(token)){
+        if(jwtUtil.isExpired(token)){
             throw new CustomException(ErrorCode.EXPIRED_ACCESS_TOKEN);
         }
         //토큰에서 username과 role 획득
