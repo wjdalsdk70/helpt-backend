@@ -16,13 +16,13 @@ public class GymEquipment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long gymEquipmentId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "equipment_id")
     private Equipment equipment;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gym_id")
     private Gym gym;
 

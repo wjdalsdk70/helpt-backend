@@ -21,7 +21,7 @@ public class GymEquipmentResponse {
 
     public static GymEquipmentResponse toDto(GymEquipment gymEquipment){
         return GymEquipmentResponse.builder()
-                .gymEquipmentId(gymEquipment.getGymEquipmentId())
+                .gymEquipmentId(gymEquipment.getId())
                 .equipmentName(gymEquipment.getEquipment().getEquipmentName())
                 .customCount(gymEquipment.getCustomCount())
                 .customSet(gymEquipment.getCustomSet())
