@@ -35,12 +35,12 @@ public class GymController {
     public ResponseEntity<GymResponse> registerGym(
             @RequestPart("gymInfo") GymResistrationRequest gymInfo,
             @RequestPart("businessFile") MultipartFile businessFile) {
-        String uploadURL;
-        try {
-            uploadURL = s3Uploader.upload(businessFile, "businessFile");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        String uploadURL = "/test";
+//        try {
+//            uploadURL = s3Uploader.upload(businessFile, "businessFile");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
         gymInfo.updateBusinessFile(uploadURL);
         return ResponseEntity.ok(gymService.addGym(gymInfo));
     }
