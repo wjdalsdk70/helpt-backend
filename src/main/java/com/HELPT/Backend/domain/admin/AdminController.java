@@ -14,6 +14,7 @@ import com.HELPT.Backend.global.auth.jwt.JWTResponse;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin")
+@Slf4j
 public class AdminController {
 
     private final AdminService adminService;
@@ -88,13 +90,14 @@ public class AdminController {
 
     @GetMapping("/equipments/add")
     public String viewAddEquipment(Model model) {
-        model.addAttribute("equipment", Equipment.builder().build());
+        model.addAttribute("equipment", EquipmentDto.builder().build());
         model.addAttribute("template", "equipments/add");
         return "admin/index";
     }
-    // 기구 추가
+
     @PostMapping("/equipments")
     public String addEquipment(@ModelAttribute EquipmentDto equipmentDto) {
+        log.info(equipmentDto.getEquipmentName());
         equipmentService.addEquipment(equipmentDto);
         return "redirect:/admin/equipments";
     }

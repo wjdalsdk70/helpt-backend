@@ -22,7 +22,7 @@ public class GymResponse {
 
     public static GymResponse toDto(Gym gym){
         return GymResponse.builder()
-                .gymId(gym.getGymId())
+                .gymId(gym.getId())
                 .address(gym.getAddress())
                 .gymName(gym.getGymName())
                 .status(gym.getStatus())
