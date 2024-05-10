@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
 import static com.HELPT.Backend.global.error.ErrorCode.EXIST_REQUEST;
 
@@ -16,6 +18,11 @@ import static com.HELPT.Backend.global.error.ErrorCode.EXIST_REQUEST;
 public class GymAdmissionController {
 
     private final GymAdmissionService gymAdmissionService;
+
+    @GetMapping
+    public ResponseEntity<List<GymAdmissionResponse>> gymAdmissionList(@PathVariable Long gymId) {
+        return ResponseEntity.ok(gymAdmissionService.findGymAdmissions(gymId));
+    }
 
     @PostMapping
     public ResponseEntity<GymAdmission> gymAdmissionAdd(@PathVariable Long gymId) {
