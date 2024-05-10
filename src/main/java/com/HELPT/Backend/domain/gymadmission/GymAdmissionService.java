@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +18,12 @@ public class GymAdmissionService {
     private final MemberRepository memberRepository;
     private final GymRepository gymRepository;
     private final GymAdmissionRepository gymAdmissionRepository;
+
+    @Transactional(readOnly = true)
+    public List<GymAdmissionResponse> findGymAdmissions(Long gymId) {
+        List<GymAdmission> gymAdmissionList = gymAdmissionRepository.findByGymId(gymId);
+        return gymAdmissionList.stream().map(gymAdmission->GymAdmissionResponse.toDto(gymAdmission,gymAdmission.getMember())).toList();
+    }
 
     @Transactional
     public GymAdmission addGymAdmission(Long gymId, Long userId) {
