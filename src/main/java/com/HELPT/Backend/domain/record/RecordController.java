@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
@@ -26,5 +27,20 @@ public class RecordController {
         Long userId = getCurrentUserId();
 
         return ResponseEntity.ok(recordService.saveRecord(userId,recordRequest));
+    }
+
+    @GetMapping("/detail")
+    public ResponseEntity<RecordResponse> recordDetail(@RequestParam("recordId") Long recordId) {
+
+        return ResponseEntity.ok(recordService.detail(recordId));
+    }
+
+    @GetMapping("/calender")
+    public ResponseEntity<List<RecordResponse>> recordList(@RequestParam("date") LocalDate monthDate) {
+
+        Long userId = getCurrentUserId();
+
+        return ResponseEntity.ok(recordService.recordList(userId,monthDate));
+
     }
 }

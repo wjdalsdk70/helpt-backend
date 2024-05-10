@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,7 +20,7 @@ public class RecordResponse {
 
     private int weight;
 
-    private LocalDateTime recordDate;
+    private LocalDate recordDate;
 
     private float successRate;
 

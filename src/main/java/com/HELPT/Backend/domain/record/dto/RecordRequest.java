@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,12 +20,12 @@ public class RecordRequest {
 
     private int weight;
 
-    private LocalDateTime recordDate;
+    private LocalDate recordDate;
 
     private float successRate;
 
     @Builder
-    public RecordRequest(Long equipmentId, int count, int setNumber, int weight, LocalDateTime recordDate, float successRate) {
+    public RecordRequest(Long equipmentId, int count, int setNumber, int weight, LocalDate recordDate, float successRate) {
         this.equipmentId = equipmentId;
         this.count = count;
         this.setNumber = setNumber;

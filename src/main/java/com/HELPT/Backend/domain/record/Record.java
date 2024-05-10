@@ -31,7 +31,7 @@ public class Record {
 
     private int weight;
 
-    private LocalDateTime recordDate;
+    private LocalDate recordDate;
 
     private float successRate;
 }
