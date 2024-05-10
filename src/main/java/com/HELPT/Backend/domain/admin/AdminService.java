@@ -35,9 +35,12 @@ public class AdminService {
                     .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + loginId));
 
             // 비밀번호 검증
-            if (!passwordEncoder.matches(password, admin.getPassword())) {
+            if(!password.equals(admin.getPassword())){
                 throw new BadCredentialsException("Invalid password");
             }
+//            if (!passwordEncoder.matches(password, admin.getPassword())) {
+//                throw new BadCredentialsException("Invalid password");
+//            }
 
             // JWT 토큰 생성
             JWTToken jwt = jwtUtil.createTokens(admin.getAdminId());

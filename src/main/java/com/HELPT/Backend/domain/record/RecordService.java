@@ -1,0 +1,71 @@
+package com.HELPT.Backend.domain.record;
+
+import com.HELPT.Backend.domain.product.Product;
+import com.HELPT.Backend.domain.product.ProductRepository;
+import com.HELPT.Backend.domain.product.dto.ProductResponse;
+import com.HELPT.Backend.domain.record.dto.RecordRequest;
+import com.HELPT.Backend.domain.record.dto.RecordResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+@Transactional
+public class RecordService {
+
+    private final RecordRepository recordRepository;
+
+    public RecordResponse saveRecord(Long userId, RecordRequest recordRequest) {
+
+        Record saveRecord = Record.builder()
+                .userId(userId)
+                .equipmentId(recordRequest.getEquipmentId())
+                .count(recordRequest.getCount())
+                .setNumber(recordRequest.getSetNumber())
+                .weight(recordRequest.getWeight())
+                .recordDate(recordRequest.getRecordDate())
+                .successRate(recordRequest.getSuccessRate())
+                .build();
+
+        recordRepository.save(saveRecord);
+
+        return new RecordResponse(saveRecord);
+    }
+
+    public RecordResponse detail(Long recordId) {
+
+        Optional<Record> findRecord = recordRepository.findById(recordId);
+
+        return findRecord.map(RecordResponse::new).orElse(null);
+    }
+
+    public List<RecordResponse> recordList(Long userId, LocalDate monthDate) {
+
+        LocalDate firstDayOfMonth = monthDate.with(TemporalAdjusters.firstDayOfMonth());
+        LocalDate lastDayOfMonth = monthDate.with(TemporalAdjusters.lastDayOfMonth());
+
+        Optional<List<Record>> findRecord = recordRepository.findAllByUserIdAndRecordDateBetween(userId, firstDayOfMonth,lastDayOfMonth);
+
+        if(findRecord.isPresent())
+        {
+            List<Record> listOfRecords = findRecord.get();
+            List<RecordResponse> recordResponsesList = listOfRecords.stream().map(RecordResponse::new).toList();
+
+            return recordResponsesList;
+        }
+        else {
+            return null;
+        }
+    }
+
+
+}

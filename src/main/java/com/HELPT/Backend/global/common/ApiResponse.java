@@ -33,19 +33,24 @@ public class ApiResponse<T> {
         return new ApiResponse<>(SUCCESS_STATUS, null, null);
     }
 
-    public static ApiResponse<?> failResponse(BindingResult bindingResult) {
-        Map<String, String> errors = new HashMap<>();
-
-        List<ObjectError> allErrors = bindingResult.getAllErrors();
-        for (ObjectError error : allErrors) {
-            if (error instanceof FieldError) {
-                errors.put(((FieldError) error).getField(), error.getDefaultMessage());
-            } else {
-                errors.put(error.getObjectName(), error.getDefaultMessage());
-            }
-        }
-        return new ApiResponse<>(FAIL_STATUS, errors, null);
+    public static ApiResponse<?> failResponse(String message) {
+        return new ApiResponse<>(FAIL_STATUS, null, message );
     }
+
+//    public static ApiResponse<?> failResponse(BindingResult bindingResult) {
+//        Map<String, String> errors = new HashMap<>();
+//
+//        List<ObjectError> allErrors = bindingResult.getAllErrors();
+//        for (ObjectError error : allErrors) {
+//            if (error instanceof FieldError) {
+//                errors.put(((FieldError) error).getField(), error.getDefaultMessage());
+//            } else {
+//                errors.put(error.getObjectName(), error.getDefaultMessage());
+//            }
+//        }
+//        return new ApiResponse<>(FAIL_STATUS, errors, null);
+//    }
+
 
     public static ApiResponse<?> errorResponse(String message) {
         return new ApiResponse<>(ERROR_STATUS, null, message);
