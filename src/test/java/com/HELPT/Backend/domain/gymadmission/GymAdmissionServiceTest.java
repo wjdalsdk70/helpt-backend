@@ -7,11 +7,17 @@ import com.HELPT.Backend.domain.member.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -38,6 +44,7 @@ public class GymAdmissionServiceTest {
     void setUp() {
         member = Member.builder()
                 .userId(1L)
+                .userName("이정민")
                 .build();
         gym = Gym.builder()
                 .id(1L)
@@ -47,6 +54,23 @@ public class GymAdmissionServiceTest {
                 .member(member)
                 .gym(gym)
                 .build();
+    }
+    @Test
+    void findGymAdmissionList_Success(){
+        // given
+        List<GymAdmission> gymAdmissions = Arrays.asList(gymAdmission);
+        when(gymAdmissionRepository.findByGymId(anyLong())).thenReturn(gymAdmissions);
+        GymAdmissionResponse expectedResponse = GymAdmissionResponse.toDto(gymAdmission, gymAdmission.getMember());
+
+        // when
+        List<GymAdmissionResponse> actualResponses = gymAdmissionService.findGymAdmissions(1L);
+
+        // then
+        assertNotNull(actualResponses, "The returned list should not be null");
+        assertFalse(actualResponses.isEmpty(), "The returned list should not be empty");
+        assertEquals(1, actualResponses.size(), "The size of returned list should match the expected list size");
+        assertEquals(expectedResponse.getGymAdmissionId(), actualResponses.get(0).getGymAdmissionId(), "The id of GymAdmissionResponse should match");
+        assertEquals(expectedResponse.getUserName(), actualResponses.get(0).getUserName(), "The memberId of GymAdmissionResponse should match");
     }
 
     @Test
@@ -65,7 +89,15 @@ public class GymAdmissionServiceTest {
         assertNotNull(savedAdmission.getMember());
         assertEquals(gym.getId(), savedAdmission.getGym().getId());
         assertEquals(member.getUserId(), savedAdmission.getMember().getUserId());
-        verify(gymAdmissionRepository).save(gymAdmission);
+
+        // Verify using ArgumentCaptor
+        ArgumentCaptor<GymAdmission> captor = ArgumentCaptor.forClass(GymAdmission.class);
+        verify(gymAdmissionRepository).save(captor.capture());
+        GymAdmission captured = captor.getValue();
+        assertNotNull(captured.getGym());
+        assertNotNull(captured.getMember());
+        assertEquals(gym.getId(), captured.getGym().getId());
+        assertEquals(member.getUserId(), captured.getMember().getUserId());
     }
 
     @Test
