@@ -42,7 +42,7 @@ public class GymAdmissionController {
             @RequestParam("endDate") LocalDate endDate){
         return ResponseEntity.ok(gymAdmissionService.approveGymAdmission(gymAdmissionId,endDate));
     }
-
+  
     @DeleteMapping("/{gymAdmissionId}/reject")
     public ResponseEntity<Void> gymAdmissionReject(@PathVariable Long gymAdmissionId){
         gymAdmissionService.rejectGymAdmission(gymAdmissionId);
