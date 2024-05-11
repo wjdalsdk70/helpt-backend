@@ -21,32 +21,26 @@ public class MembershipController {
 
     @GetMapping("/detail")
     public ResponseEntity<Membership> membershipInfo() {
-
         Long userId = getCurrentUserId();
-
         return ResponseEntity.ok(membershipService.findMembership(userId));
     }
 
-    @GetMapping("/purchase")
-    public ResponseEntity<MembershipResponse> addMembership(@RequestParam("productId")Long productId) {
-
+    @PostMapping("/{productId}")
+    public ResponseEntity<MembershipResponse> addMembership(@PathVariable Long productId) {
         Long userId = getCurrentUserId();
         return ResponseEntity.ok(membershipService.addMembership(userId,productId));
     }
 
-    @PostMapping("/extension")
+    @PutMapping ("/{membershipId}/extension")
     public ResponseEntity<MembershipResponse> extensionMembership(
-            @RequestBody MembershipRequest membershipRequest,
+            @PathVariable Long membershipId,
             @RequestParam("endDate") LocalDate endDate) {
-
-        Long mId = membershipRequest.getMembershipId();
-        return ResponseEntity.ok(membershipService.extensionMembership(mId,endDate));
+        return ResponseEntity.ok(membershipService.extensionMembership(membershipId,endDate));
     }
 
-    @DeleteMapping("/remove")
-    public ResponseEntity<Boolean> removeMembership(@RequestBody MembershipRequest membershipRequest) {
-
-        membershipService.removeMembership(membershipRequest);
+    @DeleteMapping("/{membershipId}")
+    public ResponseEntity<Boolean> removeMembership(@PathVariable Long membershipId) {
+        membershipService.removeMembership(membershipId);
         return ResponseEntity.ok(true);
     }
 

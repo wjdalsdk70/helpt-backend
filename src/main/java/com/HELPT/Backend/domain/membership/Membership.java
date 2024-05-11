@@ -40,9 +40,9 @@ public class Membership {
         this.isAttendToday=false;
     }
 
-    public void addDays(int days)
+    public void addDays(int months)
     {
-        this.endDate = startDate.plusDays(days);
+        this.endDate = startDate.plusMonths(months);
     }
 
     public void attend(){
