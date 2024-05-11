@@ -27,9 +27,8 @@ public class MembershipController {
         return ResponseEntity.ok(membershipService.findMembership(userId));
     }
 
-    @GetMapping("/purchase")
-    public ResponseEntity<MembershipResponse> addMembership(@RequestParam("productId")Long productId) {
-
+    @PostMapping("/{productId}")
+    public ResponseEntity<MembershipResponse> addMembership(@PathVariable Long productId) {
         Long userId = getCurrentUserId();
         return ResponseEntity.ok(membershipService.addMembership(userId,productId));
     }

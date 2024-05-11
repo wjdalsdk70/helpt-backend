@@ -43,7 +43,7 @@ public class MembershipService {
                 .gymId(product.getGymId())
                 .build();
 
-        addMembership.addDays(product.getDay());
+        addMembership.addDays(product.getMonths());
 
 
         Membership saveMembership = membershipRepository.save(addMembership);
