@@ -23,9 +23,10 @@ public class MembershipService {
     @Autowired
     private final EntityManager em;
 
-    public Membership findMembership(Long userid)
+    public MembershipResponse findMembership(Long userid)
     {
-        return membershipRepository.findByUserId(userid).orElseThrow(() -> new RuntimeException("Membership not found"));
+        Membership findMembership = membershipRepository.findByUserId(userid).orElseThrow(() -> new RuntimeException("Membership not found"));
+        return new MembershipResponse(findMembership);
     }
 
     public void removeMembership(Long membershipId)

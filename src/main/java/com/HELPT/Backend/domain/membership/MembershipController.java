@@ -20,7 +20,7 @@ public class MembershipController {
     private final MembershipService membershipService;
 
     @GetMapping("/detail")
-    public ResponseEntity<Membership> membershipInfo() {
+    public ResponseEntity<MembershipResponse> membershipInfo() {
         Long userId = getCurrentUserId();
         return ResponseEntity.ok(membershipService.findMembership(userId));
     }
