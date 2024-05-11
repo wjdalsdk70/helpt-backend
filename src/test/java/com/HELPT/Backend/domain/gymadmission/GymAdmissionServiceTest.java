@@ -116,7 +116,7 @@ public class GymAdmissionServiceTest {
 
     @Test
     void addGymAdmission_GymNotFound_ThrowsException() {
-        // then
+        // given
         when(memberRepository.findById(any())).thenReturn(Optional.of(member));
         when(gymRepository.findById(any())).thenReturn(Optional.empty());
 
@@ -127,5 +127,17 @@ public class GymAdmissionServiceTest {
 
         // then
         assertEquals("Gym not found", exception.getMessage());
+    }
+
+    @Test
+    void rejectGymAdmission_DeletesAdmission() {
+        // given
+        Long gymAdmissionId = 1L;
+
+        // when
+        gymAdmissionService.rejectGymAdmission(gymAdmissionId);
+
+        // then
+        verify(gymAdmissionRepository).deleteById(gymAdmissionId);
     }
 }

@@ -5,6 +5,7 @@ import com.HELPT.Backend.domain.gym.repository.GymRepository;
 import com.HELPT.Backend.domain.member.Member;
 import com.HELPT.Backend.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,5 +42,10 @@ public class GymAdmissionService {
                 .build();
         gymAdmissionRepository.save(gymAdmission);
         return gymAdmission;
+    }
+
+    @Transactional
+    public void rejectGymAdmission(Long gymAdmissionId) {
+        gymAdmissionRepository.deleteById(gymAdmissionId);
     }
 }
