@@ -33,7 +33,9 @@ public class ProductService {
     public ProductResponse addProduct(Long gymId, ProductRequest productRequest) {
 
         Product product = Product.builder()
-                .gymId(gymId).day(productRequest.getDay()).price(productRequest.getPrice()).build();
+                .gymId(gymId)
+                .months(productRequest.getMonths())
+                .price(productRequest.getPrice()).build();
 
         Product saveProduct = productRepository.save(product);
         return new ProductResponse(saveProduct);
@@ -45,7 +47,7 @@ public class ProductService {
 
         Product findProduct = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product Error"));
-        findProduct.setDay(productRequest.getDay());
+        findProduct.setMonths(productRequest.getMonths());
         findProduct.setPrice(productRequest.getPrice());
 
         return new ProductResponse(findProduct);

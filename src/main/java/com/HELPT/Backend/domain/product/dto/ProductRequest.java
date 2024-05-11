@@ -8,13 +8,13 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductRequest {
 
-    private int day;
+    private int months;
 
     private int price;
 
     @Builder
-    public ProductRequest(int day, int price) {
-        this.day = day;
+    public ProductRequest(int months, int price) {
+        this.months = months;
         this.price = price;
     }
 

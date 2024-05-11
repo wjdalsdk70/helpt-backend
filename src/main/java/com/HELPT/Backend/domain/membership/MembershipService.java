@@ -23,14 +23,15 @@ public class MembershipService {
     @Autowired
     private final EntityManager em;
 
-    public Membership findMembership(Long userid)
+    public MembershipResponse findMembership(Long userid)
     {
-        return membershipRepository.findByUserId(userid).orElseThrow(() -> new RuntimeException("Membership not found"));
+        Membership findMembership = membershipRepository.findByUserId(userid).orElseThrow(() -> new RuntimeException("Membership not found"));
+        return new MembershipResponse(findMembership);
     }
 
-    public void removeMembership(MembershipRequest membershipRequest)
+    public void removeMembership(Long membershipId)
     {
-        membershipRepository.deleteById(membershipRequest.getMembershipId());
+        membershipRepository.deleteById(membershipId);
     }
 
 
@@ -43,18 +44,17 @@ public class MembershipService {
                 .gymId(product.getGymId())
                 .build();
 
-        addMembership.addDays(product.getDay());
+        addMembership.addDays(product.getMonths());
 
 
         Membership saveMembership = membershipRepository.save(addMembership);
         return new MembershipResponse(saveMembership);
     }
 
-    public MembershipResponse extensionMembership(Long userId, LocalDate endDate)
+    public MembershipResponse extensionMembership(Long membershipId, LocalDate endDate)
     {
-        Membership findMembership = membershipRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("Membership not found"));
+        Membership findMembership = membershipRepository.findById(membershipId).orElseThrow(() -> new RuntimeException("Membership not found"));
         findMembership.setEndDate(endDate);
-
         return new MembershipResponse(findMembership);
     }
 }

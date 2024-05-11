@@ -19,12 +19,12 @@ public class Product {
 
     private Long gymId;
 
-    private int day;
+    private int months;
 
     private int price;
 
-    public void setDay(int day) {
-        this.day = day;
+    public void setMonths(int months) {
+        this.months = months;
     }
 
     public void setPrice(int price) {
