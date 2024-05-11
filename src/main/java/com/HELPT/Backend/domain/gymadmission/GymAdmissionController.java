@@ -33,4 +33,10 @@ public class GymAdmissionController {
         }
         return ResponseEntity.ok(gymAdmission);
     }
+
+    @DeleteMapping("/{gymAdmissionId}/reject")
+    public ResponseEntity<Void> gymAdmissionReject(@PathVariable Long gymAdmissionId){
+        gymAdmissionService.rejectGymAdmission(gymAdmissionId);
+        return ResponseEntity.ok().build();
+    }
 }
