@@ -28,9 +28,9 @@ public class MembershipService {
         return membershipRepository.findByUserId(userid).orElseThrow(() -> new RuntimeException("Membership not found"));
     }
 
-    public void removeMembership(MembershipRequest membershipRequest)
+    public void removeMembership(Long membershipId)
     {
-        membershipRepository.deleteById(membershipRequest.getMembershipId());
+        membershipRepository.deleteById(membershipId);
     }
 
 
@@ -50,11 +50,10 @@ public class MembershipService {
         return new MembershipResponse(saveMembership);
     }
 
-    public MembershipResponse extensionMembership(Long userId, LocalDate endDate)
+    public MembershipResponse extensionMembership(Long membershipId, LocalDate endDate)
     {
-        Membership findMembership = membershipRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("Membership not found"));
+        Membership findMembership = membershipRepository.findById(membershipId).orElseThrow(() -> new RuntimeException("Membership not found"));
         findMembership.setEndDate(endDate);
-
         return new MembershipResponse(findMembership);
     }
 }
