@@ -4,6 +4,8 @@ import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.domain.gym.repository.GymRepository;
 import com.HELPT.Backend.domain.member.Member;
 import com.HELPT.Backend.domain.member.MemberRepository;
+import com.HELPT.Backend.domain.membership.Membership;
+import com.HELPT.Backend.domain.membership.MembershipRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -33,12 +36,17 @@ public class GymAdmissionServiceTest {
     @Mock
     private GymAdmissionRepository gymAdmissionRepository;
 
+    @Mock
+    private MembershipRepository membershipRepository;
+
     @InjectMocks
     private GymAdmissionService gymAdmissionService;
 
     private Member member;
     private Gym gym;
     private GymAdmission gymAdmission;
+    private Membership membership;
+    private LocalDate endDate;
 
     @BeforeEach
     void setUp() {
@@ -54,6 +62,13 @@ public class GymAdmissionServiceTest {
                 .member(member)
                 .gym(gym)
                 .build();
+        endDate = LocalDate.of(2024, 12, 31);
+//        membership = Membership.builder()
+//                .id
+//                .member(member)
+//                .gym(gym)
+//                .build();
+
     }
     @Test
     void findGymAdmissionList_Success(){
@@ -130,7 +145,24 @@ public class GymAdmissionServiceTest {
     }
 
     @Test
-    void rejectGymAdmission_DeletesAdmission() {
+    void approveGymAdmission() {
+        // given
+        when(gymAdmissionRepository.findById(1L)).thenReturn(Optional.of(gymAdmission));
+        when(membershipRepository.save(any(Membership.class))).thenAnswer(i -> i.getArguments()[0]);
+
+        // when
+        Membership result = gymAdmissionService.approveGymAdmission(1L,endDate);
+
+        // then
+        assertNotNull(result, "Membership should not be null");
+        assertEquals(gym.getId(), result.getGymId(), "Gym ID should match");
+        assertEquals(member.getUserId(), result.getUserId(), "User ID should match");
+        assertEquals(endDate, result.getEndDate(), "End date should match");
+        verify(membershipRepository).save(any(Membership.class));
+    }
+
+    @Test
+    void rejectGymAdmission() {
         // given
         Long gymAdmissionId = 1L;
 
