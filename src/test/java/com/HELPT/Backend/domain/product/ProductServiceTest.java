@@ -21,13 +21,13 @@ class ProductServiceTest {
 
         Product saveProduct = Product.builder()
                 .gymId(1L)
-                .day(20)
+                .months(20)
                 .price(10000)
                 .build();
 
         Product product = userRepository.save(saveProduct);
 
-        assertEquals(20, product.getDay());
+        assertEquals(20, product.getMonths());
         assertEquals(10000, product.getPrice());
     }
 

@@ -4,11 +4,14 @@ import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.domain.gym.repository.GymRepository;
 import com.HELPT.Backend.domain.member.Member;
 import com.HELPT.Backend.domain.member.MemberRepository;
+import com.HELPT.Backend.domain.membership.Membership;
+import com.HELPT.Backend.domain.membership.MembershipRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +22,7 @@ public class GymAdmissionService {
     private final MemberRepository memberRepository;
     private final GymRepository gymRepository;
     private final GymAdmissionRepository gymAdmissionRepository;
+    private final MembershipRepository membershipRepository;
 
     @Transactional(readOnly = true)
     public List<GymAdmissionResponse> findGymAdmissions(Long gymId) {
@@ -42,6 +46,20 @@ public class GymAdmissionService {
                 .build();
         gymAdmissionRepository.save(gymAdmission);
         return gymAdmission;
+    }
+
+    @Transactional
+    public Membership approveGymAdmission(Long gymAdmissionId, LocalDate endDate) {
+        GymAdmission gymAdmission = gymAdmissionRepository.findById(gymAdmissionId)
+                .orElseThrow(() -> new RuntimeException("GymAdmission not found"));
+        Membership membership = Membership.builder()
+                .gymId(gymAdmission.getGym().getId())
+                .userId(gymAdmission.getMember().getUserId())
+                .build();
+        membership.setEndDate(endDate);
+        membershipRepository.save(membership);
+        return membership;
+
     }
 
     @Transactional
