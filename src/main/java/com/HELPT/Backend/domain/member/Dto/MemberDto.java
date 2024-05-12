@@ -11,17 +11,11 @@ import lombok.*;
 public class MemberDto {
 
     private Long gymId;
-
     private String userName;
-
     private GENDER gender;
-
     private float height;
-
     private float weight;
-
     private String kakaoId;
-
 
     public Member toEntity()
     {
@@ -42,7 +36,6 @@ public class MemberDto {
                 .gender(member.getGender())
                 .height(member.getHeight())
                 .weight(member.getWeight())
-                .kakaoId(member.getKakaoId())
                 .build();
     }
 }
