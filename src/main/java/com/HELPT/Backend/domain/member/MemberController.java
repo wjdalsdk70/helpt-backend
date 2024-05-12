@@ -1,13 +1,10 @@
 package com.HELPT.Backend.domain.member;
 
-import com.HELPT.Backend.domain.manager.dto.MemberJoinResponse;
+import com.HELPT.Backend.domain.member.Dto.MemberDetailResponse;
+import com.HELPT.Backend.domain.member.Dto.MemberJoinResponse;
 import com.HELPT.Backend.domain.member.Dto.MemberDto;
-import com.HELPT.Backend.global.auth.SecurityUtil;
 import com.HELPT.Backend.global.auth.jwt.JWTResponse;
 import com.HELPT.Backend.global.common.dto.KakaoLoginRequest;
-import com.HELPT.Backend.global.common.dto.KakaoLoginResponse;
-import com.HELPT.Backend.global.kakaomodule.KakaoAPI;
-import com.HELPT.Backend.global.kakaomodule.KakaoUserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -50,9 +47,8 @@ public class MemberController {
     }
 
     @GetMapping("/{memberId}")
-    public ResponseEntity<MemberDto> findMember(@PathVariable Long memberId) {
-        MemberDto resultMember = memberService.findMember(memberId);
-        return ResponseEntity.ok(resultMember);
+    public ResponseEntity<MemberDetailResponse> findMember(@PathVariable Long memberId) {
+        return ResponseEntity.ok(memberService.findMemberDetail(memberId));
     }
 
     @GetMapping("/gyms/{gymId}/search")

@@ -1,11 +1,9 @@
 package com.HELPT.Backend.domain.manager;
 
-import com.HELPT.Backend.domain.gym.dto.GymResponse;
 import com.HELPT.Backend.global.common.dto.KakaoLoginRequest;
-import com.HELPT.Backend.global.common.dto.KakaoLoginResponse;
 import com.HELPT.Backend.domain.manager.dto.ManagerRequest;
 import com.HELPT.Backend.domain.manager.dto.ManagerResponse;
-import com.HELPT.Backend.domain.manager.dto.MemberJoinResponse;
+import com.HELPT.Backend.domain.member.Dto.MemberJoinResponse;
 import com.HELPT.Backend.global.auth.jwt.JWTResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
