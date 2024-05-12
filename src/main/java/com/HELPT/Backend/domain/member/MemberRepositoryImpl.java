@@ -1,6 +1,7 @@
 package com.HELPT.Backend.domain.member;
 
-import com.HELPT.Backend.domain.manager.dto.MemberJoinResponse;
+import com.HELPT.Backend.domain.member.Dto.MemberDetailResponse;
+import com.HELPT.Backend.domain.member.Dto.MemberJoinResponse;
 import com.HELPT.Backend.domain.membership.Membership;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -40,12 +41,31 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
     }
 
     @Override
+    public MemberDetailResponse memberDetail(Long memberId) {
+        Tuple result = queryFactory
+                .select(member.userName, member.gender, member.height, member.weight, membership.startDate, membership.endDate)
+                .from(member)
+                .leftJoin(membership).on(member.userId.eq(membership.userId))
+                .where(member.userId.eq(memberId))
+                .fetchOne();
+
+        return MemberDetailResponse.builder()
+                .userName(result.get(member.userName))
+                .gender(result.get(member.gender))
+                .weight(result.get(member.weight))
+                .height(result.get(member.height))
+                .startDate(result.get(membership.startDate))
+                .endDate(result.get(membership.endDate))
+                .build();
+    }
+
+    @Override
     public List<MemberJoinResponse> memberList(Long gymId, String name)
     {
         BooleanExpression namePredicate = member.userName.contains(name);
 
         List<Tuple> results = queryFactory
-                .select(member.userId, member.userName, membership.startDate, membership.endDate)
+                .select(member.userId,member.userName, membership.startDate, membership.endDate)
                 .from(member)
                 .leftJoin(membership).on(member.userId.eq(membership.userId))
                 .where(member.gymId.eq(gymId).and(namePredicate))

@@ -1,16 +1,13 @@
 package com.HELPT.Backend.domain.member;
 
-import com.HELPT.Backend.domain.gym.entity.Gym;
-import com.HELPT.Backend.domain.gym.entity.Status;
-import com.HELPT.Backend.domain.manager.Manager;
-import com.HELPT.Backend.domain.manager.dto.MemberJoinResponse;
+import com.HELPT.Backend.domain.member.Dto.MemberDetailResponse;
+import com.HELPT.Backend.domain.member.Dto.MemberJoinResponse;
 import com.HELPT.Backend.domain.member.Dto.MemberDto;
 import com.HELPT.Backend.domain.membership.Membership;
 import com.HELPT.Backend.global.auth.jwt.JWTResponse;
 import com.HELPT.Backend.global.auth.jwt.JWTToken;
 import com.HELPT.Backend.global.auth.jwt.JWTUtil;
 import com.HELPT.Backend.global.common.dto.KakaoLoginRequest;
-import com.HELPT.Backend.global.common.dto.KakaoLoginResponse;
 import com.HELPT.Backend.global.error.CustomException;
 import com.HELPT.Backend.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +70,11 @@ public class MemberService {
         Member member = memberRepository.findById(userId).orElseThrow(() -> new RuntimeException("Member not found"));
         MemberDto memberDto = MemberDto.toDto(member);
         return memberDto;
+    }
+
+    @Transactional(readOnly = true)
+    public MemberDetailResponse findMemberDetail(Long memberId) {
+        return memberRepository.memberDetail(memberId);
     }
 
     @Transactional(readOnly = true)

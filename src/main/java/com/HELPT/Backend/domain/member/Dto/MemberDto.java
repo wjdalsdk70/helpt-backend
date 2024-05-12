@@ -2,12 +2,14 @@ package com.HELPT.Backend.domain.member.Dto;
 
 import com.HELPT.Backend.domain.member.Member;
 import com.HELPT.Backend.global.auth.GENDER;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberDto {
 
     private Long gymId;
@@ -31,7 +33,6 @@ public class MemberDto {
 
     public static MemberDto toDto(Member member) {
         return MemberDto.builder()
-                .gymId(member.getGymId())
                 .userName(member.getUserName())
                 .gender(member.getGender())
                 .height(member.getHeight())
