@@ -1,5 +1,6 @@
 package com.HELPT.Backend.domain.member;
 
+import com.HELPT.Backend.domain.manager.dto.MemberJoinResponse;
 import com.HELPT.Backend.domain.member.Dto.MemberDto;
 import com.HELPT.Backend.global.auth.SecurityUtil;
 import com.HELPT.Backend.global.auth.jwt.JWTResponse;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
 
@@ -36,18 +39,30 @@ public class MemberController {
     public ResponseEntity<String> attendance() {
         Long userId = getCurrentUserId();
         boolean bResult = memberService.attendance(userId);
-
         return ResponseEntity.ok(String.valueOf(bResult));
     }
 
-    @GetMapping("/detail")
-    public ResponseEntity<MemberDto> findMember() {
+    @GetMapping("/me")
+    public ResponseEntity<MemberDto> getMyInfo() {
         Long userId = getCurrentUserId();
         MemberDto resultMember = memberService.findMember(userId);
         return ResponseEntity.ok(resultMember);
     }
 
-    @PostMapping("/update")
+    @GetMapping("/{memberId}")
+    public ResponseEntity<MemberDto> findMember(@PathVariable Long memberId) {
+        MemberDto resultMember = memberService.findMember(memberId);
+        return ResponseEntity.ok(resultMember);
+    }
+
+    @GetMapping("/gyms/{gymId}/search")
+    public ResponseEntity<List<MemberJoinResponse>> searchMembersByGym(
+            @PathVariable Long gymId,
+            @RequestParam String name) {
+        return ResponseEntity.ok(memberService.searchMembersByGymAndName(gymId, name));
+    }
+
+    @PutMapping
     public ResponseEntity<MemberDto> updateMember(@RequestBody MemberDto member) {
         Long userId = getCurrentUserId();
         MemberDto resultMemberDto = memberService.updateMember(userId,member);

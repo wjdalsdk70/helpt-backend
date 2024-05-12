@@ -52,12 +52,16 @@ public class GymAdmissionService {
     public Membership approveGymAdmission(Long gymAdmissionId, LocalDate endDate) {
         GymAdmission gymAdmission = gymAdmissionRepository.findById(gymAdmissionId)
                 .orElseThrow(() -> new RuntimeException("GymAdmission not found"));
+        Member member = gymAdmission.getMember();
+        Gym gym = gymAdmission.getGym();
         Membership membership = Membership.builder()
                 .gymId(gymAdmission.getGym().getId())
-                .userId(gymAdmission.getMember().getUserId())
+                .userId(member.getUserId())
                 .build();
         membership.setEndDate(endDate);
         membershipRepository.save(membership);
+        Optional<Member> findmember = memberRepository.findById(member.getUserId());
+        findmember.get().updateGymId(gym.getId());
         gymAdmissionRepository.deleteById(gymAdmissionId);
         return membership;
 
