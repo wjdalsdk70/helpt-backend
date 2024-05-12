@@ -3,6 +3,7 @@ package com.HELPT.Backend.domain.member;
 import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.domain.gym.entity.Status;
 import com.HELPT.Backend.domain.manager.Manager;
+import com.HELPT.Backend.domain.manager.dto.MemberJoinResponse;
 import com.HELPT.Backend.domain.member.Dto.MemberDto;
 import com.HELPT.Backend.domain.membership.Membership;
 import com.HELPT.Backend.global.auth.jwt.JWTResponse;
@@ -17,6 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,6 +41,7 @@ public class MemberService {
         return JWTResponse.builder().token(jwt).build();
     }
 
+    @Transactional
     public JWTResponse register(MemberDto memberDto) {
         String kakaoId = memberDto.getKakaoId();
         Optional<Member> existMember = memberRepository.findByKakaoId(kakaoId);
@@ -63,6 +67,8 @@ public class MemberService {
 
         return true;
     }
+
+    @Transactional(readOnly = true)
     public MemberDto findMember(Long userId)
     {
         Member member = memberRepository.findById(userId).orElseThrow(() -> new RuntimeException("Member not found"));
@@ -70,6 +76,12 @@ public class MemberService {
         return memberDto;
     }
 
+    @Transactional(readOnly = true)
+    public List<MemberJoinResponse> searchMembersByGymAndName(Long gymId, String name) {
+        return memberRepository.memberList(gymId, name);
+    }
+
+    @Transactional
     public MemberDto updateMember(Long userId,MemberDto member)
     {
         Member findMember = memberRepository.findById(userId).orElseThrow(() -> new RuntimeException("Member not found"));
@@ -85,7 +97,4 @@ public class MemberService {
         Member member = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("Gym not found"));
         memberRepository.delete(member);
     }
-
-
-
 }

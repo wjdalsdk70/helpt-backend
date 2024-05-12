@@ -40,8 +40,10 @@ public class Member {
     public void setHeight(float height) {
         this.height = height;
     }
-
     public void setWeight(float weight) {
         this.weight = weight;
+    }
+    public void updateGymId(Long gymId) {
+        this.gymId = gymId;
     }
 }
