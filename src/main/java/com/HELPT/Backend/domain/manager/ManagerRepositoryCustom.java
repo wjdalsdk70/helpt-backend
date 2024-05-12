@@ -1,7 +1,6 @@
 package com.HELPT.Backend.domain.manager;
 
-import com.HELPT.Backend.domain.manager.dto.MemberJoinResponse;
-import com.HELPT.Backend.domain.member.Member;
+import com.HELPT.Backend.domain.member.Dto.MemberJoinResponse;
 
 import java.util.List;
 

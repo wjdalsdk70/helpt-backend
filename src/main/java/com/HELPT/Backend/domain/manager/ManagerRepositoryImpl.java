@@ -1,10 +1,7 @@
 package com.HELPT.Backend.domain.manager;
 
-import com.HELPT.Backend.domain.manager.dto.MemberJoinResponse;
-import com.HELPT.Backend.domain.member.Member;
-import com.HELPT.Backend.domain.membership.Membership;
+import com.HELPT.Backend.domain.member.Dto.MemberJoinResponse;
 import com.querydsl.core.Tuple;
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -14,10 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import static com.HELPT.Backend.domain.member.QMember.member;
 import static com.HELPT.Backend.domain.membership.QMembership.membership;
-import static com.HELPT.Backend.domain.gym.entity.QGym.gym;
+
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
