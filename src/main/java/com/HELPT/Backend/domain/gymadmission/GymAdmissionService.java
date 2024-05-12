@@ -58,6 +58,7 @@ public class GymAdmissionService {
                 .build();
         membership.setEndDate(endDate);
         membershipRepository.save(membership);
+        gymAdmissionRepository.deleteById(gymAdmissionId);
         return membership;
 
     }
