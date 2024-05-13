@@ -21,7 +21,7 @@ public class RecordController {
 
     private final RecordService recordService;
 
-    @PostMapping("/save")
+    @PostMapping("")
     public ResponseEntity<RecordResponse> saveRecord(@RequestBody RecordRequest recordRequest) {
 
         Long userId = getCurrentUserId();
@@ -29,8 +29,8 @@ public class RecordController {
         return ResponseEntity.ok(recordService.saveRecord(userId,recordRequest));
     }
 
-    @GetMapping("/detail")
-    public ResponseEntity<RecordResponse> recordDetail(@RequestParam("recordId") Long recordId) {
+    @GetMapping("/detail/{recordId}")
+    public ResponseEntity<RecordResponse> recordDetail(@PathVariable Long recordId) {
 
         return ResponseEntity.ok(recordService.detail(recordId));
     }
