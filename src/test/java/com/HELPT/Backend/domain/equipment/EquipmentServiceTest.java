@@ -126,4 +126,23 @@ class EquipmentServiceTest {
         // then
         assertThat(result.getEquipmentName()).isEqualTo(equipmentDto.getEquipmentName());
     }
+
+    @Test
+    @DisplayName("AI 기구 삭제 서비스 테스트")
+    void removeEquipmenServiceTest(){
+        // given
+        Equipment equipment = Equipment.builder()
+                .equipmentName("벤치프레스")
+                .defaultCount(10)
+                .defaultSet(5)
+                .defaultWeight(25)
+                .build();
+        given(equipmentRepository.findById(anyLong())).willReturn(Optional.of(equipment));
+
+        // when
+        equipmentService.removeEquipment(1L);
+
+        // then
+        verify(equipmentRepository).delete(any());
+    }
 }
