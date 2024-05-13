@@ -52,4 +52,24 @@ class EquipmentServiceTest {
         verify(equipmentRepository).save(any(Equipment.class));
         assertEquals(result.getEquipmentName(),equipment.getEquipmentName());
     }
+
+    @Test
+    @DisplayName("AI 기구 단건 조회 서비스 테스트")
+    void findEquipmentServiceTest(){
+        // given
+        Equipment equipment = Equipment.builder()
+                .equipmentName("벤치프레스")
+                .defaultCount(10)
+                .defaultSet(5)
+                .defaultWeight(25)
+                .build();
+        given(equipmentRepository.findById(anyLong())).willReturn(Optional.of(equipment));
+
+        // when
+        EquipmentDto result = equipmentService.findEquipment(1L);
+
+        // then
+        verify(equipmentRepository).findById(anyLong());
+        assertThat(result.getEquipmentName()).isEqualTo(equipment.getEquipmentName());
+    }
 }
