@@ -72,4 +72,33 @@ class EquipmentServiceTest {
         verify(equipmentRepository).findById(anyLong());
         assertThat(result.getEquipmentName()).isEqualTo(equipment.getEquipmentName());
     }
+    
+    @Test
+    @DisplayName("AI 기구 리스트 조회 서비스 테스트")
+    void findEquipmentListServiceTest(){
+        // given
+        List<Equipment> equipments = new ArrayList<>();
+        Equipment equipment1 = Equipment.builder()
+                .equipmentName("벤치프레스")
+                .defaultCount(10)
+                .defaultSet(5)
+                .defaultWeight(25)
+                .build();
+        Equipment equipment2 = Equipment.builder()
+                .equipmentName("스쿼트")
+                .defaultCount(10)
+                .defaultSet(5)
+                .defaultWeight(25)
+                .build();
+        equipments.add(equipment1);
+        equipments.add(equipment2);
+        given(equipmentRepository.findAll()).willReturn(equipments);
+
+        // when
+        List<EquipmentDto> result = equipmentService.findEquipments();
+
+        // then
+        assertThat(result.size()).isEqualTo(2);
+
+    }
 }
