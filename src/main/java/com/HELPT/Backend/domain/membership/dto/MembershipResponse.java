@@ -11,12 +11,14 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MembershipResponse {
 
+    private Long gymId;
     private Long membershipId;
     private int attendanceDate;
     private LocalDate startDate;
     private LocalDate endDate;
 
     public MembershipResponse(Membership membership) {
+        this.gymId = membership.getGymId();
         this.membershipId = membership.getMembershipId();
         this.attendanceDate = membership.getAttendanceDate();
         this.startDate = membership.getStartDate();
