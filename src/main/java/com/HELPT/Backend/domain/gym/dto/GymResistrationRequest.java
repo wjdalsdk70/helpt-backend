@@ -17,7 +17,7 @@ public class GymResistrationRequest {
     private String contactNumber; // 연락처
     private String businessNumber; // 사업자 등록번호
     private String businessType; // 사업자 구분
-    private String OwnerName; // 사업자 이름
+    private String ownerName; // 사업자 이름
     private String businessFile; // 사업자 등록증 파일 경로
 
     public void updateBusinessFile(String file){
@@ -30,7 +30,7 @@ public class GymResistrationRequest {
                 .contactNumber(contactNumber)
                 .businessNumber(businessNumber)
                 .businessType(businessType)
-                .OwnerName(OwnerName)
+                .ownerName(ownerName)
                 .businessFile(businessFile)
                 .build();
     }
