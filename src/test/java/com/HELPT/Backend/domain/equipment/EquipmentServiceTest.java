@@ -72,7 +72,7 @@ class EquipmentServiceTest {
         verify(equipmentRepository).findById(anyLong());
         assertThat(result.getEquipmentName()).isEqualTo(equipment.getEquipmentName());
     }
-    
+
     @Test
     @DisplayName("AI 기구 리스트 조회 서비스 테스트")
     void findEquipmentListServiceTest(){
@@ -98,7 +98,32 @@ class EquipmentServiceTest {
         List<EquipmentDto> result = equipmentService.findEquipments();
 
         // then
+        verify(equipmentRepository).findAll();
         assertThat(result.size()).isEqualTo(2);
+    }
 
+    @Test
+    @DisplayName("AI 기구 수정 서비스 테스트")
+    void modifyEquipmenServiceTest(){
+        // given
+        Equipment equipment = Equipment.builder()
+                .equipmentName("벤치프레스")
+                .defaultCount(10)
+                .defaultSet(5)
+                .defaultWeight(25)
+                .build();
+        EquipmentDto equipmentDto = EquipmentDto.builder()
+                .equipmentName("스쿼트")
+                .defaultCount(10)
+                .defaultSet(5)
+                .defaultWeight(25)
+                .build();
+        given(equipmentRepository.findById(anyLong())).willReturn(Optional.of(equipment));
+
+        // when
+        EquipmentDto result = equipmentService.modifyEquipment(1L, equipmentDto);
+
+        // then
+        assertThat(result.getEquipmentName()).isEqualTo(equipmentDto.getEquipmentName());
     }
 }
