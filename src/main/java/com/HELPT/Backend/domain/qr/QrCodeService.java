@@ -7,6 +7,9 @@ import com.HELPT.Backend.global.auth.jwt.JWTUtil;
 import com.HELPT.Backend.global.error.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 import static com.HELPT.Backend.global.error.ErrorCode.NOT_EXIST_MEMBER;
 
@@ -17,10 +20,12 @@ public class QrCodeService {
     private final JWTUtil jwtUtil;
     private final MemberRepository memberRepository;
 
+    @Transactional
     public String addQrCode(Long userId){
         return jwtUtil.createQrToken(userId);
     }
 
+    @Transactional
     public MembershipResponse verifyQrCode(Long userId, Long gymId){
 //        jwtUtil.isExpired(qrToken);
 //        Long userId = jwtUtil.getUserId(qrToken);
@@ -28,7 +33,9 @@ public class QrCodeService {
         if(membership==null) {
             throw new CustomException(NOT_EXIST_MEMBER);
         }
-        membership.attend();
+        if(!membership.getLastAttendDate().equals(LocalDate.now())){
+            membership.attend(membership.getAttendanceDate()+1);
+        }
         return MembershipResponse.builder().membership(membership).build();
     }
 }
