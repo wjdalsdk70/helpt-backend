@@ -35,4 +35,5 @@ public class Gym {
     }
     public void updateStatus(Status status) {this.status = status;}
     public void updateGymRegistration(GymRegistration gymRegistration) {this.gymRegistration = gymRegistration;}
+    public void updateChatLink(String chat_link) {this.chat_link = chat_link;}
 }
