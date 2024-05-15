@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
 
@@ -43,6 +45,18 @@ public class GymController {
 //        }
         gymInfo.updateBusinessFile(uploadURL);
         return ResponseEntity.ok(gymService.addGym(gymInfo));
+    }
+
+    @PutMapping("/{gymId}/chat-link")
+    public ResponseEntity<GymResponse> chatLinkModify(@RequestBody Map<String, String> map,@PathVariable Long gymId){
+        return ResponseEntity.ok(gymService.modifyChatLink(gymId,map.get("chatLink")));
+    }
+
+    @GetMapping("/{gymId}/chat-link")
+    public ResponseEntity<Map<String,String>> chatLinkModify(@PathVariable Long gymId){
+        Map<String, String> map = new HashMap<>();
+        map.put("chatLink",gymService.getChatLink(gymId));
+        return ResponseEntity.ok(map);
     }
 
     @GetMapping("/{gymId}")

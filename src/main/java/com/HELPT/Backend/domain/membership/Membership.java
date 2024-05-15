@@ -26,7 +26,7 @@ public class Membership {
 
     private int attendanceDate;
 
-    private Boolean isAttendToday;
+    private LocalDate lastAttendDate;
 
     private LocalDate startDate;
 
@@ -35,9 +35,10 @@ public class Membership {
     @Builder
     public Membership(Long userId, Long gymId) {
         this.userId = userId;
+        this.attendanceDate = 1;
         this.gymId = gymId;
         this.startDate = LocalDate.now();
-        this.isAttendToday=false;
+        this.lastAttendDate = LocalDate.now();
     }
 
     public void addDays(int months)
@@ -45,9 +46,9 @@ public class Membership {
         this.endDate = startDate.plusMonths(months);
     }
 
-    public void attend(){
-        this.attendanceDate += 1;
-        this.isAttendToday = true;
+    public void attend(int attendanceDate){
+        this.attendanceDate = attendanceDate;
+        this.lastAttendDate = LocalDate.now();
     }
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
