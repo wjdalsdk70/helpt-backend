@@ -44,12 +44,12 @@ public class RecordController {
 
     }
 
-    @PostMapping("members/calender")
-    public ResponseEntity<List<RecordResponse>> recordList(@RequestParam("userId") Long userId,
+    @PostMapping("/calender/members/{memberId}")
+    public ResponseEntity<List<RecordResponse>> recordList(@PathVariable Long memberId,
                                                            @RequestParam("date") LocalDate monthDate
                                                            ) {
 
-        return ResponseEntity.ok(recordService.recordList(userId,monthDate));
+        return ResponseEntity.ok(recordService.recordList(memberId,monthDate));
 
     }
 }
