@@ -43,4 +43,13 @@ public class RecordController {
         return ResponseEntity.ok(recordService.recordList(userId,monthDate));
 
     }
+
+    @PostMapping("members/calender")
+    public ResponseEntity<List<RecordResponse>> recordList(@RequestParam("userId") Long userId,
+                                                           @RequestParam("date") LocalDate monthDate
+                                                           ) {
+
+        return ResponseEntity.ok(recordService.recordList(userId,monthDate));
+
+    }
 }
