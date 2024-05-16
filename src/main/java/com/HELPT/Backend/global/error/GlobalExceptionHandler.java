@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import static com.HELPT.Backend.global.error.ErrorCode.NOT_EXIST_DATA;
+
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -14,6 +16,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse> handleCustomException(CustomException ex) {
         log.error("[CustomException] errCode : " + ex.getErrorCode());
         log.error("[CustomException] errMsg : " + ex.getMessage());
+        if (ex.getErrorCode() == NOT_EXIST_DATA){
+            return ResponseEntity.status(ex.getErrorCode().getHttpStatus().value()).body(null);
+        }
         return ResponseEntity.status(ex.getErrorCode().getHttpStatus().value()).body(ApiResponse.failResponse(ex.getMessage()));
     }
 

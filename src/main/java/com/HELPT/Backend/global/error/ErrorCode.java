@@ -11,7 +11,8 @@ public enum ErrorCode {
     BAD_REQUEST("잘못된 요청입니다.", HttpStatus.BAD_REQUEST),
     NOT_EXIST_USER("존재하지 않는 유저입니다.", HttpStatus.UNAUTHORIZED),
     NOT_EXIST_MEMBER("등록되지 않는 회원입니다.", HttpStatus.UNAUTHORIZED),
-    EXIST_REQUEST("존재하는 요청입니다.", HttpStatus.BAD_REQUEST);
+    EXIST_REQUEST("존재하는 요청입니다.", HttpStatus.BAD_REQUEST),
+    NOT_EXIST_DATA("데이터가 존재하지 않습니다.",HttpStatus.OK);
 
     private final String message;
     private final HttpStatus httpStatus;
