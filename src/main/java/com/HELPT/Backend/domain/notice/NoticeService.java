@@ -20,18 +20,11 @@ public class NoticeService {
 
     private final NoticeRepository noticeRepository;
 
-    public List<NoticeResponse> findNoticeByMember(Long gymId)
+    public List<NoticeResponse> findNotice(Long gymId)
     {
         List<Notice> noticeList = noticeRepository.findAllByGymId(gymId).orElseThrow(() -> new CustomException(ErrorCode.NOT_EXIST_USER));
 
         return noticeList.stream().map(NoticeResponse::new).toList();
-    }
-
-    public List<NoticeResponse> findNoticeByManager(Long gymId)
-    {
-        List<Notice> noticeList = noticeRepository.findAllByGymId(gymId).orElseThrow(() -> new CustomException(ErrorCode.NOT_EXIST_USER));
-
-        return noticeList.stream().map(notice -> new NoticeResponse(notice, notice.getNoticeId())).toList();
     }
 
     public Boolean uploadNotice(NoticeRequest noticeRequest)
