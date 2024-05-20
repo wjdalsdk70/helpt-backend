@@ -1,34 +1,77 @@
 package com.HELPT.Backend.domain.product;
 
+import com.HELPT.Backend.domain.product.dto.ProductRequest;
+import com.HELPT.Backend.domain.product.dto.ProductResponse;
 import groovy.util.logging.Slf4j;
-import org.junit.jupiter.api.Assertions;
+import jakarta.persistence.EntityNotFoundException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
-@DataJpaTest
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
+
+@ExtendWith(MockitoExtension.class)
 @Slf4j
 class ProductServiceTest {
 
-    @Autowired
-    private ProductRepository userRepository;
+    @Mock
+    private ProductRepository productRepository;
 
-    @Test
-    public void saveTest() {
+    @InjectMocks
+    private ProductService productService;
 
-        Product saveProduct = Product.builder()
+    private Product product;
+    @BeforeEach
+    public void setUp() {
+        product = Product.builder()
+                .productId(1L)
                 .gymId(1L)
-                .months(20)
+                .months(5)
                 .price(10000)
                 .build();
-
-        Product product = userRepository.save(saveProduct);
-
-        assertEquals(20, product.getMonths());
-        assertEquals(10000, product.getPrice());
     }
+
+    @Test
+    @DisplayName("Id검색")
+    public void findById() {
+        //given
+        List<Product> pList = new LinkedList<>();
+        pList.add(product);
+        when(productRepository.findAllByGymId(1L)).thenReturn(Optional.of(pList));
+
+        //when
+        List<ProductResponse> findList = productService.findAllProducts(1L);
+
+
+        //then
+        ProductResponse findRes = findList.stream().findFirst().get();
+        assertThat(findRes.getPrice()).isEqualTo(10000);
+        assertThat(findRes.getMonths()).isEqualTo(5);
+        
+
+
+    }
+
+    /*
+    @Test
+    public void testFindEntityById_NotFound() {
+        when(myRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> {
+            myService.findEntityById(1L);
+        });
+    }
+*/
 
 }
