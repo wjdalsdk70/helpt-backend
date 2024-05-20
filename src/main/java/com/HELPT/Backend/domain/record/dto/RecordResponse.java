@@ -20,6 +20,10 @@ public class RecordResponse {
 
     private int weight;
 
+    private LocalDateTime startTime;
+
+    private LocalDateTime endTime;
+
     private LocalDate recordDate;
 
     private float successRate;
@@ -32,5 +36,7 @@ public class RecordResponse {
         this.weight = record.getWeight();
         this.recordDate = record.getRecordDate();
         this.successRate = record.getSuccessRate();
+        this.startTime=record.getStartTime();
+        this.endTime=record.getEndTime();
     }
 }
