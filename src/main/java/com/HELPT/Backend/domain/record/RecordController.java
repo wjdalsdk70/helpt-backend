@@ -29,12 +29,13 @@ public class RecordController {
         return ResponseEntity.ok(recordService.saveRecord(userId,recordRequest));
     }
 
-    @GetMapping("/detail/{recordId}")
-    public ResponseEntity<RecordResponse> recordDetail(@PathVariable Long recordId) {
+    @GetMapping("/detail/{date}")
+    public ResponseEntity<RecordResponse> recordDetail(@PathVariable("date") LocalDate monthDate) {
 
-        return ResponseEntity.ok(recordService.detail(recordId));
+        Long userId = getCurrentUserId();
+        return ResponseEntity.ok(recordService.detail(userId,monthDate));
     }
-
+/*
     @GetMapping("/calender")
     public ResponseEntity<List<RecordResponse>> recordList(@RequestParam("date") LocalDate monthDate) {
 
@@ -43,4 +44,16 @@ public class RecordController {
         return ResponseEntity.ok(recordService.recordList(userId,monthDate));
 
     }
+
+
+    @PostMapping("/calender/members/{memberId}")
+    public ResponseEntity<List<RecordResponse>> recordList(@PathVariable Long memberId,
+                                                           @RequestParam("date") LocalDate monthDate
+                                                           ) {
+
+        return ResponseEntity.ok(recordService.recordList(memberId,monthDate));
+
+    }
+*/
+
 }

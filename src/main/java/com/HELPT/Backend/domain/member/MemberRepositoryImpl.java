@@ -41,9 +41,16 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
     }
 
     @Override
+    public Membership qrVelify(Long userid,Long gymId) {
+        return queryFactory.selectFrom(membership)
+                .where(membership.userId.eq(userid),membership.gymId.eq(gymId))
+                .fetchOne();
+    }
+
+    @Override
     public MemberDetailResponse memberDetail(Long memberId) {
         Tuple result = queryFactory
-                .select(member.userName, member.gender, member.height, member.weight, membership.startDate, membership.endDate)
+                .select(member.userName, member.gender, member.height, member.weight, membership.membershipId, membership.startDate, membership.endDate)
                 .from(member)
                 .leftJoin(membership).on(member.userId.eq(membership.userId))
                 .where(member.userId.eq(memberId))
@@ -54,6 +61,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
                 .gender(result.get(member.gender))
                 .weight(result.get(member.weight))
                 .height(result.get(member.height))
+                .membershipId(result.get(membership.membershipId))
                 .startDate(result.get(membership.startDate))
                 .endDate(result.get(membership.endDate))
                 .build();

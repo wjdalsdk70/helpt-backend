@@ -15,6 +15,7 @@ public class MemberDetailResponse {
     private GENDER gender;
     private float height;
     private float weight;
+    private Long membershipId;
     private LocalDate startDate;
     private LocalDate endDate;
 
