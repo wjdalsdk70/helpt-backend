@@ -33,5 +33,10 @@ public class Record {
 
     private LocalDate recordDate;
 
+    private LocalDateTime startTime;
+
+    private LocalDateTime endTime;
+
+
     private float successRate;
 }
