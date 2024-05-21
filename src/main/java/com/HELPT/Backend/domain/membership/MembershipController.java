@@ -1,15 +1,13 @@
 package com.HELPT.Backend.domain.membership;
 
-import com.HELPT.Backend.domain.membership.dto.MembershipRequest;
 import com.HELPT.Backend.domain.membership.dto.MembershipResponse;
-import com.HELPT.Backend.domain.product.dto.ProductResponse;
+import com.HELPT.Backend.domain.product.ProductService;
+import com.HELPT.Backend.global.kakaomodule.KakaoPayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
-
 import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
 
 @RestController

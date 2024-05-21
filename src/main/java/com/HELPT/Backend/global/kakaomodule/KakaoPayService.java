@@ -1,5 +1,7 @@
 package com.HELPT.Backend.global.kakaomodule;
 
+import com.HELPT.Backend.domain.membership.MembershipRepository;
+import com.HELPT.Backend.domain.membership.dto.PaymentRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -9,10 +11,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
+import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,28 +22,35 @@ import java.util.Map;
 @Slf4j
 public class KakaoPayService {
 
-    static final String cid = "TC0ONETIME"; // 가맹점 테스트 코드
-    @Value("${kakao.appkey}")
+    @Value("${kakaopay.cid}")
+    private String cid; // 가맹점 테스트 코드
+    @Value("${kakaopay.admin-key}")
     private String admin_Key; // 공개 조심! 본인 애플리케이션의 어드민 키를 넣어주세요
     private KakaoReadyResponse kakaoReady;
+    private PaymentRequest kakaoRequest;
 
-    public KakaoReadyResponse kakaoPayReady() throws JsonProcessingException {
+    private final MembershipRepository membershipRepository;
+
+    public KakaoReadyResponse kakaoPayReady(PaymentRequest paymentRequest){
         // 카카오페이 요청 양식
-//        MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<>();
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("cid", cid);
-        parameters.put("partner_order_id", "1001");
-        parameters.put("partner_user_id", "goguma");
-        parameters.put("item_name", "1개월권");
+        parameters.put("partner_order_id", paymentRequest.getProductId().toString());
+        parameters.put("partner_user_id",paymentRequest.getUserId().toString());
+        parameters.put("item_name", paymentRequest.getProductName());
         parameters.put("quantity", 1);
-        parameters.put("total_amount", 50000);
-//        parameters.add("vat_amount", "100");
+        parameters.put("total_amount", paymentRequest.getPrice());
         parameters.put("tax_free_amount", 100);
         parameters.put("approval_url", "http://localhost:8080/payment/success"); // 성공 시 redirect url
         parameters.put("cancel_url", "http://localhost:8080/payment/cancel"); // 취소 시 redirect url
         parameters.put("fail_url", "http://localhost:8080/payment/fail"); // 실패 시 redirect url
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(parameters);
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(parameters);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
         // 파라미터, 헤더
         HttpEntity<String> requestEntity = new HttpEntity<>(json, this.getHeaders());
@@ -55,24 +62,29 @@ public class KakaoPayService {
                 "https://open-api.kakaopay.com/online/v1/payment/ready",
                 requestEntity,
                 KakaoReadyResponse.class);
+        kakaoRequest = paymentRequest;
         log.info("결재 성공");
-
         return kakaoReady;
     }
 
     /**
      * 결제 완료 승인
      */
-    public KakaoApproveResponse approveResponse(String pgToken) throws JsonProcessingException {
+    public KakaoApproveResponse approveResponse(String pgToken){
         Map<String, Object> parameters = new HashMap<>();
         // 카카오 요청
         parameters.put("cid", cid);
         parameters.put("tid", kakaoReady.getTid());
-        parameters.put("partner_order_id", "1001");
-        parameters.put("partner_user_id", "goguma");
+        parameters.put("partner_order_id", kakaoRequest.getProductId());
+        parameters.put("partner_user_id", kakaoRequest.getUserId().toString());
         parameters.put("pg_token", pgToken);
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(parameters);
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(parameters);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
         // 파라미터, 헤더
         HttpEntity<String> requestEntity = new HttpEntity<>(json, this.getHeaders());
@@ -85,7 +97,6 @@ public class KakaoPayService {
                 requestEntity,
                 KakaoApproveResponse.class);
         log.info("결제 승인 완료");
-
         return approveResponse;
     }
 

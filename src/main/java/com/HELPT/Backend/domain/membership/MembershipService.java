@@ -1,17 +1,12 @@
 package com.HELPT.Backend.domain.membership;
-
-import com.HELPT.Backend.domain.member.Member;
-import com.HELPT.Backend.domain.membership.dto.MembershipRequest;
 import com.HELPT.Backend.domain.membership.dto.MembershipResponse;
 import com.HELPT.Backend.domain.product.Product;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+
 
 @Service
 @RequiredArgsConstructor
@@ -19,9 +14,6 @@ import java.time.LocalDate;
 public class MembershipService {
 
     private final MembershipRepository membershipRepository;
-
-    @Autowired
-    private final EntityManager em;
 
     public MembershipResponse findMembership(Long userid)
     {

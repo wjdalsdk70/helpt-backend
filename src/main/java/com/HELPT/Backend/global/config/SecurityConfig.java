@@ -103,6 +103,6 @@ public class SecurityConfig {
         // 아래 url은 filter 에서 제외
         return web ->
                 web.ignoring()
-                        .requestMatchers("/payment/**","/favicon.ico","/v3/**","/swagger-ui/**","/members/login","/members/register","/managers/login","/managers/register","/admin/**","/css/**", "/js/**", "/images/**");
+                        .requestMatchers("/payment/success","/payment/cancel","/payment/fail","/favicon.ico","/v3/**","/swagger-ui/**","/members/login","/members/register","/managers/login","/managers/register","/admin/**","/css/**", "/js/**", "/images/**");
     }
 }
