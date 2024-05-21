@@ -19,18 +19,11 @@ public class NoticeResponse {
     private LocalDate createAt;
 
     public NoticeResponse(Notice notice) {
+        this.noticeId = notice.getNoticeId();
         this.title = notice.getTitle();
         this.content = notice.getContent();
         this.createAt = notice.getCreateAt();
     }
-
-    public NoticeResponse(Notice notice,Long noticeId) {
-        this.noticeId = noticeId;
-        this.title = notice.getTitle();
-        this.content = notice.getContent();
-        this.createAt = notice.getCreateAt();
-    }
-
 
 
 

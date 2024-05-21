@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface RecordRepository extends JpaRepository<Record,Long> {
 
     Optional<List<Record>> findAllByUserIdAndRecordDateBetween(Long userId, LocalDate recordDate, LocalDate recordDate2);
+
+    Optional<Record> findByUserIdAndRecordDate(Long userId,LocalDate recordDate);
 }

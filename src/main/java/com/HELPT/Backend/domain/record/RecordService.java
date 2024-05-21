@@ -5,6 +5,8 @@ import com.HELPT.Backend.domain.product.ProductRepository;
 import com.HELPT.Backend.domain.product.dto.ProductResponse;
 import com.HELPT.Backend.domain.record.dto.RecordRequest;
 import com.HELPT.Backend.domain.record.dto.RecordResponse;
+import com.HELPT.Backend.global.error.CustomException;
+import com.HELPT.Backend.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -41,13 +43,14 @@ public class RecordService {
         return new RecordResponse(saveRecord);
     }
 
-    public RecordResponse detail(Long recordId) {
+    public RecordResponse detail(Long userId, LocalDate monthDate) {
 
-        Optional<Record> findRecord = recordRepository.findById(recordId);
+        Record findRecord = recordRepository.findByUserIdAndRecordDate(userId,monthDate).orElseThrow(() -> new CustomException(ErrorCode.NOT_EXIST_DATA));
 
-        return findRecord.map(RecordResponse::new).orElse(null);
+        return new RecordResponse(findRecord);
     }
 
+    /*
     public List<RecordResponse> recordList(Long userId, LocalDate monthDate) {
 
         LocalDate firstDayOfMonth = monthDate.with(TemporalAdjusters.firstDayOfMonth());
@@ -66,6 +69,6 @@ public class RecordService {
             return null;
         }
     }
-
+*/
 
 }
