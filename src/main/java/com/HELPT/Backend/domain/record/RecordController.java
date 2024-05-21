@@ -30,14 +30,14 @@ public class RecordController {
     }
 
     @GetMapping("/detail/{date}")
-    public ResponseEntity<RecordResponse> recordDetail(@PathVariable("date") LocalDate monthDate) {
+    public ResponseEntity<List<RecordResponse>> recordDetail(@PathVariable("date") LocalDate monthDate) {
 
         Long userId = getCurrentUserId();
         return ResponseEntity.ok(recordService.detail(userId,monthDate));
     }
 
     @PostMapping("/detail/members")
-    public ResponseEntity<RecordResponse> recordList(@RequestParam("memberId") Long memberId,
+    public ResponseEntity<List<RecordResponse>> recordDetailOfMember(@RequestParam("memberId") Long memberId,
                                                            @RequestParam("date") LocalDate monthDate
     ) {
 
