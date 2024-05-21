@@ -22,10 +22,10 @@ import java.util.Map;
 @Slf4j
 public class KakaoPayService {
 
-    @Value("${kakaopay.cid}")
-    private String cid; // 가맹점 테스트 코드
-    @Value("${kakaopay.admin-key}")
-    private String admin_Key; // 공개 조심! 본인 애플리케이션의 어드민 키를 넣어주세요
+//    @Value("${kakaopay.cid}")
+    private String cid = "TC0ONETIME"; // 가맹점 테스트 코드
+//    @Value("${kakaopay.admin-key}")
+    private String admin_Key = "DEV536BD84D06BAA55E2D09B0C2F7BE1837FF284";// 공개 조심! 본인 애플리케이션의 어드민 키를 넣어주세요
     private KakaoReadyResponse kakaoReady;
     private PaymentRequest kakaoRequest;
 
