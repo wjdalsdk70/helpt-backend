@@ -12,7 +12,9 @@ public enum ErrorCode {
     NOT_EXIST_USER("존재하지 않는 유저입니다.", HttpStatus.UNAUTHORIZED),
     NOT_EXIST_MEMBER("등록되지 않는 회원입니다.", HttpStatus.UNAUTHORIZED),
     EXIST_REQUEST("존재하는 요청입니다.", HttpStatus.BAD_REQUEST),
-    NOT_EXIST_DATA("데이터가 존재하지 않습니다.",HttpStatus.OK);
+    NOT_EXIST_DATA("데이터가 존재하지 않습니다.",HttpStatus.OK),
+    PAY_CANCEL("결제 취소",HttpStatus.BAD_REQUEST),
+    PAY_FAILED("결제 실패",HttpStatus.BAD_REQUEST);
 
     private final String message;
     private final HttpStatus httpStatus;
