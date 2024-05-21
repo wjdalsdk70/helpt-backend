@@ -29,6 +29,14 @@ public class ProductService {
 
     }
 
+    @Transactional(readOnly = true)
+    public ProductResponse findProduct(Long productId) {
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product Error"));
+        return new ProductResponse(product);
+    }
+
     @Transactional
     public ProductResponse addProduct(Long gymId, ProductRequest productRequest) {
 
