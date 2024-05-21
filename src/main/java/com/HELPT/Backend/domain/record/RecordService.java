@@ -43,11 +43,11 @@ public class RecordService {
         return new RecordResponse(saveRecord);
     }
 
-    public RecordResponse detail(Long userId, LocalDate monthDate) {
+    public List<RecordResponse> detail(Long userId, LocalDate monthDate) {
 
-        Record findRecord = recordRepository.findByUserIdAndRecordDate(userId,monthDate).orElseThrow(() -> new CustomException(ErrorCode.NOT_EXIST_DATA));
+        List<Record> findRecord = recordRepository.findAllByUserIdAndRecordDate(userId,monthDate).orElseThrow(() -> new CustomException(ErrorCode.NOT_EXIST_DATA));
 
-        return new RecordResponse(findRecord);
+        return findRecord.stream().map(RecordResponse::new).toList();
     }
 
     /*
