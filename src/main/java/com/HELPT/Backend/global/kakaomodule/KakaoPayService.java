@@ -75,7 +75,7 @@ public class KakaoPayService {
         // 카카오 요청
         parameters.put("cid", cid);
         parameters.put("tid", kakaoReady.getTid());
-        parameters.put("partner_order_id", kakaoRequest.getProductId());
+        parameters.put("partner_order_id", kakaoRequest.getProductId().toString());
         parameters.put("partner_user_id", kakaoRequest.getUserId().toString());
         parameters.put("pg_token", pgToken);
         ObjectMapper mapper = new ObjectMapper();

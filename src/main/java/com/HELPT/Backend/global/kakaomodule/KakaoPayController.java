@@ -43,10 +43,10 @@ public class KakaoPayController {
      * 결제 성공
      */
     @GetMapping("/success")
-    public ResponseEntity afterPayRequest(@RequestParam("pg_token") String pgToken) throws JsonProcessingException {
+    public ResponseEntity<KakaoApproveResponse> afterPayRequest(@RequestParam("pg_token") String pgToken) throws JsonProcessingException {
         KakaoApproveResponse kakaoApprove = kakaoPayService.approveResponse(pgToken);
         membershipService.addMembership(Long.valueOf(kakaoApprove.getPartner_user_id()),Long.valueOf(kakaoApprove.getPartner_order_id()));
-        return new ResponseEntity<>(kakaoApprove, HttpStatus.OK);
+        return ResponseEntity.ok(kakaoApprove);
     }
 
     /**
