@@ -41,9 +41,9 @@ public class KakaoPayService {
         parameters.put("quantity", 1);
         parameters.put("total_amount", paymentRequest.getPrice());
         parameters.put("tax_free_amount", 100);
-        parameters.put("approval_url", "http://localhost:8080/payment/success"); // 성공 시 redirect url
-        parameters.put("cancel_url", "http://localhost:8080/payment/cancel"); // 취소 시 redirect url
-        parameters.put("fail_url", "http://localhost:8080/payment/fail"); // 실패 시 redirect url
+        parameters.put("approval_url", "http://54.180.211.41:8080/payment/success"); // 성공 시 redirect url
+        parameters.put("cancel_url", "http://54.180.211.41:8080/payment/cancel"); // 취소 시 redirect url
+        parameters.put("fail_url", "http://54.180.211.41:8080/payment/fail"); // 실패 시 redirect url
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
         try {
