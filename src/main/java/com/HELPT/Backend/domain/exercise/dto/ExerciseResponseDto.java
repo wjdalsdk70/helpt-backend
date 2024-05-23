@@ -4,6 +4,7 @@ import com.HELPT.Backend.domain.exercise.Exercise;
 import com.HELPT.Backend.domain.product.Product;
 import lombok.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -20,7 +21,8 @@ public class ExerciseResponseDto {
 
     public ExerciseResponseDto(Exercise exercise) {
         this.exerciseDescription = exercise.getExerciseDescription();
-
+        String[] resultMethod=exercise.getExerciseMethod().split("\n");
+        this.exerciseMethod = Arrays.stream(resultMethod).toList();
         this.topImage = exercise.getTopImage();
         this.bottomImage = exercise.getBottomImage();
     }

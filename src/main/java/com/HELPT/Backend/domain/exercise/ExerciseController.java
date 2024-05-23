@@ -1,6 +1,7 @@
 package com.HELPT.Backend.domain.exercise;
 
 import com.HELPT.Backend.domain.exercise.dto.ExerciseRequestDto;
+import com.HELPT.Backend.domain.exercise.dto.ExerciseResponseDto;
 import com.HELPT.Backend.domain.gym.dto.GymResistrationRequest;
 import com.HELPT.Backend.domain.gym.dto.GymResponse;
 import com.HELPT.Backend.global.s3.S3Uploader;
@@ -23,7 +24,7 @@ public class ExerciseController {
     private final ExerciseService exerciseService;
 
     @PostMapping(consumes = "multipart/form-data")
-    public ResponseEntity<Exercise> uploadDescription(
+    public ResponseEntity<ExerciseResponseDto> uploadDescription(
             @RequestPart("description") ExerciseRequestDto exerciseRequestDto,
             @RequestPart("topImage") MultipartFile topImage,
             @RequestPart("bottomImage") MultipartFile bottomImage
