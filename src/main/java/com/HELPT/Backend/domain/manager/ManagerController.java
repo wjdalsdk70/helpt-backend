@@ -39,8 +39,9 @@ public class ManagerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ManagerResponse>> managerList() {
-        return ResponseEntity.ok(managerService.findManagers());
+    public ResponseEntity<ManagerResponse> managerList() {
+        Long id = getCurrentUserId();
+        return ResponseEntity.ok(managerService.findManager(id));
     }
 
     @GetMapping("/members")
