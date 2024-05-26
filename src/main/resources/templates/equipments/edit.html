@@ -1,7 +1,7 @@
 <button type="button" class="btn btn-secondary mt-3" onclick="window.history.back();">뒤로 가기</button>
-<div class="container">
-    <h2>기구 수정</h2>
-    <form th:action="@{/admin/equipments/edit/{id}(id=${equipment.equipmentId})}" th:object="${equipment}" method="post">
+<div class="container mt-5">
+    <h2 class="mb-4">기구 수정</h2>
+    <form th:action="@{/admin/equipments/edit/{id}(id=${equipment.equipmentId})}" th:object="${equipment}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="equipmentName">기구 이름:</label>
             <input type="text" id="equipmentName" name="equipmentName" th:value="*{equipmentName}" required/>
@@ -18,6 +18,19 @@
             <label for="defaultWeight">기본 무게:</label>
             <input type="number" id="defaultWeight" name="defaultWeight" th:value="*{defaultWeight}" required/>
         </div>
-        <button type="submit" class="btn">수정하기</button>
+        <div class="form-group">
+            <label for="exerciseDescription">운동 설명:</label>
+            <textarea id="exerciseDescription" name="exerciseDescription" th:text="${exercise.exerciseDescription}" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="exerciseMethod">운동 방법:</label>
+            <textarea id="exerciseMethod" name="exerciseMethod" th:text="${exercise.exerciseMethod}" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="topImage">대표 이미지 (새 이미지 선택 시 업데이트):</label>
+            <input type="file" id="topImage" name="topImage"/>
+            <input type="hidden" name="originImage" th:value="${exercise.topImage}"/>
+        </div>
+        <button type="submit" class="btn btn-primary">수정하기</button>
     </form>
 </div>
