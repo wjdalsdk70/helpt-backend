@@ -17,6 +17,7 @@
             <td th:text="${equipment.defaultSet}">기본 세트</td>
             <td th:text="${equipment.defaultWeight}">기본 무게</td>
             <td class="action-cell">
+                <a th:href="@{/admin/equipments/{id}(id=${equipment.equipmentId})}" class="show-button">상세보기</a>
                 <a th:href="@{/admin/equipments/edit/{id}(id=${equipment.equipmentId})}" class="edit-button">수정</a>
                 <form th:action="@{/admin/equipments/delete/{id}(id=${equipment.equipmentId})}" method="post">
                     <input type="hidden" name="_method" value="delete" />

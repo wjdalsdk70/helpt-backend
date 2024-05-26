@@ -23,5 +23,12 @@ public class Exercise {
 
     private String topImage;
 
-    private String bottomImage;
+    public void updateDescription(String equipmentName) {
+        this.exerciseDescription = equipmentName;
+    }
+    public void updateMetood(String exerciseMethod) { this.exerciseDescription = exerciseMethod; }
+    public void updatetopImage(String topImage) {
+        this.topImage = topImage;
+    }
+
 }
