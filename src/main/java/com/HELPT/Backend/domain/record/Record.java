@@ -37,6 +37,7 @@ public class Record {
 
     private LocalDateTime endTime;
 
+    private String comment;
 
     private float successRate;
 }
