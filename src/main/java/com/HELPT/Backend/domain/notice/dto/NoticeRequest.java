@@ -11,8 +11,6 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NoticeRequest {
 
-    private Long noticeId;
-
     private Long gymId;
 
     private String title;
@@ -22,8 +20,7 @@ public class NoticeRequest {
     private LocalDate createAt;
 
     @Builder
-    public NoticeRequest(Long noticeId,Long gymId, String title, String content, LocalDate createAt) {
-        this.noticeId=noticeId;
+    public NoticeRequest(Long gymId, String title, String content, LocalDate createAt) {
         this.gymId = gymId;
         this.title = title;
         this.content = content;
