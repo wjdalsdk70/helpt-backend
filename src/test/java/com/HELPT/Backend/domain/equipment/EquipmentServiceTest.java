@@ -1,5 +1,7 @@
 package com.HELPT.Backend.domain.equipment;
 
+import com.HELPT.Backend.domain.equipment.dto.EquipmentDto;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,16 +29,23 @@ class EquipmentServiceTest {
     @Mock
     EquipmentRepository equipmentRepository;
 
-    @Test
-    @DisplayName("AI 기구 생성 서비스 테스트")
-    void saveEquipmentServiceTest(){
-        // given
-        Equipment equipment = Equipment.builder()
-                .equipmentName("벤치프레스")
+    private Equipment equipment;
+
+    @BeforeEach
+    void setUp() {
+        equipment = Equipment.builder()
+                .equipmentId(1L)
+                .exerciseId(100L)
+                .equipmentName("벤치 프레스")
                 .defaultCount(10)
                 .defaultSet(5)
                 .defaultWeight(25)
                 .build();
+    }
+    @Test
+    @DisplayName("[Service] 기구 생성 서비스 테스트")
+    void saveEquipmentServiceTest(){
+        // given
         EquipmentDto equipmentDto = EquipmentDto.builder()
                 .equipmentName("벤치프레스")
                 .defaultCount(10)
@@ -46,15 +55,15 @@ class EquipmentServiceTest {
         given(equipmentRepository.save(any(Equipment.class))).willReturn(equipment);
 
         // when
-        EquipmentDto result = equipmentService.addEquipment(equipmentDto);
+        EquipmentDto savedEquipmentDto = equipmentService.addEquipment(equipmentDto);
 
         // then
         verify(equipmentRepository).save(any(Equipment.class));
-        assertEquals(result.getEquipmentName(),equipment.getEquipmentName());
+        assertEquals(savedEquipmentDto.getEquipmentName(),equipment.getEquipmentName());
     }
 
     @Test
-    @DisplayName("AI 기구 단건 조회 서비스 테스트")
+    @DisplayName("[Service] 기구 단건 조회 서비스 테스트")
     void findEquipmentServiceTest(){
         // given
         Equipment equipment = Equipment.builder()
@@ -74,7 +83,7 @@ class EquipmentServiceTest {
     }
 
     @Test
-    @DisplayName("AI 기구 리스트 조회 서비스 테스트")
+    @DisplayName("[Service] 기구 리스트 조회 서비스 테스트")
     void findEquipmentListServiceTest(){
         // given
         List<Equipment> equipments = new ArrayList<>();
@@ -103,7 +112,7 @@ class EquipmentServiceTest {
     }
 
     @Test
-    @DisplayName("AI 기구 수정 서비스 테스트")
+    @DisplayName("[Service] 기구 수정 서비스 테스트")
     void modifyEquipmenServiceTest(){
         // given
         Equipment equipment = Equipment.builder()
@@ -128,7 +137,7 @@ class EquipmentServiceTest {
     }
 
     @Test
-    @DisplayName("AI 기구 삭제 서비스 테스트")
+    @DisplayName("[Service] 기구 삭제 서비스 테스트")
     void removeEquipmenServiceTest(){
         // given
         Equipment equipment = Equipment.builder()
