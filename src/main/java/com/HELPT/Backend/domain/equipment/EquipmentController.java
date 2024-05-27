@@ -1,11 +1,7 @@
 package com.HELPT.Backend.domain.equipment;
 
-import com.HELPT.Backend.domain.gym.dto.GymRegistrationDto;
-import com.HELPT.Backend.domain.gym.dto.GymRequest;
-import com.HELPT.Backend.domain.gym.dto.GymResistrationRequest;
-import com.HELPT.Backend.domain.gym.dto.GymResponse;
+import com.HELPT.Backend.domain.equipment.dto.EquipmentDto;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

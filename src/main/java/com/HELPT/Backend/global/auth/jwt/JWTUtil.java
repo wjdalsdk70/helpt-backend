@@ -22,6 +22,7 @@ public class JWTUtil {
 
     private static final Long accessTokenValidTime = Duration.ofDays(15).toMillis(); // 만료시간 15일
     private static final Long refreshTokenValidTime = Duration.ofDays(30).toMillis(); // 만료시간 30일
+    private static final Long qrTokenValidTime = Duration.ofMinutes(3).toMillis(); // 만료시간 3분
     private static final Long remainValidTime = Duration.ofDays(3).toMillis();
     private SecretKey secretKey;
 
@@ -75,6 +76,9 @@ public class JWTUtil {
         String accessToken = createToken(userId, accessTokenValidTime);
         String refreshToken = createToken(userId, refreshTokenValidTime);
         return new JWTToken("Bearer", accessToken, refreshToken);
+    }
+    public String createQrToken(Long userId) {
+        return createToken(userId, qrTokenValidTime);
     }
 
     public String createAccessToken(Long userId) {

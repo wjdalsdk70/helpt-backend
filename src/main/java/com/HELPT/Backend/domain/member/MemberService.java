@@ -59,8 +59,7 @@ public class MemberService {
     {
         Membership membership =  memberRepository.attendance(userId);
         if(membership==null) return false;
-        membership.attend();
-
+        membership.attend(membership.getAttendanceDate());
         return true;
     }
 

@@ -1,7 +1,5 @@
 package com.HELPT.Backend.domain.gym.dto;
 
-import com.HELPT.Backend.domain.equipment.Equipment;
-import com.HELPT.Backend.domain.equipment.EquipmentDto;
 import com.HELPT.Backend.domain.gym.entity.Address;
 import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.domain.gym.entity.Status;

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,9 +26,18 @@ public class ProductService {
         List<Product> products = productRepository.findAllByGymId(gymId)
                 .orElseThrow(() -> new RuntimeException("Product Error"));
         return  products.stream()
-                    .map(product -> new ProductResponse(product))
+                .sorted(Comparator.comparingInt(Product::getMonths))
+                .map(product -> new ProductResponse(product))
                     .collect(Collectors.toList());
 
+    }
+
+    @Transactional(readOnly = true)
+    public ProductResponse findProduct(Long productId) {
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product Error"));
+        return new ProductResponse(product);
     }
 
     @Transactional

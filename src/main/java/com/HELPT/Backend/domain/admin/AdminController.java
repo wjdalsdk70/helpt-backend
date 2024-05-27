@@ -1,26 +1,28 @@
 package com.HELPT.Backend.domain.admin;
 
 import com.HELPT.Backend.domain.admin.dto.AdminRequest;
-import com.HELPT.Backend.domain.equipment.Equipment;
-import com.HELPT.Backend.domain.equipment.EquipmentDto;
+import com.HELPT.Backend.domain.equipment.dto.EquipmentDto;
+import com.HELPT.Backend.domain.equipment.dto.EquipmentRequestDto;
 import com.HELPT.Backend.domain.equipment.EquipmentService;
+import com.HELPT.Backend.domain.exercise.Exercise;
+import com.HELPT.Backend.domain.exercise.dto.ExerciseResponseDto;
+import com.HELPT.Backend.domain.exercise.service.ExerciseService;
 import com.HELPT.Backend.domain.gym.GymService;
 import com.HELPT.Backend.domain.gym.dto.GymRegistrationDto;
 import com.HELPT.Backend.domain.gym.entity.Gym;
-import com.HELPT.Backend.domain.gym.entity.GymRegistration;
 import com.HELPT.Backend.domain.gym.entity.Status;
-import com.HELPT.Backend.domain.manager.dto.ManagerRequest;
 import com.HELPT.Backend.global.auth.jwt.JWTResponse;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+import com.HELPT.Backend.global.s3.S3Uploader;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -32,6 +34,8 @@ public class AdminController {
     private final AdminService adminService;
     private final GymService gymService;
     private final EquipmentService equipmentService;
+    private final S3Uploader s3Uploader;
+    private final ExerciseService exerciseService;
 
     @GetMapping("/login")
     public String loginView() {
@@ -88,32 +92,62 @@ public class AdminController {
         return "admin/index";
     }
 
+    @GetMapping("/equipments/{id}")
+    public String showEquipmentDetails(@PathVariable Long id, Model model) {
+        EquipmentDto equipment = equipmentService.findEquipment(id);
+        ExerciseResponseDto exercise = exerciseService.findExercise(equipment.getExerciseId());
+        model.addAttribute("equipment", equipment);
+        model.addAttribute("exercise", exercise);
+        model.addAttribute("template", "equipments/detail");
+        return "admin/index";
+    }
+
     @GetMapping("/equipments/add")
     public String viewAddEquipment(Model model) {
-        model.addAttribute("equipment", EquipmentDto.builder().build());
+        model.addAttribute("equipment", EquipmentRequestDto.builder().build());
         model.addAttribute("template", "equipments/add");
         return "admin/index";
     }
 
     @PostMapping("/equipments")
-    public String addEquipment(@ModelAttribute EquipmentDto equipmentDto) {
-        log.info(equipmentDto.getEquipmentName());
-        equipmentService.addEquipment(equipmentDto);
+    public String addEquipment(@ModelAttribute EquipmentRequestDto equipmentRequestDto) {
+        String uploadTopURL;
+        try {
+            uploadTopURL = s3Uploader.upload(equipmentRequestDto.getTopImage(), "exerciseFile");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        ExerciseResponseDto exerciseResponseDto = exerciseService.uploadExercise(equipmentRequestDto.toExerciseDto(), uploadTopURL);
+        equipmentRequestDto.setExerciseId(exerciseResponseDto.getExerciseId());
+        equipmentService.addEquipment(equipmentRequestDto.toEquipmentDto());
         return "redirect:/admin/equipments";
     }
 
     // 기구 수정 페이지로 이동
     @GetMapping("/equipments/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        model.addAttribute("equipment", equipmentService.findEquipment(id));
+        EquipmentDto equipment = equipmentService.findEquipment(id);
+        Exercise exercise = exerciseService.findNonParsingExercise(equipment.getExerciseId());
+        model.addAttribute("equipment", equipment);
+        model.addAttribute("exercise", exercise);
         model.addAttribute("template", "equipments/edit");
         return "admin/index";
     }
 
     // 기구 수정
     @PostMapping("/equipments/edit/{id}")
-    public String editEquipment(@PathVariable Long id, @ModelAttribute EquipmentDto equipmentDto) {
-        equipmentService.modifyEquipment(id,equipmentDto);
+    public String editEquipment(@PathVariable Long id, @ModelAttribute EquipmentRequestDto equipmentRequestDto) {
+        String uploadTopURL = equipmentRequestDto.getOriginImage();
+        if (!equipmentRequestDto.getTopImage().isEmpty()){
+            try {
+                s3Uploader.deleteFile(uploadTopURL);
+                uploadTopURL = s3Uploader.upload(equipmentRequestDto.getTopImage(), "exerciseFile");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        EquipmentDto equipmentDto = equipmentService.modifyEquipment(id, equipmentRequestDto.toEquipmentDto());
+        exerciseService.modifyExercise(equipmentDto.getExerciseId(),equipmentRequestDto.toExerciseDto(),uploadTopURL);
         return "redirect:/admin/equipments";
     }
 

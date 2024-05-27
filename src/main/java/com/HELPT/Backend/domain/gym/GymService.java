@@ -10,6 +10,7 @@ import com.HELPT.Backend.domain.gym.entity.Status;
 import com.HELPT.Backend.domain.gym.repository.GymRepository;
 import com.HELPT.Backend.domain.manager.Manager;
 import com.HELPT.Backend.domain.manager.ManagerRepository;
+import com.HELPT.Backend.global.error.CustomException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 import static com.HELPT.Backend.domain.gym.entity.Status.Unregistered;
 import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
+import static com.HELPT.Backend.global.error.ErrorCode.NOT_EXIST_DATA;
 
 @Service
 @RequiredArgsConstructor
@@ -42,12 +44,26 @@ public class GymService {
         return GymResponse.toDto(gym);
     }
 
+    @Transactional
+    public GymResponse modifyChatLink(Long gymId,String link) {
+        Gym gym = gymRepository.findById(gymId).orElseThrow(() -> new RuntimeException("Gym not found"));
+        gym.updateChatLink(link);
+        return GymResponse.toDto(gym);
+    }
+
+    @Transactional(readOnly = true)
+    public String getChatLink(Long gymId) {
+        Gym gym = gymRepository.findById(gymId).orElseThrow(() -> new RuntimeException("Gym not found"));
+        return gym.getChat_link();
+    }
+
     @Transactional(readOnly = true)
     public GymResponse findGym(Long id) {
         Gym gym = gymRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Gym not found"));
+                .orElseThrow(() -> new CustomException(NOT_EXIST_DATA));
         return GymResponse.toDto(gym);
     }
+
     @Transactional(readOnly = true)
     public GymRegistrationDto findGymRegistration(Long id) {
         Gym gym = gymRepository.findById(id).orElseThrow(() -> new RuntimeException("Gym not found"));
