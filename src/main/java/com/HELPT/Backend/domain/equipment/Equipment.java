@@ -1,5 +1,6 @@
 package com.HELPT.Backend.domain.equipment;
 
+import com.HELPT.Backend.domain.exercise.Exercise;
 import com.HELPT.Backend.domain.gym.entity.Status;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +18,8 @@ public class Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long equipmentId;
+
+    private Long exerciseId;
 
     private String equipmentName;
 

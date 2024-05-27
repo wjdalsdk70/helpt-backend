@@ -1,16 +1,7 @@
 package com.HELPT.Backend.domain.equipment;
 
-import com.HELPT.Backend.domain.gym.dto.GymRegistrationDto;
-import com.HELPT.Backend.domain.gym.dto.GymRequest;
-import com.HELPT.Backend.domain.gym.dto.GymResistrationRequest;
-import com.HELPT.Backend.domain.gym.dto.GymResponse;
-import com.HELPT.Backend.domain.gym.entity.Gym;
-import com.HELPT.Backend.domain.gym.entity.GymRegistration;
-import com.HELPT.Backend.domain.gym.entity.Status;
-import jakarta.persistence.EntityNotFoundException;
+import com.HELPT.Backend.domain.equipment.dto.EquipmentDto;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Request;
-import org.apache.coyote.Response;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
