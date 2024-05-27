@@ -28,6 +28,7 @@ public class RecordResponse {
 
     private float successRate;
 
+    private String comment;
 
     public RecordResponse(Record record) {
         this.equipmentId = record.getEquipmentId();
@@ -38,5 +39,6 @@ public class RecordResponse {
         this.successRate = record.getSuccessRate();
         this.startTime=record.getStartTime();
         this.endTime=record.getEndTime();
+        this.comment=record.getComment();
     }
 }
