@@ -30,6 +30,8 @@ public class RecordResponse {
 
     private String comment;
 
+    private String snapshotFile;
+
     public RecordResponse(Record record) {
         this.equipmentId = record.getEquipmentId();
         this.count = record.getCount();
@@ -40,5 +42,6 @@ public class RecordResponse {
         this.startTime=record.getStartTime();
         this.endTime=record.getEndTime();
         this.comment=record.getComment();
+        this.snapshotFile=record.getSnapshotFile();
     }
 }

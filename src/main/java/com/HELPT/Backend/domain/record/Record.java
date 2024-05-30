@@ -40,4 +40,6 @@ public class Record {
     private String comment;
 
     private float successRate;
+
+    private String snapshotFile;
 }

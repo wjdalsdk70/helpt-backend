@@ -30,6 +30,8 @@ public class RecordRequest {
 
     private String comment;
 
+    private String snapshotFile;
+
     @Builder
     public RecordRequest(Long equipmentId, int count, int setNumber, int weight, LocalDate recordDate, float successRate,
                          LocalDateTime startTime,LocalDateTime endTime,String comment) {
@@ -42,5 +44,9 @@ public class RecordRequest {
         this.recordDate = recordDate;
         this.successRate = successRate;
         this.comment=comment;
+    }
+
+    public void setSnapshotFile(String snapshotFile) {
+        this.snapshotFile = snapshotFile;
     }
 }

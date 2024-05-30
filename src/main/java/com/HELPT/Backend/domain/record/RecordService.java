@@ -36,6 +36,7 @@ public class RecordService {
                 .weight(recordRequest.getWeight())
                 .recordDate(recordRequest.getRecordDate())
                 .successRate(recordRequest.getSuccessRate())
+                .snapshotFile(recordRequest.getSnapshotFile())
                 .build();
 
         recordRepository.save(saveRecord);
