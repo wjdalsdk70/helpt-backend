@@ -28,7 +28,7 @@ class EquipmentDomainTest {
         // given
         // when
         // then
-        assertThat(equipment.getEquipmentName()).isEqualTo("벤치 프레스");
+       assertThat(equipment.getEquipmentName()).isEqualTo("벤치 프레스");
         assertThat(equipment.getDefaultCount()).isEqualTo(10);
         assertThat(equipment.getDefaultSet()).isEqualTo(5);
         assertThat(equipment.getDefaultWeight()).isEqualTo(25);
