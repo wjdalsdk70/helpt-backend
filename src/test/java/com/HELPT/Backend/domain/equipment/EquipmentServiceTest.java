@@ -29,11 +29,8 @@ class EquipmentServiceTest {
     @Mock
     EquipmentRepository equipmentRepository;
 
-    private Equipment equipment;
-
-    @BeforeEach
-    void setUp() {
-        equipment = Equipment.builder()
+    public Equipment setUpEquipment(){
+        return Equipment.builder()
                 .equipmentId(1L)
                 .exerciseId(100L)
                 .equipmentName("벤치 프레스")
@@ -42,58 +39,20 @@ class EquipmentServiceTest {
                 .defaultWeight(25)
                 .build();
     }
-    @Test
-    @DisplayName("[Service] 기구 생성 서비스 테스트")
-    void saveEquipmentServiceTest(){
-        // given
-        EquipmentDto equipmentDto = EquipmentDto.builder()
-                .equipmentName("벤치프레스")
-                .defaultCount(10)
-                .defaultSet(5)
-                .defaultWeight(25)
-                .build();
-        given(equipmentRepository.save(any(Equipment.class))).willReturn(equipment);
 
-        // when
-        EquipmentDto savedEquipmentDto = equipmentService.addEquipment(equipmentDto);
-
-        // then
-        verify(equipmentRepository).save(any(Equipment.class));
-        assertEquals(savedEquipmentDto.getEquipmentName(),equipment.getEquipmentName());
-    }
-
-    @Test
-    @DisplayName("[Service] 기구 단건 조회 서비스 테스트")
-    void findEquipmentServiceTest(){
-        // given
-        Equipment equipment = Equipment.builder()
-                .equipmentName("벤치프레스")
-                .defaultCount(10)
-                .defaultSet(5)
-                .defaultWeight(25)
-                .build();
-        given(equipmentRepository.findById(anyLong())).willReturn(Optional.of(equipment));
-
-        // when
-        EquipmentDto result = equipmentService.findEquipment(1L);
-
-        // then
-        verify(equipmentRepository).findById(anyLong());
-        assertThat(result.getEquipmentName()).isEqualTo(equipment.getEquipmentName());
-    }
-
-    @Test
-    @DisplayName("[Service] 기구 리스트 조회 서비스 테스트")
-    void findEquipmentListServiceTest(){
-        // given
+    public List<Equipment> setUpEquipmentList(){
         List<Equipment> equipments = new ArrayList<>();
         Equipment equipment1 = Equipment.builder()
+                .equipmentId(1L)
+                .exerciseId(100L)
                 .equipmentName("벤치프레스")
                 .defaultCount(10)
                 .defaultSet(5)
                 .defaultWeight(25)
                 .build();
         Equipment equipment2 = Equipment.builder()
+                .equipmentId(2L)
+                .exerciseId(200L)
                 .equipmentName("스쿼트")
                 .defaultCount(10)
                 .defaultSet(5)
@@ -101,6 +60,56 @@ class EquipmentServiceTest {
                 .build();
         equipments.add(equipment1);
         equipments.add(equipment2);
+        return equipments;
+    }
+
+    public EquipmentDto setUpEquipmentDto(){
+        return EquipmentDto.builder()
+                .equipmentId(1L)
+                .exerciseId(100L)
+                .equipmentName("벤치 프레스")
+                .defaultCount(10)
+                .defaultSet(5)
+                .defaultWeight(25)
+                .build();
+    }
+
+    @Test
+    @DisplayName("[Service] 기구 생성 서비스 테스트")
+    void saveEquipmentServiceTest(){
+        // given
+        EquipmentDto equipmentDto = setUpEquipmentDto();
+        given(equipmentRepository.save(any(Equipment.class))).willReturn(equipmentDto.toEntity());
+
+        // when
+        EquipmentDto savedEquipmentDto = equipmentService.addEquipment(equipmentDto);
+
+        // then
+        verify(equipmentRepository).save(any(Equipment.class));
+        assertEquals(savedEquipmentDto.getEquipmentName(),equipmentDto.getEquipmentName());
+    }
+
+    @Test
+    @DisplayName("[Service] 기구 단건 조회 서비스 테스트")
+    void findEquipmentServiceTest(){
+        // given
+        Equipment equipment = setUpEquipment();
+        given(equipmentRepository.findById(equipment.getEquipmentId())).willReturn(Optional.of(equipment));
+
+        // when
+        EquipmentDto result = equipmentService.findEquipment(equipment.getEquipmentId());
+
+        // then
+        assertNotNull(result);
+        verify(equipmentRepository).findById(equipment.getEquipmentId());
+        assertThat(result.getEquipmentName()).isEqualTo(equipment.getEquipmentName());
+    }
+
+    @Test
+    @DisplayName("[Service] 기구 리스트 조회 서비스 테스트")
+    void findEquipmentListServiceTest(){
+        // given
+        List<Equipment> equipments = setUpEquipmentList();
         given(equipmentRepository.findAll()).willReturn(equipments);
 
         // when
@@ -115,22 +124,12 @@ class EquipmentServiceTest {
     @DisplayName("[Service] 기구 수정 서비스 테스트")
     void modifyEquipmenServiceTest(){
         // given
-        Equipment equipment = Equipment.builder()
-                .equipmentName("벤치프레스")
-                .defaultCount(10)
-                .defaultSet(5)
-                .defaultWeight(25)
-                .build();
-        EquipmentDto equipmentDto = EquipmentDto.builder()
-                .equipmentName("스쿼트")
-                .defaultCount(10)
-                .defaultSet(5)
-                .defaultWeight(25)
-                .build();
-        given(equipmentRepository.findById(anyLong())).willReturn(Optional.of(equipment));
+        Equipment equipment = setUpEquipment();
+        EquipmentDto equipmentDto = setUpEquipmentDto();
+        given(equipmentRepository.findById(equipment.getEquipmentId())).willReturn(Optional.of(equipment));
 
         // when
-        EquipmentDto result = equipmentService.modifyEquipment(1L, equipmentDto);
+        EquipmentDto result = equipmentService.modifyEquipment(equipment.getEquipmentId(), equipmentDto);
 
         // then
         assertThat(result.getEquipmentName()).isEqualTo(equipmentDto.getEquipmentName());
@@ -140,18 +139,13 @@ class EquipmentServiceTest {
     @DisplayName("[Service] 기구 삭제 서비스 테스트")
     void removeEquipmenServiceTest(){
         // given
-        Equipment equipment = Equipment.builder()
-                .equipmentName("벤치프레스")
-                .defaultCount(10)
-                .defaultSet(5)
-                .defaultWeight(25)
-                .build();
-        given(equipmentRepository.findById(anyLong())).willReturn(Optional.of(equipment));
+        Equipment equipment = setUpEquipment();
+        given(equipmentRepository.findById(equipment.getEquipmentId())).willReturn(Optional.of(equipment));
 
         // when
-        equipmentService.removeEquipment(1L);
+        equipmentService.removeEquipment(equipment.getEquipmentId());
 
         // then
-        verify(equipmentRepository).delete(any());
+        verify(equipmentRepository).delete(any(Equipment.class));
     }
 }
