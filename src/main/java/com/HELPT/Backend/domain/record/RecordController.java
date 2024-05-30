@@ -27,13 +27,13 @@ public class RecordController {
 
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<RecordResponse> saveRecord(@RequestPart("recordRequest") RecordRequest recordRequest,
-                                                     @RequestPart("businessFile") MultipartFile businessFile
+                                                     @RequestPart("snapshotFile") MultipartFile snapshotFile
                                                      ) {
 
         Long userId = getCurrentUserId();
         String uploadURL;
         try {
-            uploadURL = s3Uploader.upload(businessFile, "businessFile");
+            uploadURL = s3Uploader.upload(snapshotFile, "snapshotFile");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
