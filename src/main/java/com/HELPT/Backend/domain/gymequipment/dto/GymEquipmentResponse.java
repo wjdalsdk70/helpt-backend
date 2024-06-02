@@ -13,6 +13,8 @@ public class GymEquipmentResponse {
 
     private String equipmentName;
 
+    private String equipmentNameEng;
+
     private int customCount;
 
     private int customSet;
@@ -26,6 +28,7 @@ public class GymEquipmentResponse {
                 .customCount(gymEquipment.getCustomCount())
                 .customSet(gymEquipment.getCustomSet())
                 .customWeight(gymEquipment.getCustomWeight())
+                .equipmentNameEng(gymEquipment.getEquipment().getEquipmentNameEng())
                 .build();
     }
 
