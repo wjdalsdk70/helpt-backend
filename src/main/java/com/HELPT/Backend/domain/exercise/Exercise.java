@@ -17,6 +17,8 @@ public class Exercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long exerciseId;
 
+
+
     private String exerciseDescription;
 
     private String exerciseMethod;

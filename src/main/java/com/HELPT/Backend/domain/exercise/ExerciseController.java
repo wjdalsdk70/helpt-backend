@@ -33,8 +33,8 @@ public class ExerciseController {
         return ResponseEntity.ok(exerciseService.uploadExercise(exerciseRequestDto,uploadTopURL));
     }
 
-    @GetMapping("/{exerciseId}")
-    public ResponseEntity<ExerciseResponseDto> exerciseDetails(@PathVariable Long exerciseId) {
-        return ResponseEntity.ok(exerciseService.findExercise(exerciseId));
+    @GetMapping("/{gymEquipmentId}")
+    public ResponseEntity<ExerciseResponseDto> exerciseDetails(@PathVariable Long gymEquipmentId) {
+        return ResponseEntity.ok(exerciseService.findExercise(gymEquipmentId));
     }
 }
