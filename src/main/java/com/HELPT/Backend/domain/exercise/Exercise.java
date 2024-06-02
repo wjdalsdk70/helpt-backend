@@ -17,13 +17,13 @@ public class Exercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long exerciseId;
 
-
-
     private String exerciseDescription;
 
     private String exerciseMethod;
 
     private String topImage;
+
+    private String videoUrl;
 
     public void updateDescription(String equipmentName) {
         this.exerciseDescription = equipmentName;

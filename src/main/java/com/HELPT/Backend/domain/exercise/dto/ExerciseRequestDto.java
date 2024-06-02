@@ -8,6 +8,8 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ExerciseRequestDto {
 
+    private String videoUrl;
+
     private String exerciseDescription;
 
     private String exerciseMethod;
