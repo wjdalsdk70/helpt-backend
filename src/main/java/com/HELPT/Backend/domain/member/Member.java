@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.userdetails.User;
 
+import java.time.LocalDate;
 
 
 @Entity
@@ -32,6 +33,10 @@ public class Member {
 
     private float weight;
 
+    private String profileImage;
+
+    private LocalDate birthDate;
+
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Role role = Role.MEMBER;
@@ -46,4 +51,6 @@ public class Member {
     public void updateGymId(Long gymId) {
         this.gymId = gymId;
     }
+    public void updateProfileImage(String profileImage) {this.profileImage = profileImage;}
+
 }

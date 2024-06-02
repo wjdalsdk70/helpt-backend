@@ -1,9 +1,8 @@
 package com.HELPT.Backend.domain.record;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.HELPT.Backend.domain.equipment.Equipment;
+import com.HELPT.Backend.domain.gymequipment.GymEquipment;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -23,7 +22,9 @@ public class Record {
 
     private Long userId;
 
-    private Long equipmentId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gym_equipment_id")
+    private GymEquipment gymEquipment;
 
     private int count;
 
@@ -33,9 +34,7 @@ public class Record {
 
     private LocalDate recordDate;
 
-    private LocalDateTime startTime;
-
-    private LocalDateTime endTime;
+    private String recordTime;
 
     private String comment;
 

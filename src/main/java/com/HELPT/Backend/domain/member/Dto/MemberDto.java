@@ -5,6 +5,8 @@ import com.HELPT.Backend.global.auth.GENDER;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,6 +20,8 @@ public class MemberDto {
     private float height;
     private float weight;
     private String kakaoId;
+    private String profileImage;
+    private LocalDate birthDate;
 
     public Member toEntity()
     {
@@ -28,6 +32,7 @@ public class MemberDto {
                 .gender(gender)
                 .height(height)
                 .weight(weight)
+                .birthDate(birthDate)
                 .build();
     }
 
@@ -37,6 +42,8 @@ public class MemberDto {
                 .gender(member.getGender())
                 .height(member.getHeight())
                 .weight(member.getWeight())
+                .profileImage(member.getProfileImage())
+                .birthDate(member.getBirthDate())
                 .build();
     }
 }

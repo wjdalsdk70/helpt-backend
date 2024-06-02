@@ -38,18 +38,18 @@ public class MemberService {
     }
 
     @Transactional
-    public JWTResponse register(MemberDto memberDto) {
+    public JWTResponse register(MemberDto memberDto, String uploadURL) {
         String kakaoId = memberDto.getKakaoId();
         Optional<Member> existMember = memberRepository.findByKakaoId(kakaoId);
 
         Member member;
         if (existMember.isPresent()) {
-            member = existMember.get();
+            throw new CustomException(ErrorCode.EXIST_MEMBER);
         } else {
             memberRepository.save(memberDto.toEntity());
-            member = memberRepository.findByKakaoId(kakaoId).orElseThrow(() -> new RuntimeException("Manager could not be retrieved after save."));
+            member = memberRepository.findByKakaoId(kakaoId).orElseThrow(() -> new RuntimeException("Member could not be retrieved after save."));
         }
-
+        member.updateProfileImage(uploadURL);
         JWTToken jwt = jwtUtil.createTokens(member.getUserId());
         return JWTResponse.builder().token(jwt).build();
     }
