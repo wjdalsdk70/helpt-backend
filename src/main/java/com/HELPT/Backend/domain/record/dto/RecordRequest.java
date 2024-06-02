@@ -20,11 +20,9 @@ public class RecordRequest {
 
     private int weight;
 
-    private LocalDateTime startTime;
-
-    private LocalDateTime endTime;
-
     private LocalDate recordDate;
+
+    private String recordTime;
 
     private float successRate;
 
@@ -34,9 +32,8 @@ public class RecordRequest {
 
     @Builder
     public RecordRequest(Long equipmentId, int count, int setNumber, int weight, LocalDate recordDate, float successRate,
-                         LocalDateTime startTime,LocalDateTime endTime,String comment) {
-        this.startTime=startTime;
-        this.endTime=endTime;
+                         String recordTime ,String comment) {
+        this.recordTime = recordTime;
         this.equipmentId = equipmentId;
         this.count = count;
         this.setNumber = setNumber;
