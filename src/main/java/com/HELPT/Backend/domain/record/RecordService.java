@@ -1,5 +1,9 @@
 package com.HELPT.Backend.domain.record;
 
+import com.HELPT.Backend.domain.equipment.Equipment;
+import com.HELPT.Backend.domain.equipment.EquipmentRepository;
+import com.HELPT.Backend.domain.gymequipment.GymEquipment;
+import com.HELPT.Backend.domain.gymequipment.GymEquipmentRepository;
 import com.HELPT.Backend.domain.product.Product;
 import com.HELPT.Backend.domain.product.ProductRepository;
 import com.HELPT.Backend.domain.product.dto.ProductResponse;
@@ -25,17 +29,22 @@ import java.util.stream.Collectors;
 public class RecordService {
 
     private final RecordRepository recordRepository;
+    private final GymEquipmentRepository gymEquipmentRepository;
 
     public RecordResponse saveRecord(Long userId, RecordRequest recordRequest) {
-
+        Optional<GymEquipment> equipment = gymEquipmentRepository.findById(recordRequest.getEquipmentId());
+        if(equipment.isEmpty()){
+            new CustomException(ErrorCode.NOT_EXIST_DATA);
+        }
         Record saveRecord = Record.builder()
                 .userId(userId)
-                .equipmentId(recordRequest.getEquipmentId())
+                .gymEquipment(equipment.get())
                 .count(recordRequest.getCount())
                 .setNumber(recordRequest.getSetNumber())
                 .weight(recordRequest.getWeight())
                 .recordDate(recordRequest.getRecordDate())
                 .successRate(recordRequest.getSuccessRate())
+                .comment(recordRequest.getComment())
                 .snapshotFile(recordRequest.getSnapshotFile())
                 .build();
 
