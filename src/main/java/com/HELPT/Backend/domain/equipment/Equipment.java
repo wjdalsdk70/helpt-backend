@@ -23,6 +23,8 @@ public class Equipment {
 
     private String equipmentName;
 
+    private String equipmentNameEng;
+
     private int defaultCount;
 
     private int defaultSet;
