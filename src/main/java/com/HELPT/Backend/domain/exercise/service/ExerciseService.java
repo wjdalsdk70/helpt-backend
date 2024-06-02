@@ -4,6 +4,8 @@ import com.HELPT.Backend.domain.exercise.Exercise;
 import com.HELPT.Backend.domain.exercise.dto.ExerciseRequestDto;
 import com.HELPT.Backend.domain.exercise.dto.ExerciseResponseDto;
 import com.HELPT.Backend.domain.exercise.repository.ExerciseRepository;
+import com.HELPT.Backend.domain.gymequipment.GymEquipment;
+import com.HELPT.Backend.domain.gymequipment.GymEquipmentRepository;
 import com.HELPT.Backend.global.error.CustomException;
 import com.HELPT.Backend.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.Optional;
 public class ExerciseService {
 
     private final ExerciseRepository exerciseRepository;
+    private final GymEquipmentRepository gymEquipmentRepository;
 
     @Transactional
     public ExerciseResponseDto uploadExercise(ExerciseRequestDto exerciseRequestDto, String topImage) {
@@ -37,8 +40,9 @@ public class ExerciseService {
     }
 
     @Transactional(readOnly = true)
-    public ExerciseResponseDto findExercise(Long exerciseId){
-        Optional<Exercise> exercise = exerciseRepository.findById(exerciseId);
+    public ExerciseResponseDto findExercise(Long gymEquipmentId){
+        Optional<GymEquipment> gymEquipment = gymEquipmentRepository.findById(gymEquipmentId);
+        Optional<Exercise> exercise = exerciseRepository.findById(gymEquipment.get().getEquipment().getExerciseId());
         if(exercise.isEmpty()){
             new CustomException(ErrorCode.NOT_EXIST_DATA);
         }
