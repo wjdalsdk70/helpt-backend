@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RecordRequest {
 
-    private Long equipmentId;
+    private Long gymEquipmentId;
 
     private int count;
 
@@ -31,10 +31,10 @@ public class RecordRequest {
     private String snapshotFile;
 
     @Builder
-    public RecordRequest(Long equipmentId, int count, int setNumber, int weight, LocalDate recordDate, float successRate,
+    public RecordRequest(Long gymEquipmentId, int count, int setNumber, int weight, LocalDate recordDate, float successRate,
                          String recordTime ,String comment) {
         this.recordTime = recordTime;
-        this.equipmentId = equipmentId;
+        this.gymEquipmentId = gymEquipmentId;
         this.count = count;
         this.setNumber = setNumber;
         this.weight = weight;

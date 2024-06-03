@@ -32,7 +32,7 @@ public class RecordService {
     private final GymEquipmentRepository gymEquipmentRepository;
 
     public RecordResponse saveRecord(Long userId, RecordRequest recordRequest) {
-        Optional<GymEquipment> equipment = gymEquipmentRepository.findById(recordRequest.getEquipmentId());
+        Optional<GymEquipment> equipment = gymEquipmentRepository.findById(recordRequest.getGymEquipmentId());
         if(equipment.isEmpty()){
             new CustomException(ErrorCode.NOT_EXIST_DATA);
         }
@@ -45,7 +45,8 @@ public class RecordService {
                 .recordDate(recordRequest.getRecordDate())
                 .successRate(recordRequest.getSuccessRate())
                 .comment(recordRequest.getComment())
-                .snapshotFile(recordRequest.getSnapshotFile())
+                .recordTime(recordRequest.getRecordTime())
+//                .snapshotFile(recordRequest.getSnapshotFile())
                 .build();
 
         recordRepository.save(saveRecord);

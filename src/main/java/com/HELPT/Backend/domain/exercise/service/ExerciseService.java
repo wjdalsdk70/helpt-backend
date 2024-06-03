@@ -42,6 +42,7 @@ public class ExerciseService {
     @Transactional(readOnly = true)
     public ExerciseResponseDto findExercise(Long gymEquipmentId){
         Optional<GymEquipment> gymEquipment = gymEquipmentRepository.findById(gymEquipmentId);
+        log.info(gymEquipment.get().getGym().getGymName());
         Optional<Exercise> exercise = exerciseRepository.findById(gymEquipment.get().getEquipment().getExerciseId());
         if(exercise.isEmpty()){
             new CustomException(ErrorCode.NOT_EXIST_DATA);
