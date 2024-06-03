@@ -37,4 +37,9 @@ public class ExerciseController {
     public ResponseEntity<ExerciseResponseDto> exerciseDetails(@PathVariable Long gymEquipmentId) {
         return ResponseEntity.ok(exerciseService.findExercise(gymEquipmentId));
     }
+
+    @GetMapping("/{exerciseId}")
+    public ResponseEntity<ExerciseResponseDto> exerciseDetailss(@PathVariable Long gymEquipmentId) {
+        return ResponseEntity.ok(exerciseService.findExercise(gymEquipmentId));
+    }
 }
