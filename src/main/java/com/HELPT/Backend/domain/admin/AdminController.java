@@ -62,6 +62,14 @@ public class AdminController {
         return new RedirectView("/admin/gyms/pending");
     }
 
+    @GetMapping("/gyms")
+    public String viewGymList(Model model) {
+        List<Gym> gymList = gymService.findGymList();
+        model.addAttribute("pendingGyms", gymList);
+        model.addAttribute("template", "gyms/list");
+        return "admin/index";
+    }
+
     @GetMapping("/gyms/pending")
     public String viewGyms(Model model) {
         List<Gym> pendingGyms = gymService.findGymsByStatus(Status.Pending);
