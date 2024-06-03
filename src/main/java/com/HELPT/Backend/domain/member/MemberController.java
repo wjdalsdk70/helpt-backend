@@ -27,6 +27,9 @@ public class MemberController {
 
     @PostMapping("/login")
     public ResponseEntity<JWTResponse> login(@RequestBody KakaoLoginRequest kakaoLoginRequest) {
+
+        log.info("login : "+kakaoLoginRequest.getKakaoId());
+
         return ResponseEntity.ok(memberService.login(kakaoLoginRequest));
     }
 
