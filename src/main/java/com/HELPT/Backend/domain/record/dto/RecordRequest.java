@@ -20,8 +20,6 @@ public class RecordRequest {
 
     private int weight;
 
-    private LocalDate recordDate;
-
     private String recordTime;
 
     private float successRate;
@@ -38,7 +36,6 @@ public class RecordRequest {
         this.count = count;
         this.setNumber = setNumber;
         this.weight = weight;
-        this.recordDate = recordDate;
         this.successRate = successRate;
         this.comment=comment;
     }

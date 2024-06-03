@@ -42,7 +42,7 @@ public class RecordService {
                 .count(recordRequest.getCount())
                 .setNumber(recordRequest.getSetNumber())
                 .weight(recordRequest.getWeight())
-                .recordDate(recordRequest.getRecordDate())
+                .recordDate(LocalDate.now())
                 .successRate(recordRequest.getSuccessRate())
                 .comment(recordRequest.getComment())
                 .recordTime(recordRequest.getRecordTime())
