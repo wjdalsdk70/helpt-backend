@@ -1,4 +1,6 @@
 package com.HELPT.Backend.domain.membership;
+import com.HELPT.Backend.domain.member.Member;
+import com.HELPT.Backend.domain.member.MemberRepository;
 import com.HELPT.Backend.domain.membership.dto.MembershipResponse;
 import com.HELPT.Backend.domain.product.Product;
 import com.HELPT.Backend.global.error.CustomException;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static com.HELPT.Backend.global.error.ErrorCode.NOT_EXIST_DATA;
 
@@ -17,6 +20,8 @@ import static com.HELPT.Backend.global.error.ErrorCode.NOT_EXIST_DATA;
 public class MembershipService {
 
     private final MembershipRepository membershipRepository;
+
+    private final MemberRepository memberRepository;
 
     public MembershipResponse findMembership(Long userid)
     {
@@ -40,9 +45,9 @@ public class MembershipService {
                 .build();
 
         addMembership.addDays(product.getMonths());
-
-
         Membership saveMembership = membershipRepository.save(addMembership);
+        Optional<Member> findmember = memberRepository.findById(userId);
+        findmember.get().updateGymId(product.getGymId());
         return new MembershipResponse(saveMembership);
     }
 
