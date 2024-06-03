@@ -32,6 +32,7 @@ public class MemberDto {
                 .gender(gender)
                 .height(height)
                 .weight(weight)
+                .profileImage(profileImage)
                 .birthDate(birthDate)
                 .build();
     }
