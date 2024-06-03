@@ -65,6 +65,12 @@ public class GymService {
     }
 
     @Transactional(readOnly = true)
+    public List<Gym> findGymList() {
+        List<Gym> gymList = gymRepository.findAll();
+        return gymList;
+    }
+
+    @Transactional(readOnly = true)
     public GymRegistrationDto findGymRegistration(Long id) {
         Gym gym = gymRepository.findById(id).orElseThrow(() -> new RuntimeException("Gym not found"));
         return GymRegistrationDto.toDto(gym.getGymRegistration());
