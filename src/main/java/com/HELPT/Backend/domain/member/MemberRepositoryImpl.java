@@ -50,7 +50,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
     @Override
     public MemberDetailResponse memberDetail(Long memberId) {
         Tuple result = queryFactory
-                .select(member.userName, member.gender, member.height, member.weight, membership.membershipId, membership.startDate, membership.endDate)
+                .select(member.userName, member.gender, member.height, member.weight, member.birthDate, member.profileImage, membership.membershipId, membership.startDate, membership.endDate)
                 .from(member)
                 .leftJoin(membership).on(member.userId.eq(membership.userId))
                 .where(member.userId.eq(memberId))
@@ -64,6 +64,8 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
                 .membershipId(result.get(membership.membershipId))
                 .startDate(result.get(membership.startDate))
                 .endDate(result.get(membership.endDate))
+                .birthDate(result.get(member.birthDate))
+                .profileImage(result.get(member.profileImage))
                 .build();
     }
 
