@@ -24,24 +24,15 @@ import static com.HELPT.Backend.global.auth.SecurityUtil.getCurrentUserId;
 public class MemberController {
 
     private final MemberService memberService;
-    private final S3Uploader s3Uploader;
 
     @PostMapping("/login")
     public ResponseEntity<JWTResponse> login(@RequestBody KakaoLoginRequest kakaoLoginRequest) {
         return ResponseEntity.ok(memberService.login(kakaoLoginRequest));
     }
 
-    @PostMapping(value = "/register", consumes = "multipart/form-data")
-    public ResponseEntity<JWTResponse> register(
-            @RequestPart("memberDto") MemberDto memberDto,
-            @RequestPart("profileImage") MultipartFile profileImage){
-        String uploadURL;
-        try {
-            uploadURL = s3Uploader.upload(profileImage, "profileFile");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return ResponseEntity.ok(memberService.register(memberDto,uploadURL));
+    @PostMapping( "/register")
+    public ResponseEntity<JWTResponse> register(@RequestBody MemberDto memberDto){
+        return ResponseEntity.ok(memberService.register(memberDto));
     }
 
     @GetMapping("/attendance")
