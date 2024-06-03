@@ -18,5 +18,7 @@ public class MemberDetailResponse {
     private Long membershipId;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String profileImage;
+    private LocalDate birthDate;
 
 }
