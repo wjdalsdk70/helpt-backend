@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface MembershipRepository extends JpaRepository<Membership,Long>,MembershipRepositoryCustom {
 
+    Optional<Membership> findByUserIdAndGymId(Long userId, Long gymId);
     Optional<Membership> findByUserId(Long userId);
 }

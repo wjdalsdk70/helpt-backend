@@ -41,7 +41,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
     }
 
     @Override
-    public Membership qrVelify(Long userid,Long gymId) {
+    public Membership qrVelify(Long userid, Long gymId) {
         return queryFactory.selectFrom(membership)
                 .where(membership.userId.eq(userid),membership.gymId.eq(gymId))
                 .fetchOne();
