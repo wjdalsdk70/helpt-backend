@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface MemberRepositoryCustom {
     public Membership attendance(Long userid);
-    public Membership qrVelify(Long userId,Long gymId);
+    public Membership qrVelify(Long userId, Long gymId);
     public MemberDetailResponse memberDetail(Long memberId);
     public List<MemberJoinResponse> memberList(Long gymId, String name);
 
