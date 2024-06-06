@@ -1,5 +1,6 @@
 package com.HELPT.Backend.domain.entry_log;
 
+import com.HELPT.Backend.domain.entry_log.repository.EntryLogRepository;
 import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.domain.gym.repository.GymRepository;
 import com.HELPT.Backend.domain.member.Member;
@@ -7,11 +8,10 @@ import com.HELPT.Backend.domain.member.MemberRepository;
 import com.HELPT.Backend.global.error.CustomException;
 import com.HELPT.Backend.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +37,7 @@ public class EntryLogService {
         return entryLog;
     }
 
-    public List<EntryLog> getAllEntries() {
-        return entryLogRepository.findAll();
+    public List<EntryLogResponse> getEntryLogsByNameAndDate(String name, Long gymId, LocalDate date) {
+        return entryLogRepository.findByNameAndGymIdAndEntryDate(name, gymId, date);
     }
 }
