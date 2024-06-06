@@ -1,14 +1,13 @@
 package com.HELPT.Backend.domain.qr;
 
 import com.HELPT.Backend.domain.entry_log.EntryLog;
-import com.HELPT.Backend.domain.entry_log.EntryLogRepository;
+import com.HELPT.Backend.domain.entry_log.repository.EntryLogRepository;
 import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.domain.gym.repository.GymRepository;
 import com.HELPT.Backend.domain.member.Member;
 import com.HELPT.Backend.domain.member.MemberRepository;
 import com.HELPT.Backend.domain.membership.Membership;
 import com.HELPT.Backend.domain.membership.MembershipRepository;
-import com.HELPT.Backend.domain.membership.dto.MembershipResponse;
 import com.HELPT.Backend.global.auth.jwt.JWTUtil;
 import com.HELPT.Backend.global.error.CustomException;
 import com.HELPT.Backend.global.error.ErrorCode;
@@ -19,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static com.HELPT.Backend.global.error.ErrorCode.NOT_EXIST_DATA;
 import static com.HELPT.Backend.global.error.ErrorCode.NOT_EXIST_MEMBER;
 
 @Service
