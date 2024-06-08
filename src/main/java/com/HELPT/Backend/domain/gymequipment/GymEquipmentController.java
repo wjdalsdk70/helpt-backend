@@ -1,5 +1,6 @@
 package com.HELPT.Backend.domain.gymequipment;
 
+import com.HELPT.Backend.domain.equipment.dto.EquipmentDto;
 import com.HELPT.Backend.domain.gymequipment.dto.GymEquipmentRequest;
 import com.HELPT.Backend.domain.gymequipment.dto.GymEquipmentResponse;
 import com.HELPT.Backend.domain.gymequipment.dto.GymEquipmentUpdateRequest;
@@ -33,6 +34,14 @@ public class GymEquipmentController {
         GymEquipmentResponse updatedGymEquipment = gymEquipmentService.modifyGymEquipment(gymEquipmentId, gymEquipmentUpdateRequest);
         return ResponseEntity.ok(updatedGymEquipment);
     }
+
+
+    @GetMapping("/{gymId}/unlinkedEquipments")
+    public ResponseEntity<List<EquipmentDto>> getGymUnlinkedEquipments(@PathVariable Long gymId) {
+        List<EquipmentDto> equipments = gymEquipmentService.findUnlinkEquipments(gymId);
+        return ResponseEntity.ok(equipments);
+    }
+
 
     @DeleteMapping("/{gymEquipmentId}")
     public ResponseEntity<Void> GymEquipment(@PathVariable Long gymEquipmentId) {

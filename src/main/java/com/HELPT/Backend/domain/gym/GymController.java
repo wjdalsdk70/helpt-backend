@@ -49,15 +49,20 @@ public class GymController {
     }
 
     @PutMapping("/{gymId}/chat-link")
-    public ResponseEntity<GymResponse> chatLinkModify(@RequestBody Map<String, String> map,@PathVariable Long gymId){
-        return ResponseEntity.ok(gymService.modifyChatLink(gymId,map.get("chatLink")));
+    public ResponseEntity<GymResponse> chatLinkModify(@RequestBody String chatLink,@PathVariable Long gymId){
+        return ResponseEntity.ok(gymService.modifyChatLink(gymId,chatLink));
     }
 
     @GetMapping("/{gymId}/chat-link")
-    public ResponseEntity<Map<String,String>> chatLinkModify(@PathVariable Long gymId){
+    public ResponseEntity<Map<String,String>> findChatLink(@PathVariable Long gymId){
         Map<String, String> map = new HashMap<>();
         map.put("chatLink",gymService.getChatLink(gymId));
         return ResponseEntity.ok(map);
+    }
+
+    @DeleteMapping("/{gymId}/chat-link")
+    public ResponseEntity<Boolean> removeChatLink(@PathVariable Long gymId){
+        return ResponseEntity.ok(gymService.removeChatLink(gymId));
     }
 
     @GetMapping("/{gymId}")
