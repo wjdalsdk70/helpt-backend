@@ -11,6 +11,6 @@ public interface GymEquipmentRepository extends JpaRepository<GymEquipment,Long>
 
     List<GymEquipment> findByGym_Id(Long gymId);
 
-    @Query("SELECT e FROM Equipment e WHERE e.equipmentId NOT IN (SELECT ge.equipment.equipmentId FROM GymEquipment ge WHERE ge.id = :gymId)")
+    @Query("SELECT e FROM Equipment e WHERE e.equipmentId NOT IN (SELECT ge.equipment.equipmentId FROM GymEquipment ge WHERE ge.gym.id = :gymId)")
     List<Equipment> findEquipments(@Param("gymId") Long gymId);
 }
