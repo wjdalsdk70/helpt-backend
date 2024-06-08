@@ -2,6 +2,7 @@ package com.HELPT.Backend.domain.gymequipment;
 
 import com.HELPT.Backend.domain.equipment.Equipment;
 import com.HELPT.Backend.domain.equipment.EquipmentRepository;
+import com.HELPT.Backend.domain.equipment.dto.EquipmentDto;
 import com.HELPT.Backend.domain.gym.entity.Gym;
 import com.HELPT.Backend.domain.gym.repository.GymRepository;
 import com.HELPT.Backend.domain.gymequipment.dto.GymEquipmentRequest;
@@ -44,7 +45,10 @@ public class GymEquipmentService{
         List<GymEquipment> equipments = gymEquipmentRepository.findByGym_Id(gymId);
         return equipments.stream().map(equipment->GymEquipmentResponse.toDto(equipment)).collect(Collectors.toList());
     }
-
+    public List<EquipmentDto> findUnlinkEquipments(Long gymId) {
+        List<Equipment> equipments = gymEquipmentRepository.findEquipments(gymId);
+        return equipments.stream().map(EquipmentDto::toDto).collect(Collectors.toList());
+    }
     public GymEquipmentResponse modifyGymEquipment(Long equipmentId, GymEquipmentUpdateRequest gymEquipmentUpdateRequest) {
         GymEquipment gymEquipment = gymEquipmentRepository.findById(equipmentId)
                 .orElseThrow(() -> new RuntimeException("Equipment not found"));
