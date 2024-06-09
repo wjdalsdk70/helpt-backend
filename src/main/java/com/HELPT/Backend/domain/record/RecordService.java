@@ -46,7 +46,7 @@ public class RecordService {
                 .successRate(recordRequest.getSuccessRate())
                 .comment(recordRequest.getComment())
                 .recordTime(recordRequest.getRecordTime())
-//                .snapshotFile(recordRequest.getSnapshotFile())
+                .snapshotFile(recordRequest.getSnapshotFile())
                 .build();
 
         recordRepository.save(saveRecord);

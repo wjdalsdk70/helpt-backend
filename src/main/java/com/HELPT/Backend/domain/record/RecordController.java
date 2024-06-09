@@ -25,6 +25,7 @@ public class RecordController {
     private final RecordService recordService;
     private final S3Uploader s3Uploader;
 
+    /*
     //임시로 사용
     @PostMapping
     public ResponseEntity<RecordResponse> saveRecord(@RequestBody RecordRequest recordRequest) {
@@ -33,22 +34,24 @@ public class RecordController {
         return ResponseEntity.ok(recordService.saveRecord(userId,recordRequest));
     }
 
-//    @PostMapping(consumes = "multipart/form-data")
-//    public ResponseEntity<RecordResponse> saveRecord(@RequestPart("recordRequest") RecordRequest recordRequest,
-//                                                     @RequestPart("snapshotFile") MultipartFile snapshotFile
-//                                                     ) {
-//
-//        Long userId = getCurrentUserId();
-//        String uploadURL;
-//        try {
-//            uploadURL = s3Uploader.upload(snapshotFile, "snapshotFile");
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        recordRequest.setSnapshotFile(uploadURL);
-//
-//        return ResponseEntity.ok(recordService.saveRecord(userId,recordRequest));
-//    }
+     */
+
+    @PostMapping(consumes = "multipart/form-data")
+    public ResponseEntity<RecordResponse> saveRecord(@RequestPart("recordRequest") RecordRequest recordRequest,
+                                                     @RequestPart("snapshotFile") MultipartFile snapshotFile
+                                                     ) {
+
+        Long userId = getCurrentUserId();
+        String uploadURL;
+        try {
+            uploadURL = s3Uploader.upload(snapshotFile, "snapshotFile");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        recordRequest.setSnapshotFile(uploadURL);
+
+        return ResponseEntity.ok(recordService.saveRecord(userId,recordRequest));
+    }
 
     @GetMapping("/detail/{date}")
     public ResponseEntity<List<RecordResponse>> recordDetail(@PathVariable("date") LocalDate monthDate) {
@@ -74,9 +77,9 @@ public class RecordController {
         return ResponseEntity.ok(recordService.recordList(userId,monthDate));
 
     }
-
-
-
 */
+
+
+
 
 }
