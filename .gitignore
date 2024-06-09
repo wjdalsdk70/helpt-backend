@@ -37,3 +37,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+**/src/main/resources/firebase/firebase_service_key.json
+**/.DS_Store

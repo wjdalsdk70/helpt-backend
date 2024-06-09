@@ -2,6 +2,8 @@ package com.HELPT.Backend.domain.notice;
 
 import com.HELPT.Backend.domain.emitter.EmitterService;
 import com.HELPT.Backend.domain.emitter.entity.NotificationType;
+import com.HELPT.Backend.domain.fcm.DeviceTokenService;
+import com.HELPT.Backend.domain.fcm.FirebaseCloudMessageService;
 import com.HELPT.Backend.domain.member.Member;
 import com.HELPT.Backend.domain.member.MemberRepository;
 import com.HELPT.Backend.domain.notice.dto.NoticeRequest;
@@ -13,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +27,9 @@ public class NoticeService {
     private final NoticeRepository noticeRepository;
     private final MemberRepository memberRepository;
     private final EmitterService emitterService;
+    private final FirebaseCloudMessageService firebaseCloudMessageService;
+    private final DeviceTokenService deviceTokenService;
+
 
     public List<NoticeResponse> findNotice(Long gymId)
     {
@@ -49,6 +55,14 @@ public class NoticeService {
         for (Member member : members) {
             log.info(member.getUserName());
             emitterService.send(member, content, NotificationType.NOTICE, url);
+        }
+        List<String> deviceTokens = deviceTokenService.getDeviceTokensByGymId(noticeRequest.getGymId());
+        for (String token : deviceTokens) {
+            try {
+                firebaseCloudMessageService.sendMessageTo(token, notice.getTitle(), notice.getContent());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         return Boolean.TRUE;
     }
