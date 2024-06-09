@@ -59,12 +59,12 @@ public class SecurityConfig {
 
                         CorsConfiguration configuration = new CorsConfiguration();
 
-                        configuration.setAllowedOrigins(Collections.singletonList("*"));
+//                        configuration.setAllowedOrigins(Collections.singletonList("*"));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
                         configuration.setMaxAge(3600L);
-
+                        configuration.setAllowedOriginPatterns(Collections.singletonList("http://127.0.0.1:5500"));
                         configuration.setExposedHeaders(Collections.singletonList("Authorization"));
 
                         return configuration;
@@ -81,6 +81,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth)->auth
                         .requestMatchers("/auth/**","/admin/**").permitAll()
+                        .requestMatchers("/api/subscribe").authenticated()
 //                        .requestMatchers("/admin").permitAll() //.hasRole("ADMIN")
                         .anyRequest().authenticated());
         //JWTFilter 등록
