@@ -1,5 +1,9 @@
 package com.HELPT.Backend.domain.notice;
 
+import com.HELPT.Backend.domain.emitter.EmitterService;
+import com.HELPT.Backend.domain.emitter.entity.NotificationType;
+import com.HELPT.Backend.domain.member.Member;
+import com.HELPT.Backend.domain.member.MemberRepository;
 import com.HELPT.Backend.domain.notice.dto.NoticeRequest;
 import com.HELPT.Backend.domain.notice.dto.NoticeResponse;
 import com.HELPT.Backend.global.error.CustomException;
@@ -15,10 +19,11 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Transactional
 public class NoticeService {
 
     private final NoticeRepository noticeRepository;
+    private final MemberRepository memberRepository;
+    private final EmitterService emitterService;
 
     public List<NoticeResponse> findNotice(Long gymId)
     {
@@ -36,8 +41,15 @@ public class NoticeService {
                 .createAt(noticeRequest.getCreateAt())
                 .build();
 
-        noticeRepository.save(newNotice);
+        Notice notice = noticeRepository.save(newNotice);
+        List<Member> members = memberRepository.findAllByGymId(noticeRequest.getGymId());
+        String url = "/notices/" + notice.getNoticeId();
+        String content = notice.getTitle();
 
+        for (Member member : members) {
+            log.info(member.getUserName());
+            emitterService.send(member, content, NotificationType.NOTICE, url);
+        }
         return Boolean.TRUE;
     }
 
