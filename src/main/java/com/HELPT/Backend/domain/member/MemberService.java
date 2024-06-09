@@ -1,5 +1,6 @@
 package com.HELPT.Backend.domain.member;
 
+import com.HELPT.Backend.domain.fcm.DeviceTokenService;
 import com.HELPT.Backend.domain.member.Dto.MemberDetailResponse;
 import com.HELPT.Backend.domain.member.Dto.MemberJoinResponse;
 import com.HELPT.Backend.domain.member.Dto.MemberDto;
@@ -26,6 +27,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final JWTUtil jwtUtil;
+    private final DeviceTokenService deviceTokenService;
 
     @Transactional(readOnly = true)
     public JWTResponse login(KakaoLoginRequest kakaoLoginRequest) {
@@ -34,6 +36,7 @@ public class MemberService {
             throw new CustomException(ErrorCode.NOT_EXIST_USER);
         }
         JWTToken jwt = jwtUtil.createTokens(member.get().getUserId());
+        deviceTokenService.saveDeviceToken(member.get().getUserId(),kakaoLoginRequest.getDeviceToken());
         return JWTResponse.builder().token(jwt).build();
     }
 

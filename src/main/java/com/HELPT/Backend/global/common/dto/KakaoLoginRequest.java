@@ -9,4 +9,5 @@ import lombok.*;
 public class KakaoLoginRequest {
 
     private String kakaoId;
+    private String deviceToken;
 }
