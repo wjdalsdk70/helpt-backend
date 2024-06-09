@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member,Long>, MemberRepositoryCustom {
 
     Optional<Member> findByKakaoId(String kakaoId);
+    List<Member> findAllByGymId(Long gymId);
 }
