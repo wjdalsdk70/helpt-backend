@@ -20,6 +20,11 @@ jobs:
       - run: touch ./src/main/resources/application.properties
       - run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.properties
 
+      #firebase생성
+      - run: touch ./src/main/resources/firebase/firebase_service_key.json
+      - run: echo "${{ secrets.FIREBASE_SERVICE_KEY }}" > ./src/main/resources/firebase/firebase_service_key.json
+
+
       # gradlew 권한 부여
       - name: give permission
         run: chmod +x ./gradlew
