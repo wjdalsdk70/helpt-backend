@@ -57,7 +57,7 @@ public class GymService {
         return gym.getChat_link();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Boolean removeChatLink(Long gymId) {
         Gym gym = gymRepository.findById(gymId).orElseThrow(() -> new RuntimeException("Gym not found"));
         gym.updateChatLink(null);
