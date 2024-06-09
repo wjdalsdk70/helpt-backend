@@ -12,6 +12,10 @@ public class DeviceTokenService {
     private final DeviceTokenRepository deviceTokenRepository;
 
     public void saveDeviceToken(Long userId, String deviceToken) {
+        List<DeviceToken> tokenList = deviceTokenRepository.findAllByUserId(userId);
+        for (DeviceToken token : tokenList) {
+            if(token.equals(deviceToken)) return;
+        }
         DeviceToken deviceTokenEntity = DeviceToken.builder()
                 .userId(userId)
                 .deviceToken(deviceToken)
