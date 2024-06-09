@@ -1,9 +1,6 @@
 package com.HELPT.Backend.domain.gym;
 
-import com.HELPT.Backend.domain.gym.dto.GymRegistrationDto;
-import com.HELPT.Backend.domain.gym.dto.GymResistrationRequest;
-import com.HELPT.Backend.domain.gym.dto.GymResponse;
-import com.HELPT.Backend.domain.gym.dto.GymRequest;
+import com.HELPT.Backend.domain.gym.dto.*;
 import com.HELPT.Backend.domain.gym.entity.GymRegistration;
 import com.HELPT.Backend.domain.gymequipment.GymEquipmentService;
 import com.HELPT.Backend.domain.gymequipment.dto.GymEquipmentResponse;
@@ -49,8 +46,8 @@ public class GymController {
     }
 
     @PutMapping("/{gymId}/chat-link")
-    public ResponseEntity<GymResponse> chatLinkModify(@RequestBody String chatLink,@PathVariable Long gymId){
-        return ResponseEntity.ok(gymService.modifyChatLink(gymId,chatLink));
+    public ResponseEntity<GymResponse> chatLinkModify(@RequestBody ChatLinkDto chatLinkDto, @PathVariable Long gymId){
+        return ResponseEntity.ok(gymService.modifyChatLink(gymId,chatLinkDto.getChatLink()));
     }
 
     @GetMapping("/{gymId}/chat-link")
