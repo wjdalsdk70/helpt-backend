@@ -4,18 +4,24 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-@Builder
-@AllArgsConstructor
+/**
+ * FCM 전송 Format DTO
+ *
+ * @author : lee
+ * @fileName : FcmMessageDto
+ * @since : 2/21/24
+ */
 @Getter
-public class FcmMessage {
+@Builder
+public class FcmMessageDto {
     private boolean validateOnly;
-    private Message message;
+    private FcmMessageDto.Message message;
 
     @Builder
     @AllArgsConstructor
     @Getter
     public static class Message {
-        private Notification notification;
+        private FcmMessageDto.Notification notification;
         private String token;
     }
 

@@ -3,6 +3,7 @@ package com.HELPT.Backend.domain.notice;
 import com.HELPT.Backend.domain.emitter.EmitterService;
 import com.HELPT.Backend.domain.emitter.entity.NotificationType;
 import com.HELPT.Backend.domain.fcm.DeviceTokenService;
+import com.HELPT.Backend.domain.fcm.FcmSendDto;
 import com.HELPT.Backend.domain.fcm.FirebaseCloudMessageService;
 import com.HELPT.Backend.domain.member.Member;
 import com.HELPT.Backend.domain.member.MemberRepository;
@@ -59,7 +60,13 @@ public class NoticeService {
         List<String> deviceTokens = deviceTokenService.getDeviceTokensByGymId(noticeRequest.getGymId());
         for (String token : deviceTokens) {
             try {
-                firebaseCloudMessageService.sendMessageTo(token, notice.getTitle(), notice.getContent());
+                log.info(token);
+                FcmSendDto fcmSendDto = FcmSendDto.builder()
+                        .token(token)
+                        .title(notice.getTitle())
+                        .body(notice.getContent())
+                        .build();
+                firebaseCloudMessageService.sendMessageTo(fcmSendDto);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

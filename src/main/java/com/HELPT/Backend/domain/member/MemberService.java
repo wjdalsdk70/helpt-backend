@@ -29,7 +29,7 @@ public class MemberService {
     private final JWTUtil jwtUtil;
     private final DeviceTokenService deviceTokenService;
 
-    @Transactional(readOnly = true)
+    @Transactional
     public JWTResponse login(KakaoLoginRequest kakaoLoginRequest) {
         Optional<Member> member = memberRepository.findByKakaoId(kakaoLoginRequest.getKakaoId());
         if(member.isEmpty()){
