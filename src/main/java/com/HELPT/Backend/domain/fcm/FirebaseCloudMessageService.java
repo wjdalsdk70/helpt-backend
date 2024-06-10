@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.Duration;
 import java.util.List;
 
 @Component
@@ -58,12 +59,15 @@ public class FirebaseCloudMessageService {
     private String getAccessToken() throws IOException {
         String firebaseConfigPath = "firebase/firebase_service_key.json";
 
-        // Use Gson to read the JSON with lenient mode
-        Gson gson = new GsonBuilder().setLenient().create();
+        // Gson 세팅
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Duration.class, new DurationTypeAdapter())
+                .setLenient().create();
+
         JsonReader reader = new JsonReader(new InputStreamReader(new ClassPathResource(firebaseConfigPath).getInputStream()));
         reader.setLenient(true);
 
-        // Parse the JSON to GoogleCredentials
+        // Json파싱
         GoogleCredentials googleCredentials = gson.fromJson(reader, GoogleCredentials.class);
         googleCredentials = googleCredentials.createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
 
