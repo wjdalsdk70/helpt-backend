@@ -66,6 +66,7 @@ public class NoticeService {
                         .title(notice.getTitle())
                         .body(notice.getContent())
                         .build();
+                log.info(fcmSendDto.toString());
                 firebaseCloudMessageService.sendMessageTo(fcmSendDto);
             } catch (IOException e) {
                 throw new RuntimeException(e);
