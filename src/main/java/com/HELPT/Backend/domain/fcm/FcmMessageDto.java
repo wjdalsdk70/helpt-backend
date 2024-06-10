@@ -16,8 +16,8 @@ import lombok.Getter;
 @Builder
 public class FcmMessageDto {
 
-    @JsonProperty("validate_only")
-    private boolean validateOnly;
+    //@JsonProperty("validate_only")
+    //private boolean validateOnly;
 
     @JsonProperty("message")
     private FcmMessageDto.Message message;
@@ -45,7 +45,7 @@ public class FcmMessageDto {
         @JsonProperty("body")
         private String body;
 
-        @JsonProperty("image")
-        private String image;
+        //@JsonProperty("image")
+        //private String image;
     }
 }

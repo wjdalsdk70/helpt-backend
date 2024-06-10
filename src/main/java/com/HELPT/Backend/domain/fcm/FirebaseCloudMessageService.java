@@ -76,12 +76,12 @@ public class FirebaseCloudMessageService {
                 .message(FcmMessageDto.Message.builder()
                         .token(fcmSendDto.getToken())
                         .notification(FcmMessageDto.Notification.builder()
-                                .title(fcmSendDto.getTitle())
                                 .body(fcmSendDto.getBody())
-                                .image(null)
+                                .title(fcmSendDto.getTitle())
+                                //.image(null)
                                 .build()
                         ).build())
-                .validateOnly(false)
+                //.validateOnly(false)
                 .build();
 
         return om.writeValueAsString(fcmMessageDto);
