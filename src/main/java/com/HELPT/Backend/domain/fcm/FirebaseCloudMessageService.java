@@ -71,25 +71,36 @@ public class FirebaseCloudMessageService {
 //        googleCredentials.refreshIfExpired();
 //        return googleCredentials.getAccessToken().getTokenValue();
 //    }
+//
+//    private String getAccessToken() throws IOException {
+//        String firebaseConfigPath = "firebase/firebase_service_key.json";
+//
+//        // GSON 설정
+//        Gson gson = new GsonBuilder()
+//                .setLenient()
+//                .create();
+//
+//        JsonReader reader = new JsonReader(new InputStreamReader(new ClassPathResource(firebaseConfigPath).getInputStream()));
+//        reader.setLenient(true);
+//
+//        // Json 파싱
+//        GoogleCredentials googleCredentials = GoogleCredentials.fromStream(new ClassPathResource(firebaseConfigPath).getInputStream())
+//                .createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
+//
+//        googleCredentials.refreshIfExpired();
+//        return googleCredentials.getAccessToken().getTokenValue();
+//    }
     private String getAccessToken() throws IOException {
         String firebaseConfigPath = "firebase/firebase_service_key.json";
 
-        // GSON 설정
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-
-        JsonReader reader = new JsonReader(new InputStreamReader(new ClassPathResource(firebaseConfigPath).getInputStream()));
-        reader.setLenient(true);
-
-        // Json 파싱
-        GoogleCredentials googleCredentials = GoogleCredentials.fromStream(new ClassPathResource(firebaseConfigPath).getInputStream())
+        // GoogleCredentials 객체를 생성하여 액세스 토큰을 가져옵니다.
+        GoogleCredentials googleCredentials = GoogleCredentials
+                .fromStream(new ClassPathResource(firebaseConfigPath).getInputStream())
                 .createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
 
         googleCredentials.refreshIfExpired();
         return googleCredentials.getAccessToken().getTokenValue();
     }
-
 
 
     private String makeMessage(FcmSendDto fcmSendDto){
