@@ -33,14 +33,14 @@ public class FirebaseCloudMessageService {
 
     public void sendMessageTo(FcmSendDto fcmSendDto) throws IOException {
 
-        String message = makeMessage(fcmSendDto);
+        FcmMessageDto fcmMessageDto = makeFmd(fcmSendDto);
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer " + getAccessToken());
 
-        HttpEntity entity = new HttpEntity<>(message, headers);
+        HttpEntity entity = new HttpEntity<>(fcmMessageDto, headers);
 
         String API_URL = "https://fcm.googleapis.com/v1/projects/helpt-431a3/messages:send";
         try {
@@ -69,6 +69,7 @@ public class FirebaseCloudMessageService {
         return googleCredentials.getAccessToken().getTokenValue();
     }
 
+    /*
     private String makeMessage(FcmSendDto fcmSendDto) throws JsonProcessingException {
 
         ObjectMapper om = new ObjectMapper();
@@ -86,5 +87,20 @@ public class FirebaseCloudMessageService {
 
         return om.writeValueAsString(fcmMessageDto);
     }
+*/
 
+    private FcmMessageDto makeFmd(FcmSendDto fcmSendDto) {
+
+        return FcmMessageDto.builder()
+                .message(FcmMessageDto.Message.builder()
+                        .token(fcmSendDto.getToken())
+                        .notification(FcmMessageDto.Notification.builder()
+                                .body(fcmSendDto.getBody())
+                                .title(fcmSendDto.getTitle())
+                                //.image(null)
+                                .build()
+                        ).build())
+                //.validateOnly(false)
+                .build();
+    }
 }
