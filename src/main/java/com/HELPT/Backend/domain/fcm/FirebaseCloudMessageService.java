@@ -60,10 +60,17 @@ public class FirebaseCloudMessageService {
 private String getAccessToken() throws IOException {
     String firebaseConfigPath = "/firebase/firebase_service_key.json";
 
-    InputStream serviceSecret = getClass().getResourceAsStream(firebaseConfigPath);  //resources 기준 상대경로
-    GoogleCredentials googleCredentials = GoogleCredentials.fromStream(serviceSecret);
-    googleCredentials = googleCredentials.createScoped(List.of("https://www.googleapis.com/auth/cloud-platform")); //scope이 없으면 자격 증명이 제대로 생성이 되지 않는다.
+    // InputStream으로 JSON 파일 읽기
+    InputStream serviceSecret = FirebaseCloudMessageService.class.getResourceAsStream(firebaseConfigPath);
+    if (serviceSecret == null) {
+        throw new IOException("Resource not found: " + firebaseConfigPath);
+    }
 
+    // GoogleCredentials 생성
+    GoogleCredentials googleCredentials = GoogleCredentials.fromStream(serviceSecret);
+    googleCredentials = googleCredentials.createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
+
+    // Access Token 갱신
     googleCredentials.refreshIfExpired();
     return googleCredentials.getAccessToken().getTokenValue();
 }
