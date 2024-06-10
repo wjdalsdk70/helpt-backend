@@ -1,10 +1,7 @@
 package com.HELPT.Backend.domain.fcm;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * FCM 전송 Format DTO
@@ -15,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Getter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class FcmMessageDto {
