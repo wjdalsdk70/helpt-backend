@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * FCM 전송 Format DTO
@@ -14,6 +15,8 @@ import lombok.Getter;
  */
 @Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FcmMessageDto {
 
     //@JsonProperty("validate_only")
@@ -24,6 +27,7 @@ public class FcmMessageDto {
 
     @Builder
     @AllArgsConstructor
+    @NoArgsConstructor
     @Getter
     public static class Message {
 
@@ -36,6 +40,7 @@ public class FcmMessageDto {
 
     @Builder
     @AllArgsConstructor
+    @NoArgsConstructor
     @Getter
     public static class Notification {
 
