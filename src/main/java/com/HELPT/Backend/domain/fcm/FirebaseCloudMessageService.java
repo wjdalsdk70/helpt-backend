@@ -12,8 +12,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -55,7 +57,17 @@ public class FirebaseCloudMessageService {
 //        FcmMapper udm = sqlSession.getMapper(FcmMapper.class);
 //        return udm.selectFcmSendList();
 //    }
+private String getAccessToken() throws IOException {
+    String firebaseConfigPath = "/firebase/firebase_service_key.json";
 
+    InputStream serviceSecret = getClass().getResourceAsStream(firebaseConfigPath);  //resources 기준 상대경로
+    GoogleCredentials googleCredentials = GoogleCredentials.fromStream(serviceSecret);
+    googleCredentials = googleCredentials.createScoped(List.of("https://www.googleapis.com/auth/cloud-platform")); //scope이 없으면 자격 증명이 제대로 생성이 되지 않는다.
+
+    googleCredentials.refreshIfExpired();
+    return googleCredentials.getAccessToken().getTokenValue();
+}
+    /*
     private String getAccessToken() throws IOException {
         String firebaseConfigPath = "firebase/firebase_service_key.json";
 
@@ -74,6 +86,7 @@ public class FirebaseCloudMessageService {
         googleCredentials.refreshIfExpired();
         return googleCredentials.getAccessToken().getTokenValue();
     }
+     */
 
     /*
     private String makeMessage(FcmSendDto fcmSendDto) throws JsonProcessingException {
