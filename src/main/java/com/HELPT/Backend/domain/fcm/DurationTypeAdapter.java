@@ -10,12 +10,20 @@ import java.time.Duration;
 public class DurationTypeAdapter extends TypeAdapter<Duration> {
 
     @Override
-    public void write(JsonWriter out, Duration value) throws IOException {
-        out.value(value.toString());
+    public void write(JsonWriter out, Duration duration) throws IOException {
+        if (duration == null) {
+            out.nullValue();
+            return;
+        }
+        out.value(duration.toString());
     }
 
     @Override
     public Duration read(JsonReader in) throws IOException {
+        if (in.peek() == null) {
+            in.nextNull();
+            return null;
+        }
         return Duration.parse(in.nextString());
     }
 }
