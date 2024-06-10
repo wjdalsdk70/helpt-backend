@@ -34,6 +34,7 @@ public class FirebaseCloudMessageService {
     public void sendMessageTo(FcmSendDto fcmSendDto) throws IOException {
 
         FcmMessageDto fcmMessageDto = makeFmd(fcmSendDto);
+        log.debug("fcmMessageDto :: " + fcmMessageDto);
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
