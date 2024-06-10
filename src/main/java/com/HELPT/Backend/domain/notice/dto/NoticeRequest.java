@@ -17,13 +17,10 @@ public class NoticeRequest {
 
     private String content;
 
-    private LocalDate createAt;
-
     @Builder
     public NoticeRequest(Long gymId, String title, String content, LocalDate createAt) {
         this.gymId = gymId;
         this.title = title;
         this.content = content;
-        this.createAt = createAt;
     }
 }
