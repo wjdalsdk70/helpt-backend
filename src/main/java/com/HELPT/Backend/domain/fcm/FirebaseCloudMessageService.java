@@ -1,6 +1,9 @@
 package com.HELPT.Backend.domain.fcm;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 @Component
@@ -54,9 +58,14 @@ public class FirebaseCloudMessageService {
     private String getAccessToken() throws IOException {
         String firebaseConfigPath = "firebase/firebase_service_key.json";
 
-        GoogleCredentials googleCredentials = GoogleCredentials
-                .fromStream(new ClassPathResource(firebaseConfigPath).getInputStream())
-                .createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
+        // Use Gson to read the JSON with lenient mode
+        Gson gson = new GsonBuilder().setLenient().create();
+        JsonReader reader = new JsonReader(new InputStreamReader(new ClassPathResource(firebaseConfigPath).getInputStream()));
+        reader.setLenient(true);
+
+        // Parse the JSON to GoogleCredentials
+        GoogleCredentials googleCredentials = gson.fromJson(reader, GoogleCredentials.class);
+        googleCredentials = googleCredentials.createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
 
         googleCredentials.refreshIfExpired();
         return googleCredentials.getAccessToken().getTokenValue();
