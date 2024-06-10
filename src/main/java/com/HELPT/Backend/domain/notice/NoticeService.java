@@ -50,6 +50,8 @@ public class NoticeService {
                 .build();
 
         Notice notice = noticeRepository.save(newNotice);
+
+        /*
         List<Member> members = memberRepository.findAllByGymId(noticeRequest.getGymId());
         String url = "/notices/" + notice.getNoticeId();
         String content = notice.getTitle();
@@ -58,7 +60,10 @@ public class NoticeService {
             log.info(member.getUserName());
             emitterService.send(member, content, NotificationType.NOTICE, url);
         }
+
+
         List<String> deviceTokens = deviceTokenService.getDeviceTokensByGymId(noticeRequest.getGymId());
+
         for (String token : deviceTokens) {
             try {
                 log.info(token);
@@ -73,6 +78,8 @@ public class NoticeService {
                 throw new RuntimeException(e);
             }
         }
+
+         */
         return Boolean.TRUE;
     }
 
