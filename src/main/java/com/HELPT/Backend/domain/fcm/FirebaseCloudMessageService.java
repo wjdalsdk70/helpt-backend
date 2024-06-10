@@ -1,11 +1,6 @@
 package com.HELPT.Backend.domain.fcm;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingException;
-import com.google.firebase.messaging.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
@@ -13,11 +8,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -42,7 +33,7 @@ public class FirebaseCloudMessageService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer " + getAccessToken());
 
-        HttpEntity entity = new HttpEntity<>(fcmMessageDto, headers);
+        HttpEntity<FcmMessageDto> entity = new HttpEntity<>(fcmMessageDto, headers);
 
         String API_URL = "https://fcm.googleapis.com/v1/projects/helpt-431a3/messages:send";
         try {
