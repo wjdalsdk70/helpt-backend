@@ -1,4 +1,3 @@
-# HELPT BACKEND
 # <img src="https://github.com/Ajou-Capston-09-HELPT/.github/assets/48830509/76963a33-aac7-48b2-8b82-ae0ee5e308b1" alt="HELPT Logo" width="40" height="30"> HELPT
 
 <img width="1438" alt="스크린샷 2024-05-30 오후 1 55 08" src="https://github.com/Ajou-Capston-09-HELPT/.github/assets/48830509/da8223d0-d85c-4ac9-b5c7-3ae577a0422d">
